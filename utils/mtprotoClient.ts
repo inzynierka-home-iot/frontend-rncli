@@ -33,9 +33,9 @@ const mtproto = new MTProto({
 
 export const connect = async () => {
   try {
-    const res = await mtproto.call('help.getNearestDc');
-    await mtproto.setDefaultDc(res.nearest_dc);
-    return '3124312';
+    // const res = await mtproto.call('help.getNearestDc');
+    await mtproto.setDefaultDc(4);
+    return 'ee';
   } catch (e) {
     console.error(e);
   }
@@ -72,6 +72,7 @@ export const logIn2FA = async (
         syncAuth: false,
       },
     );
+    console.log(res)
     return res;
   } catch (e) {
     console.log(e);
@@ -80,21 +81,23 @@ export const logIn2FA = async (
 
 export const sendIOTMessage = async (message: string) => {
   try {
-    // TODO add channel_id and access_hash to the iot bot channel
-    // const res = await mtproto.call('messages.sendMessage', {
-    //   clear_draft: true,
-    //   peer: {
-    //     _: 'inputPeerChannel',
-    //     channel_id: ,
-    //     access_hash: ,
-    //   },
-    //   message,
-    //   random_id:
-    //     Math.ceil(Math.random() * 0xffffff) +
-    //     Math.ceil(Math.random() * 0xffffff),
-    // });
-    // console.log(res);
-    // return res;
+    const res = await mtproto.call('contacts.resolveUsername', {
+      username: 'homeiotinzynierka_bot',
+    });
+    const { access_hash, id } = res.users[0];
+    const sendMessageResponse = await mtproto.call('messages.sendMessage', {
+      clear_draft: true,
+      peer: {
+        _: 'inputPeerUser',
+        user_id: id,
+        access_hash,
+      },
+      message,
+      random_id:
+        Math.ceil(Math.random() * 0xffffff) +
+        Math.ceil(Math.random() * 0xffffff),
+    });
+    return sendMessageResponse;
   } catch (e) {
     console.log(e);
   }
