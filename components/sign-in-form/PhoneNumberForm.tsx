@@ -18,6 +18,7 @@ export const PhoneNumberForm = ({
 }: PhoneNumberFormProps) => {
   const onLogin = async ({ phoneNumber }: SignInData) => {
     try {
+      console.log('VERIFY');
       const res = await sendVerificationCode(phoneNumber);
       setPhoneCodeHash(res.phone_code_hash);
     } catch (e) {

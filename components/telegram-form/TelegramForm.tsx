@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Button, StyleSheet, TextInput, View } from 'react-native';
-import { sendIOTMessage } from '../../utils/mtprotoClient';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { sendIOTMessage, updateEmitter } from '../../utils/mtprotoClient';
 
 type TelegramFormData = {
   telegramMessage: string;
 };
 
 export const TelegramForm = () => {
+  const [receivedMessage, setReceivedMessage] = useState('');
   const { control, handleSubmit } = useForm<TelegramFormData>({
     defaultValues: {
       telegramMessage: '',
     },
+  });
+
+  updateEmitter.on('newMessage', (message: any) => {
+    console.log('Received update:', message);
+    setReceivedMessage(message);
   });
 
   const onSubmit = async ({ telegramMessage }: any) => {
@@ -33,6 +39,7 @@ export const TelegramForm = () => {
         )}
       />
       <Button title="submit" onPress={handleSubmit(onSubmit)} />
+      <Text>{receivedMessage}</Text>
     </View>
   );
 };
