@@ -1,1 +1,1 @@
-export * from './TelegramForm';
+export * from './TelegramForm'

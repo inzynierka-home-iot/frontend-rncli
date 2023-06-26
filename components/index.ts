@@ -1,2 +1,2 @@
-export * from './sign-in-form';
-export * from './telegram-form';
+export * from './sign-in-form'
+export * from './telegram-form'

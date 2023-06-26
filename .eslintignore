@@ -1,0 +1,8 @@
+node_modules
+.bundle
+android
+ios
+.idea
+assets
+utils
+.husky
