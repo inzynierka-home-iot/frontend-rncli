@@ -34,8 +34,8 @@ const mtproto = new MTProto({
 
 export const updateEmitter = mitt();
 
-mtproto.updates.on('updateShortChatMessage', (updateInfo: any) => {
-  console.log('updateShortChatMessage:', updateInfo);
+mtproto.updates.on('updateShortMessage', (updateInfo: any) => {
+  console.log('updateShortMessage:', updateInfo);
   updateEmitter.emit('newMessage', updateInfo.message);
 });
 
