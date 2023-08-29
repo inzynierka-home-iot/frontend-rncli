@@ -2,32 +2,30 @@ import { TextEncoder, TextDecoder } from 'web-encoding';
 import { polyfillGlobal } from 'react-native/Libraries/Utilities/PolyfillFunctions';
 
 import MTProto from '@mtproto/core/envs/browser';
+import { ReadStoredValue, SaveStoredValue } from './EncryptedStorage';
 
 polyfillGlobal('TextEncoder', () => TextEncoder);
 polyfillGlobal('TextDecoder', () => TextDecoder);
 
 class CustomStorage {
-  data: any;
-  constructor() {
-    this.data = {};
+  set(key: string, value: string) {
+    console.log('set key:', key);
+    console.log('set value:', value);
+    return SaveStoredValue(key, value);
   }
 
-  set(key: any, value: any) {
-    this.data[key] = value;
-    return Promise.resolve();
-  }
-
-  get(key: any) {
-    return Promise.resolve(this.data[key]);
+  get(key: string) {
+    console.log('read key:', key);
+    return ReadStoredValue(key);
   }
 }
+const storage = new CustomStorage();
 
 const mtproto = new MTProto({
   api_id: 22644523,
   api_hash: '66823e32a91f1719251639bb0bd5944d',
-
   storageOptions: {
-    instance: new CustomStorage(),
+    instance: storage,
   },
 });
 
@@ -35,22 +33,32 @@ export const connect = async () => {
   try {
     // const res = await mtproto.call('help.getNearestDc');
     await mtproto.setDefaultDc(4);
+    storage.get('signedIn');
     return 'ee';
   } catch (e) {
     console.error(e);
   }
 };
 
-export const sendVerificationCode = async (phoneNumber: string) => {
+export const sendVerificationCode = async (
+  phoneNumber: string,
+  isWorking: Function,
+) => {
   try {
+    isWorking(true);
     const res = await mtproto.call('auth.sendCode', {
       phone_number: phoneNumber,
       settings: {
         _: 'codeSettings',
       },
     });
+    if (res) {
+      isWorking(false);
+    }
+
     return res;
   } catch (e) {
+    isWorking(false);
     console.error(e);
   }
 };
@@ -72,7 +80,6 @@ export const logIn2FA = async (
         syncAuth: false,
       },
     );
-    console.log(res)
     return res;
   } catch (e) {
     console.log(e);

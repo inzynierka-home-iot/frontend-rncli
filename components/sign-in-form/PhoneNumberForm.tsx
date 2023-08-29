@@ -1,5 +1,5 @@
 import React from 'react-native';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Control, Controller, UseFormHandleSubmit } from 'react-hook-form';
 import { Button, TextInput } from 'react-native';
 import { SignInData } from './SignInForm';
@@ -16,9 +16,12 @@ export const PhoneNumberForm = ({
   handleSubmit,
   setPhoneCodeHash,
 }: PhoneNumberFormProps) => {
+
+  const [isWaiting, setWaiting] = useState<boolean>(false);
+
   const onLogin = async ({ phoneNumber }: SignInData) => {
     try {
-      const res = await sendVerificationCode(phoneNumber);
+      const res = await sendVerificationCode(phoneNumber, setWaiting);
       setPhoneCodeHash(res.phone_code_hash);
     } catch (e) {
       console.error(e);
@@ -38,7 +41,11 @@ export const PhoneNumberForm = ({
           />
         )}
       />
-      <Button title="log in" onPress={handleSubmit(onLogin)} />
+      <Button
+        disabled={isWaiting}
+        title="log in"
+        onPress={handleSubmit(onLogin)}
+      />
     </>
   );
 };
