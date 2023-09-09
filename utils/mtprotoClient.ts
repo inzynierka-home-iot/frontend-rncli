@@ -2,6 +2,7 @@ import { TextEncoder, TextDecoder } from 'web-encoding';
 import { polyfillGlobal } from 'react-native/Libraries/Utilities/PolyfillFunctions';
 
 import MTProto from '@mtproto/core/envs/browser';
+import mitt from 'mitt';
 
 polyfillGlobal('TextEncoder', () => TextEncoder);
 polyfillGlobal('TextDecoder', () => TextDecoder);
@@ -29,6 +30,13 @@ const mtproto = new MTProto({
   storageOptions: {
     instance: new CustomStorage(),
   },
+});
+
+export const updateEmitter = mitt();
+
+mtproto.updates.on('updateShortMessage', (updateInfo: any) => {
+  console.log('updateShortMessage:', updateInfo);
+  updateEmitter.emit('newMessage', updateInfo.message);
 });
 
 export const connect = async () => {
@@ -72,7 +80,7 @@ export const logIn2FA = async (
         syncAuth: false,
       },
     );
-    console.log(res)
+    console.log(res);
     return res;
   } catch (e) {
     console.log(e);
