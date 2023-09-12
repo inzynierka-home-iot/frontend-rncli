@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { Control, Controller, UseFormHandleSubmit } from 'react-hook-form';
 import { Button, TextInput } from 'react-native';
 import { SignInData } from './SignInForm';
-import { sendVerificationCode } from '../../utils/mtprotoClient';
+import { sendVerificationCode } from '../../utils';
 
 type PhoneNumberFormProps = {
   control: Control<SignInData>;
@@ -16,15 +16,14 @@ export const PhoneNumberForm = ({
   handleSubmit,
   setPhoneCodeHash,
 }: PhoneNumberFormProps) => {
-
-  const [isWaiting, setWaiting] = useState<boolean>(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const onLogin = async ({ phoneNumber }: SignInData) => {
-    try {
-      const res = await sendVerificationCode(phoneNumber, setWaiting);
+    setIsButtonDisabled(true);
+    const res = await sendVerificationCode(phoneNumber);
+    setIsButtonDisabled(false);
+    if (res) {
       setPhoneCodeHash(res.phone_code_hash);
-    } catch (e) {
-      console.error(e);
     }
   };
 
@@ -42,7 +41,7 @@ export const PhoneNumberForm = ({
         )}
       />
       <Button
-        disabled={isWaiting}
+        disabled={isButtonDisabled}
         title="log in"
         onPress={handleSubmit(onLogin)}
       />

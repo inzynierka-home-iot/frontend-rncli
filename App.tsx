@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { SignInForm, TelegramForm } from './components';
 import { useEffect, useState } from 'react';
-import { connect } from './utils/mtprotoClient';
+import { connect } from './utils';
 
 export type RootStackParamList = {
   SignIn: undefined;
@@ -19,12 +19,15 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   const [isConnected, setIsConnected] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     (async () => {
       const res = await connect();
       if (res) {
         setIsConnected(true);
+      } else {
+        setIsError(true);
       }
     })();
   }, []);
@@ -36,6 +39,8 @@ export default function App() {
           <Stack.Screen name="SignIn" component={SignInForm} />
           <Stack.Screen name="Telegram" component={TelegramForm} />
         </Stack.Navigator>
+      ) : isError ? (
+        <Text>Error</Text>
       ) : (
         <Text>Loading</Text>
       )}

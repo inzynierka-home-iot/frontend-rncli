@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { View } from 'react-native';
 import { ConfrimationForm } from './ConfirmationForm';
 import { PhoneNumberForm } from './PhoneNumberForm';
 import { RootNavigationProps } from '../../App';
@@ -15,6 +14,15 @@ export type SignInData = {
 export const SignInForm = () => {
   const navigation = useNavigation<RootNavigationProps>();
 
+  const [phoneCodeHash, setPhoneCodeHash] = useState<string>();
+
+  const { control, handleSubmit } = useForm<SignInData>({
+    defaultValues: {
+      phoneNumber: '',
+      phoneCode: '',
+    },
+  });
+
   useEffect(() => {
     (async () => {
       const resLogging = await ReadStoredValue('4authKey');
@@ -24,17 +32,8 @@ export const SignInForm = () => {
     })();
   }, [navigation]);
 
-  const { control, handleSubmit } = useForm<SignInData>({
-    defaultValues: {
-      phoneNumber: '',
-      phoneCode: '',
-    },
-  });
-
-  const [phoneCodeHash, setPhoneCodeHash] = useState<string>();
-
   return (
-    <View>
+    <>
       {phoneCodeHash ? (
         <ConfrimationForm
           control={control}
@@ -48,6 +47,6 @@ export const SignInForm = () => {
           setPhoneCodeHash={setPhoneCodeHash}
         />
       )}
-    </View>
+    </>
   );
 };

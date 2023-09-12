@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Control, Controller, UseFormHandleSubmit } from 'react-hook-form';
 import { Button, TextInput } from 'react-native';
 import { RootNavigationProps } from '../../App';
 import { SignInData } from './SignInForm';
-import { logIn2FA } from '../../utils/mtprotoClient';
+import { logIn2FA } from '../../utils';
 
 type ConfirmationFormProps = {
   control: Control<SignInData>;
@@ -19,9 +19,15 @@ export const ConfrimationForm = ({
 }: ConfirmationFormProps) => {
   const navigation = useNavigation<RootNavigationProps>();
 
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
   const onConfirm = async ({ phoneNumber, phoneCode }: SignInData) => {
+    setIsButtonDisabled(true);
     const res = await logIn2FA(phoneNumber, phoneCodeHash, phoneCode);
-    navigation.navigate('Telegram');
+    setIsButtonDisabled(false);
+    if (res) {
+      navigation.navigate('Telegram');
+    }
   };
 
   return (
@@ -37,7 +43,11 @@ export const ConfrimationForm = ({
           />
         )}
       />
-      <Button title="confirm your account" onPress={handleSubmit(onConfirm)} />
+      <Button
+        title="confirm your account"
+        disabled={isButtonDisabled}
+        onPress={handleSubmit(onConfirm)}
+      />
     </>
   );
 };
