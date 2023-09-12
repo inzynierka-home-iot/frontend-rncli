@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { View } from 'react-native';
 import { ConfrimationForm } from './ConfirmationForm';
 import { PhoneNumberForm } from './PhoneNumberForm';
+import { RootNavigationProps } from '../../App';
+import { useNavigation } from '@react-navigation/native';
+import { ReadStoredValue } from '../../utils/EncryptedStorage';
 
 export type SignInData = {
   phoneNumber: string;
@@ -10,6 +12,10 @@ export type SignInData = {
 };
 
 export const SignInForm = () => {
+  const navigation = useNavigation<RootNavigationProps>();
+
+  const [phoneCodeHash, setPhoneCodeHash] = useState<string>();
+
   const { control, handleSubmit } = useForm<SignInData>({
     defaultValues: {
       phoneNumber: '',
@@ -17,10 +23,17 @@ export const SignInForm = () => {
     },
   });
 
-  const [phoneCodeHash, setPhoneCodeHash] = useState<string>();
+  useEffect(() => {
+    (async () => {
+      const resLogging = await ReadStoredValue('4authKey');
+      if (resLogging) {
+        navigation.navigate('Telegram');
+      }
+    })();
+  }, [navigation]);
 
   return (
-    <View>
+    <>
       {phoneCodeHash ? (
         <ConfrimationForm
           control={control}
@@ -34,6 +47,6 @@ export const SignInForm = () => {
           setPhoneCodeHash={setPhoneCodeHash}
         />
       )}
-    </View>
+    </>
   );
 };

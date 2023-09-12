@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
-import { sendIOTMessage, updateEmitter } from '../../utils/mtprotoClient';
+import { listenForMessages, sendIoTMessage } from '../../utils';
 
 type TelegramFormData = {
   telegramMessage: string;
@@ -9,26 +9,23 @@ type TelegramFormData = {
 
 export const TelegramForm = () => {
   const [receivedMessage, setReceivedMessage] = useState('');
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
   const { control, handleSubmit } = useForm<TelegramFormData>({
     defaultValues: {
       telegramMessage: '',
     },
   });
 
-  const handleMessage = (message: any) => {
-    console.log('Received update:', message);
-    setReceivedMessage(message);
-    updateEmitter.off('newMessage', handleMessage);
-  };
-
-  const setListener = () => {
-    updateEmitter.on('newMessage', handleMessage);
-  };
-
   const onSubmit = async ({ telegramMessage }: any) => {
-    setListener();
-    sendIOTMessage(telegramMessage);
+    setIsButtonDisabled(true);
+    await sendIoTMessage(telegramMessage);
+    setIsButtonDisabled(false);
   };
+
+  useEffect(() => {
+    listenForMessages(setReceivedMessage);
+  }, []);
 
   return (
     <View>
@@ -44,7 +41,11 @@ export const TelegramForm = () => {
           />
         )}
       />
-      <Button title="submit" onPress={handleSubmit(onSubmit)} />
+      <Button
+        title="submit"
+        disabled={isButtonDisabled}
+        onPress={handleSubmit(onSubmit)}
+      />
       <Text style={styles.message}>Message:</Text>
       <Text style={styles.message}>{receivedMessage}</Text>
     </View>
