@@ -3,6 +3,7 @@ import { polyfillGlobal } from 'react-native/Libraries/Utilities/PolyfillFunctio
 
 import MTProto from '@mtproto/core/envs/browser';
 import { ReadStoredValue, SaveStoredValue } from './EncryptedStorage';
+import mitt from 'mitt';
 
 polyfillGlobal('TextEncoder', () => TextEncoder);
 polyfillGlobal('TextDecoder', () => TextDecoder);
@@ -27,6 +28,13 @@ const mtproto = new MTProto({
   storageOptions: {
     instance: storage,
   },
+});
+
+export const updateEmitter = mitt();
+
+mtproto.updates.on('updateShortMessage', (updateInfo: any) => {
+  console.log('updateShortMessage:', updateInfo);
+  updateEmitter.emit('newMessage', updateInfo.message);
 });
 
 export const connect = async () => {
