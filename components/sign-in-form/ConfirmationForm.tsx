@@ -4,7 +4,9 @@ import { Control, Controller, UseFormHandleSubmit } from 'react-hook-form';
 import { Button, TextInput } from 'react-native';
 import { RootNavigationProps } from '../../App';
 import { SignInData } from './SignInForm';
-import { logIn2FA } from '../../utils';
+import { logIn2FA } from '../../utils/logIn2FA';
+import { resolveBotID } from '../../utils/resolveBotID';
+import { ReadStoredValue } from '../../utils/EncryptedStorage';
 
 type ConfirmationFormProps = {
   control: Control<SignInData>;
@@ -12,7 +14,7 @@ type ConfirmationFormProps = {
   phoneCodeHash: string;
 };
 
-export const ConfrimationForm = ({
+export const ConfirmationForm = ({
   control,
   handleSubmit,
   phoneCodeHash,
@@ -25,7 +27,12 @@ export const ConfrimationForm = ({
     setIsButtonDisabled(true);
     const res = await logIn2FA(phoneNumber, phoneCodeHash, phoneCode);
     setIsButtonDisabled(false);
-    if (res) {
+    if (res._ == 'auth.authorization') {
+      const botAccessHash = await ReadStoredValue(
+        'bot_conversation_access_hash',
+      );
+      const botUserID = await ReadStoredValue('bot_user_id');
+      if (!botAccessHash || !botUserID) await resolveBotID();
       navigation.navigate('Telegram');
     }
   };
