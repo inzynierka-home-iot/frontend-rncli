@@ -32,7 +32,9 @@ export const ConfirmationForm = ({
         'bot_conversation_access_hash',
       );
       const botUserID = await ReadStoredValue('bot_user_id');
-      if (!botAccessHash || !botUserID) await resolveBotID();
+      if (!botAccessHash || !botUserID) {
+        await resolveBotID();
+      }
       navigation.navigate('Telegram');
     }
   };

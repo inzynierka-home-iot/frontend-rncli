@@ -1422,10 +1422,9 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@mtproto/core@^6.2.0":
-  version "6.2.0"
-  resolved "https://registry.npmjs.org/@mtproto/core/-/core-6.2.0.tgz"
-  integrity sha512-topZ4VaDTkTQDjXktiPVpmY9Eeb8utKKiCjLOgWcGKXoVIpyi9fbBQ0jLPykt0xZDZAmE6ANEmSHat8m6Lxp/g==
+"@mtproto/core@https://github.com/Phabes/mtproto-core.git#feat/native_version_of_mtproto":
+  version "6.3.0"
+  resolved "git+ssh://git@github.com/Phabes/mtproto-core.git#29cbb2c809f5260e0bdd1cc720d28ee482bf65cf"
   dependencies:
     aes-js "3.1.2"
     big-integer "1.6.51"
@@ -1434,7 +1433,7 @@
     events "3.3.0"
     leemon "6.2.0"
     lodash.debounce "4.0.8"
-    pako "2.0.4"
+    pako "2.1.0"
 
 "@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1":
   version "5.1.1-v1"
@@ -6001,10 +6000,10 @@ p-try@^2.0.0:
   resolved "https://registry.npmjs.org/p-try/-/p-try-2.2.0.tgz"
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
 
-pako@2.0.4:
-  version "2.0.4"
-  resolved "https://registry.npmjs.org/pako/-/pako-2.0.4.tgz"
-  integrity sha512-v8tweI900AUkZN6heMU/4Uy4cXRc2AYNRggVmTR+dEncawDJgCdLMximOVA2p4qO57WMynangsfGRb5WD6L1Bg==
+pako@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/pako/-/pako-2.1.0.tgz"
+  integrity sha512-w+eufiZ1WuJYgPXbV/PO3NCMEc3xqylkKHzp8bxp1uW4qaSNQUkwmLLEc3kKsfz8lpV1F8Ht3U1Cm+9Srog2ug==
 
 parent-module@^1.0.0:
   version "1.0.1"

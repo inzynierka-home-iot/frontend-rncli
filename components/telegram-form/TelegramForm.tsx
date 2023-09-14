@@ -36,9 +36,7 @@ export const TelegramForm = () => {
   }, []);
 
   useEffect(() => {
-    (async () => {
-      listenForMessages(setReceivedMessage, botUserID);
-    })();
+    listenForMessages(setReceivedMessage, botUserID);
   }, [botUserID]);
 
   return (
