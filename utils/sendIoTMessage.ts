@@ -1,16 +1,16 @@
+import { ReadStoredValue } from './EncryptedStorage';
 import { mtproto } from './mtprotoClient';
 
 export const sendIoTMessage = async (message: string) => {
   try {
-    const res = await mtproto.call('contacts.resolveUsername', {
-      username: 'homeiotinzynierka_bot',
-    });
-    const { access_hash, id } = res.users[0];
+    const access_hash = await ReadStoredValue('access_hash');
+    const user_id = await ReadStoredValue('user_id');
+
     return await mtproto.call('messages.sendMessage', {
       clear_draft: true,
       peer: {
         _: 'inputPeerUser',
-        user_id: id,
+        user_id,
         access_hash,
       },
       message,

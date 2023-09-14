@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { ConfrimationForm } from './ConfirmationForm';
+import { ConfirmationForm } from './ConfirmationForm';
 import { PhoneNumberForm } from './PhoneNumberForm';
 import { RootNavigationProps } from '../../App';
 import { useNavigation } from '@react-navigation/native';
@@ -35,7 +35,7 @@ export const SignInForm = () => {
   return (
     <>
       {phoneCodeHash ? (
-        <ConfrimationForm
+        <ConfirmationForm
           control={control}
           handleSubmit={handleSubmit}
           phoneCodeHash={phoneCodeHash}
