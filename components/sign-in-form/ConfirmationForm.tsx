@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Control, Controller, UseFormHandleSubmit } from 'react-hook-form';
 import { Button, TextInput } from 'react-native';
 import { RootNavigationProps } from '../../App';
 import { SignInData } from './SignInForm';
 import { logIn2FA } from '../../utils/logIn2FA';
-import { storeUserID } from '../../utils/storeUserID';
+import { resolveBotID } from '../../utils/resolveBotID';
+import { ReadStoredValue } from '../../utils/EncryptedStorage';
 
 type ConfirmationFormProps = {
   control: Control<SignInData>;
@@ -20,10 +21,18 @@ export const ConfirmationForm = ({
 }: ConfirmationFormProps) => {
   const navigation = useNavigation<RootNavigationProps>();
 
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
   const onConfirm = async ({ phoneNumber, phoneCode }: SignInData) => {
+    setIsButtonDisabled(true);
     const res = await logIn2FA(phoneNumber, phoneCodeHash, phoneCode);
+    setIsButtonDisabled(false);
     if (res._ == 'auth.authorization') {
-      await storeUserID();
+      const botAccessHash = await ReadStoredValue(
+        'bot_conversation_access_hash',
+      );
+      const botUserID = await ReadStoredValue('bot_user_id');
+      if (!botAccessHash || !botUserID) await resolveBotID();
       navigation.navigate('Telegram');
     }
   };
@@ -41,7 +50,11 @@ export const ConfirmationForm = ({
           />
         )}
       />
-      <Button title="confirm your account" onPress={handleSubmit(onConfirm)} />
+      <Button
+        title="confirm your account"
+        disabled={isButtonDisabled}
+        onPress={handleSubmit(onConfirm)}
+      />
     </>
   );
 };

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import { listenForMessages, sendIoTMessage } from '../../utils';
+import { ReadStoredValue } from '../../utils/EncryptedStorage';
 
 type TelegramFormData = {
   telegramMessage: string;
@@ -9,6 +10,8 @@ type TelegramFormData = {
 
 export const TelegramForm = () => {
   const [receivedMessage, setReceivedMessage] = useState('');
+  const [botUserID, setBotUserID] = useState('');
+  const [botAccessHash, setBotAccessHash] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const { control, handleSubmit } = useForm<TelegramFormData>({
@@ -19,13 +22,24 @@ export const TelegramForm = () => {
 
   const onSubmit = async ({ telegramMessage }: any) => {
     setIsButtonDisabled(true);
-    await sendIoTMessage(telegramMessage);
+    await sendIoTMessage(telegramMessage, botAccessHash, botUserID);
     setIsButtonDisabled(false);
   };
 
   useEffect(() => {
-    listenForMessages(setReceivedMessage);
+    (async () => {
+      const hash = await ReadStoredValue('bot_conversation_access_hash');
+      if (hash) setBotAccessHash(hash);
+      const id = await ReadStoredValue('bot_user_id');
+      if (id) setBotUserID(id);
+    })();
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      listenForMessages(setReceivedMessage, botUserID);
+    })();
+  }, [botUserID]);
 
   return (
     <View>

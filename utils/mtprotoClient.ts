@@ -3,7 +3,7 @@ import { polyfillGlobal } from 'react-native/Libraries/Utilities/PolyfillFunctio
 
 import MTProto from '@mtproto/core/envs/browser';
 import { ReadStoredValue, SaveStoredValue } from './EncryptedStorage';
-import { API_ID, API_HASH } from '@env';
+import { API_ID, API_HASH } from './env';
 
 polyfillGlobal('TextEncoder', () => TextEncoder);
 polyfillGlobal('TextDecoder', () => TextDecoder);

@@ -3,9 +3,8 @@ import { mtproto } from './mtprotoClient';
 
 export const listenForMessages = async (
   setReceivedMessage: (msg: string) => void,
+  user_id: string,
 ) => {
-  const user_id = await ReadStoredValue('user_id');
-
   mtproto.updates.on(
     'updateShortMessage',
     (updateInfo: { message: string; user_id: string }) => {
