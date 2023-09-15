@@ -23,9 +23,17 @@ export const ConfirmationForm = ({
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
-  const onConfirm = async ({ phoneNumber, phoneCode }: SignInData) => {
+  const onConfirm = async ({
+    diallingCode,
+    phoneNumber,
+    phoneCode,
+  }: SignInData) => {
     setIsButtonDisabled(true);
-    const res = await logIn2FA(phoneNumber, phoneCodeHash, phoneCode);
+    const res = await logIn2FA(
+      '+' + diallingCode + phoneNumber,
+      phoneCodeHash,
+      phoneCode,
+    );
     setIsButtonDisabled(false);
     if (res._ == 'auth.authorization') {
       const botAccessHash = await ReadStoredValue(

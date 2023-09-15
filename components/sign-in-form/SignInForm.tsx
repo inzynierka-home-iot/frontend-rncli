@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { ReadStoredValue } from '../../utils/EncryptedStorage';
 
 export type SignInData = {
+  diallingCode: string;
   phoneNumber: string;
   phoneCode: string;
 };
@@ -18,6 +19,7 @@ export const SignInForm = () => {
 
   const { control, handleSubmit } = useForm<SignInData>({
     defaultValues: {
+      diallingCode: '',
       phoneNumber: '',
       phoneCode: '',
     },
