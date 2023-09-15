@@ -67,3 +67,5 @@ yarn-error.log
 js.json
 .env
 utils/env.ts
+package-lock.json
+yarn.lock

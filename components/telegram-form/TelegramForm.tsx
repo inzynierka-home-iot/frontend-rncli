@@ -29,9 +29,13 @@ export const TelegramForm = () => {
   useEffect(() => {
     (async () => {
       const hash = await ReadStoredValue('bot_conversation_access_hash');
-      if (hash) setBotAccessHash(hash);
+      if (hash) {
+        setBotAccessHash(hash);
+      }
       const id = await ReadStoredValue('bot_user_id');
-      if (id) setBotUserID(id);
+      if (id) {
+        setBotUserID(id);
+      }
     })();
   }, []);
 
