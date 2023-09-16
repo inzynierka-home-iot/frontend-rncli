@@ -25,6 +25,7 @@
     "react-native-quick-crypto": "^0.6.1",
     "react-native-safe-area-context": "^4.5.2",
     "react-native-screens": "^3.20.0",
+    "react-native-select-dropdown": "^3.4.0",
     "stream": "^0.0.2",
     "stream-browserify": "^3.0.0",
     "web-encoding": "^1.1.5"
