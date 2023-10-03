@@ -35,7 +35,7 @@ export default function App() {
   return (
     <NavigationContainer>
       {isConnected ? (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="SignIn" component={SignInForm} />
           <Stack.Screen name="Telegram" component={TelegramForm} />
         </Stack.Navigator>
