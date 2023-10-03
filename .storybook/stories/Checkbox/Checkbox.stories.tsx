@@ -1,13 +1,10 @@
 import React from 'react';
-import { Button } from './Button';
 import { View } from 'react-native';
+import { Checkbox } from './Checkbox';
 
-const MyButtonMeta = {
-  title: 'Button',
-  component: Button,
-  args: {
-    text: 'Hello world',
-  },
+const MyCheckboxMeta = {
+  title: 'Checkbox',
+  component: Checkbox,
   decorators: [
     (Story: any) => (
       <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
@@ -17,7 +14,7 @@ const MyButtonMeta = {
   ],
 };
 
-export default MyButtonMeta;
+export default MyCheckboxMeta;
 
 export const Basic = {};
 
@@ -26,7 +23,6 @@ export const Success = {
     variant: 'success',
   },
 };
-
 export const Error = {
   args: {
     variant: 'error',

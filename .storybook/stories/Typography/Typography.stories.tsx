@@ -3,13 +3,13 @@ import { View } from 'react-native';
 import { Typography } from './Typography';
 
 const meta = {
-  title: 'Typohraphy',
+  title: 'Typography',
   component: Typography,
   args: {
     text: 'Hello world',
   },
   decorators: [
-    (Story) => (
+    (Story: any) => (
       <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
         <Story />
       </View>
@@ -21,36 +21,36 @@ export default meta;
 
 export const HeaderLarge = {
   args: {
-    variant: 'header-large'
-  }
+    variant: 'header-large',
+  },
 };
 
 export const HeaderMedium = {
   args: {
-    variant: 'header-medium'
-  }
+    variant: 'header-medium',
+  },
 };
 
 export const HeaderSmall = {
   args: {
-    variant: 'header-small'
-  }
+    variant: 'header-small',
+  },
 };
 
 export const BodyLarge = {
   args: {
-    variant: 'body-large'
-  }
+    variant: 'body-large',
+  },
 };
 
 export const BodeMedium = {
   args: {
-    variant: 'body-medium'
-  }
+    variant: 'body-medium',
+  },
 };
 
 export const BodySmall = {
   args: {
-    variant: 'body-small'
-  }
+    variant: 'body-small',
+  },
 };

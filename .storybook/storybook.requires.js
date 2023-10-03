@@ -34,7 +34,7 @@ if (decorators) {
   }
   // workaround for global decorators getting infinitely applied on HMR, see https://github.com/storybookjs/react-native/issues/185
   clearDecorators();
-  decorators.forEach((decorator) => addDecorator(decorator));
+  decorators.forEach(decorator => addDecorator(decorator));
 }
 
 if (parameters) {
@@ -42,13 +42,14 @@ if (parameters) {
 }
 
 try {
-  argsEnhancers.forEach((enhancer) => addArgsEnhancer(enhancer));
-} catch { }
+  argsEnhancers.forEach(enhancer => addArgsEnhancer(enhancer));
+} catch {}
 
 const getStories = () => {
   return {
     './.storybook/stories/Button/Button.stories.tsx': require('./stories/Button/Button.stories.tsx'),
     './.storybook/stories/Typography/Typography.stories.tsx': require('./stories/Typography/Typography.stories.tsx'),
+    './.storybook/stories/Checkbox/Checkbox.stories.tsx': require('./stories/Checkbox/Checkbox.stories.tsx'),
   };
 };
 
