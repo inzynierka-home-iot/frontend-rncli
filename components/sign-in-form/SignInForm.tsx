@@ -25,9 +25,9 @@ export const SignInForm = () => {
 
   useEffect(() => {
     (async () => {
-      const resLogging = await ReadStoredValue('4authKey');
+      const resLogging = await ReadStoredValue('SignedIn');
       if (resLogging) {
-        navigation.navigate('Telegram');
+        navigation.replace('Telegram');
       }
     })();
   }, [navigation]);

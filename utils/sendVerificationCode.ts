@@ -1,17 +1,23 @@
+import { hasErrorMessage } from './hasErrorMessage';
 import { mtproto } from './mtprotoClient';
+import { raiseTelegramError } from './raiseTelegramError';
 
 export const sendVerificationCode = async (
   phone_number: string,
-): Promise<false | { phone_code_hash: string }> => {
+): Promise<{ success: boolean; res: any; }> => {
   try {
-    return await mtproto.call('auth.sendCode', {
+    const res = await mtproto.call('auth.sendCode', {
       phone_number,
       settings: {
         _: 'codeSettings',
       },
     });
+    return { success: true, res: res };
   } catch (e) {
-    console.error(e);
-    return false;
+    if (hasErrorMessage(e)) {
+      raiseTelegramError(e.error_message);
+    }
+
+    return { success: false, res: {} };
   }
 };

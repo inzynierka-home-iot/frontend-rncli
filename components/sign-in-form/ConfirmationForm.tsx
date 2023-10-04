@@ -6,7 +6,7 @@ import { RootNavigationProps } from '../../App';
 import { SignInData } from './SignInForm';
 import { logIn2FA } from '../../utils/logIn2FA';
 import { resolveBotID } from '../../utils/resolveBotID';
-import { ReadStoredValue } from '../../utils/EncryptedStorage';
+import { ReadStoredValue, SaveStoredValue } from '../../utils/EncryptedStorage';
 
 type ConfirmationFormProps = {
   control: Control<SignInData>;
@@ -35,7 +35,8 @@ export const ConfirmationForm = ({
       if (!botAccessHash || !botUserID) {
         await resolveBotID();
       }
-      navigation.navigate('Telegram');
+      SaveStoredValue('SignedIn', 'true');
+      navigation.replace('Telegram');
     }
   };
 

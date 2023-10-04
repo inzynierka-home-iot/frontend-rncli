@@ -4,6 +4,8 @@ import { Control, Controller, UseFormHandleSubmit } from 'react-hook-form';
 import { Button, TextInput } from 'react-native';
 import { SignInData } from './SignInForm';
 import { sendVerificationCode } from '../../utils';
+// import { showMessage, hideMessage } from 'react-native-flash-message';
+import { raiseTelegramError } from '../../utils/raiseTelegramError';
 
 type PhoneNumberFormProps = {
   control: Control<SignInData>;
@@ -22,8 +24,8 @@ export const PhoneNumberForm = ({
     setIsButtonDisabled(true);
     const res = await sendVerificationCode(phoneNumber);
     setIsButtonDisabled(false);
-    if (res) {
-      setPhoneCodeHash(res.phone_code_hash);
+    if (res.success) {
+      setPhoneCodeHash(res.res.phone_code_hash);
     }
   };
 
