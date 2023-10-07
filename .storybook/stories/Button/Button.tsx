@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { theme } from '../../theme';
 import { Typography } from '../Typography/Typography';
 
@@ -19,20 +19,18 @@ export const Button: FC<ButtonProps> = ({
   onPress,
   disabled = false,
 }) => {
-  const styles = useSizes(variant, size);
+  const styles = useSizes(variant, size, disabled);
+  const textColor = disabled ? 'text-secondary' : 'text-invertedPrimary';
 
   return (
     <TouchableOpacity
       style={{
         ...styles.container,
       }}
+      disabled={disabled}
       onPress={onPress}
       activeOpacity={0.8}>
-      <Typography
-        variant="body-medium"
-        text={text}
-        color="text-invertedPrimary"
-      />
+      <Typography variant="body-medium" text={text} color={textColor} />
     </TouchableOpacity>
   );
 };
@@ -40,13 +38,15 @@ export const Button: FC<ButtonProps> = ({
 const useSizes = (
   variant: ButtonProps['variant'],
   size: ButtonProps['size'],
+  disabled: ButtonProps['disabled'],
 ) => {
-  const buttonColor =
-    variant == 'default'
-      ? 'text-informative'
-      : variant == 'success'
-      ? 'text-success'
-      : 'text-error';
+  const buttonColor = disabled
+    ? 'background-subtle'
+    : variant == 'default'
+    ? 'text-informative'
+    : variant == 'success'
+    ? 'text-success'
+    : 'text-error';
   const buttonSize = size === 'large' ? 4 : size === 'medium' ? 3 : 2;
 
   return {

@@ -1,13 +1,10 @@
 import React from 'react';
-import { Button } from './Button';
+import { Input } from './Input';
 import { View } from 'react-native';
 
-const MyButtonMeta = {
-  title: 'Button',
-  component: Button,
-  args: {
-    text: 'Hello world',
-  },
+const MyTextInputMeta = {
+  title: 'Input',
+  component: Input,
   decorators: [
     (Story: any) => (
       <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
@@ -17,13 +14,13 @@ const MyButtonMeta = {
   ],
 };
 
-export default MyButtonMeta;
+export default MyTextInputMeta;
 
 export const Basic = {};
 
-export const Success = {
+export const Active = {
   args: {
-    variant: 'success',
+    variant: 'active',
   },
 };
 
@@ -35,6 +32,7 @@ export const Error = {
 
 export const Disabled = {
   args: {
-    disabled: true,
+    text: '',
+    variant: 'disabled',
   },
 };

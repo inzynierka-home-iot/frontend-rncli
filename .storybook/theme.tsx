@@ -1,4 +1,4 @@
-import { StyleProp, TextProps, TextStyle } from 'react-native/types';
+import { StyleProp, TextStyle } from 'react-native/types';
 
 export const theme: Theme = {
   spacing: num => num * 4,
