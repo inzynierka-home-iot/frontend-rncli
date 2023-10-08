@@ -10,6 +10,7 @@ export const SaveStoredValue = async (key: string, value: string) => {
 
 export const ReadStoredValue = async (key: string) => {
   const res = await EncryptedStorage.getItem(key);
+
   return res;
 };
 

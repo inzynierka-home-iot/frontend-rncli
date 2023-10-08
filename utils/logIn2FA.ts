@@ -19,6 +19,7 @@ export const logIn2FA = async (
         syncAuth: false,
       },
     );
+    console.log(res);
     return res;
   } catch (e) {
     if (hasErrorMessage(e)) {
