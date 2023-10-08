@@ -2,19 +2,20 @@ import React, { FC, useState } from 'react';
 import { TextInput } from 'react-native';
 import { theme } from '../../theme';
 
-type TextInputProps = {
+type InputProps = {
   text: string;
-  variant?: 'default' | 'active' | 'error' | 'disabled';
-  onPress: () => void;
+  variant?: 'default' | 'error';
+  editable?: boolean;
+  onChange: (e: string) => void;
 };
 
-export const Input: FC<TextInputProps> = ({
-  text = 'Input value',
+export const Input: FC<InputProps> = ({
+  text,
   variant = 'default',
-  onPress,
+  editable = true,
+  onChange,
 }) => {
-  const [value, setValue] = useState(text);
-  const [type, setType] = useState(variant);
+  const [type, setType] = useState<InputProps['variant'] | 'active'>(variant);
   const borderColor =
     type == 'default'
       ? 'background-subtle'
@@ -23,26 +24,23 @@ export const Input: FC<TextInputProps> = ({
       : type == 'error'
       ? 'text-error'
       : 'background-subtle';
-  const textColor =
-    variant == 'disabled'
-      ? 'text-secondary'
-      : value != ''
-      ? 'text-primary'
-      : 'text-secondary';
-  const editable = variant != 'disabled';
+  const textColor = !editable
+    ? 'text-secondary'
+    : text != ''
+    ? 'text-primary'
+    : 'text-secondary';
 
   return (
     <TextInput
       placeholder="Input placeholder"
-      value={value}
-      onChangeText={e => {
-        setValue(e);
-        onPress;
-      }}
+      value={text}
+      onChangeText={onChange}
       onFocus={() => setType('active')}
       onBlur={() => setType(variant)}
       editable={editable}
       style={{
+        flex: 1,
+        margin: theme.spacing(2),
         ...theme.typography['body-medium'],
         color: theme.colors[textColor],
         borderWidth: 1,

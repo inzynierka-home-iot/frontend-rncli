@@ -10,7 +10,12 @@ const MyButtonMeta = {
   },
   decorators: [
     (Story: any) => (
-      <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+      <View
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          flex: 1,
+        }}>
         <Story />
       </View>
     ),

@@ -12,6 +12,11 @@
     "storybook-watch": "sb-rn-watcher"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-brands-svg-icons": "^6.4.2",
+    "@fortawesome/free-regular-svg-icons": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/react-native-fontawesome": "^0.3.0",
     "@mtproto/core": "^6.2.0",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
@@ -28,6 +33,7 @@
     "react-native-quick-crypto": "^0.6.1",
     "react-native-safe-area-context": "^4.7.2",
     "react-native-screens": "^3.20.0",
+    "react-native-svg": "^13.14.0",
     "stream": "^0.0.2",
     "stream-browserify": "^3.0.0",
     "web-encoding": "^1.1.5"

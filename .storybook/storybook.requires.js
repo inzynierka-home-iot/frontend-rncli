@@ -51,6 +51,7 @@ const getStories = () => {
     './.storybook/stories/Typography/Typography.stories.tsx': require('./stories/Typography/Typography.stories.tsx'),
     './.storybook/stories/Checkbox/Checkbox.stories.tsx': require('./stories/Checkbox/Checkbox.stories.tsx'),
     './.storybook/stories/Input/Input.stories.tsx': require('./stories/Input/Input.stories'),
+    './.storybook/stories/AlertBanner/AlertBanner.stories.tsx': require('./stories/AlertBanner/AlertBanner.stories'),
   };
 };
 

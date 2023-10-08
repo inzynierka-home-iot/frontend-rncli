@@ -1,21 +1,20 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import CheckBox from 'react-native-check-box';
 import { theme } from '../../theme';
 
 type CheckboxProps = {
   variant?: 'default' | 'success' | 'error';
-  checked?: boolean;
+  checked: boolean;
   onPress: () => void;
-  paddingSize: number;
+  paddingSize?: number;
 };
 
 export const Checkbox: FC<CheckboxProps> = ({
   variant = 'default',
-  checked = true,
+  checked,
   onPress,
-  paddingSize = 4,
+  paddingSize = 1,
 }) => {
-  const [isChecked, setIsChecked] = useState(checked);
   const checkboxColor =
     variant == 'default'
       ? 'text-informative'
@@ -25,13 +24,13 @@ export const Checkbox: FC<CheckboxProps> = ({
 
   return (
     <CheckBox
-      isChecked={isChecked}
-      onClick={() => {
-        onPress;
-        setIsChecked(!isChecked);
-      }}
+      isChecked={checked}
+      onClick={onPress}
       checkBoxColor={theme.colors[checkboxColor]}
-      style={{ padding: theme.spacing(paddingSize) }}
+      style={{
+        padding: theme.spacing(paddingSize),
+        transform: [{ scaleX: 2 }, { scaleY: 2 }],
+      }}
     />
   );
 };

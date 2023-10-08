@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { View } from 'react-native';
 import { Checkbox } from './Checkbox';
 
@@ -16,15 +16,21 @@ const MyCheckboxMeta = {
 
 export default MyCheckboxMeta;
 
-export const Basic = {};
+export const Basic = () => {
+  const [checked, setChecked] = useState(true);
+  const onPress = () => setChecked(!checked);
 
-export const Success = {
-  args: {
-    variant: 'success',
-  },
+  return <Checkbox checked={checked} onPress={onPress} />;
 };
-export const Error = {
-  args: {
-    variant: 'error',
-  },
+export const Success = () => {
+  const [checked, setChecked] = useState(true);
+  const onPress = () => setChecked(!checked);
+
+  return <Checkbox variant="success" checked={checked} onPress={onPress} />;
+};
+export const Error = () => {
+  const [checked, setChecked] = useState(true);
+  const onPress = () => setChecked(!checked);
+
+  return <Checkbox variant="error" checked={checked} onPress={onPress} />;
 };

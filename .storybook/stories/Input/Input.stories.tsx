@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Input } from './Input';
 import { View } from 'react-native';
 
@@ -7,7 +7,13 @@ const MyTextInputMeta = {
   component: Input,
   decorators: [
     (Story: any) => (
-      <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+      <View
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          flex: 1,
+          flexDirection: 'row',
+        }}>
         <Story />
       </View>
     ),
@@ -16,23 +22,20 @@ const MyTextInputMeta = {
 
 export default MyTextInputMeta;
 
-export const Basic = {};
+export const Basic = () => {
+  const [text, setText] = useState('Input value');
 
-export const Active = {
-  args: {
-    variant: 'active',
-  },
+  return <Input text={text} onChange={e => setText(e)} />;
 };
 
-export const Error = {
-  args: {
-    variant: 'error',
-  },
+export const Error = () => {
+  const [text, setText] = useState('Input value');
+
+  return <Input variant="error" text={text} onChange={e => setText(e)} />;
 };
 
-export const Disabled = {
-  args: {
-    text: '',
-    variant: 'disabled',
-  },
+export const Disabled = () => {
+  const [text, setText] = useState('Input value');
+
+  return <Input editable={false} text={text} onChange={e => setText(e)} />;
 };

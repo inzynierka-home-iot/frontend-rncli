@@ -51,8 +51,6 @@ const useSizes = (
 
   return {
     container: {
-      display: 'flex',
-      flexDirection: 'column',
       backgroundColor: theme.colors[buttonColor],
       paddingHorizontal: theme.spacing(buttonSize * 2),
       paddingVertical: theme.spacing(buttonSize),
