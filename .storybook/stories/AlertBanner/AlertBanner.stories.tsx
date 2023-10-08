@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { AlertBanner } from './AlertBanner';
-import React from 'react';
+import React, { useState } from 'react';
 
 const MyAlertBanner = {
   title: 'Alert Banner',
@@ -23,23 +23,40 @@ const MyAlertBanner = {
 
 export default MyAlertBanner;
 
-export const Informative = {
-  args: {
-    text: 'Changes saved',
-    variant: 'informative',
-  },
+export const Informative = () => {
+  const [open, setOpen] = useState(true);
+
+  return (
+    <AlertBanner
+      text={'Changes saved'}
+      isOpen={open}
+      onClose={() => setOpen(false)}
+    />
+  );
 };
 
-export const Success = {
-  args: {
-    text: 'Lights turned on! You are enlighted now!',
-    variant: 'success',
-  },
+export const Success = () => {
+  const [open, setOpen] = useState(true);
+
+  return (
+    <AlertBanner
+      text={'Lights turned on! You are enlighted now!'}
+      isOpen={open}
+      variant="success"
+      onClose={() => setOpen(false)}
+    />
+  );
 };
 
-export const Error = {
-  args: {
-    text: 'Error! Cannot update settings',
-    variant: 'error',
-  },
+export const Error = () => {
+  const [open, setOpen] = useState(true);
+
+  return (
+    <AlertBanner
+      text={'Error! Cannot update settings'}
+      isOpen={open}
+      variant="error"
+      onClose={() => setOpen(false)}
+    />
+  );
 };

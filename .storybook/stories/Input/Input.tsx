@@ -1,21 +1,47 @@
-import React, { FC, useState } from 'react';
-import { TextInput } from 'react-native';
+import React, { FC, useCallback, useState } from 'react';
+import { StyleSheet, TextInput } from 'react-native';
 import { theme } from '../../theme';
 
 type InputProps = {
   text: string;
   variant?: 'default' | 'error';
-  editable?: boolean;
+  disabled?: boolean;
   onChange: (e: string) => void;
 };
 
 export const Input: FC<InputProps> = ({
   text,
   variant = 'default',
-  editable = true,
+  disabled = false,
   onChange,
 }) => {
   const [type, setType] = useState<InputProps['variant'] | 'active'>(variant);
+  const styles = useStyles(type, disabled, text);
+  const inputFocus = useCallback(
+    (inputType: InputProps['variant'] | 'active') => {
+      setType(inputType);
+    },
+    [type],
+  );
+
+  return (
+    <TextInput
+      placeholder="Input placeholder"
+      value={text}
+      onChangeText={onChange}
+      onFocus={() => inputFocus('active')}
+      onBlur={() => inputFocus(variant)}
+      editable={!disabled}
+      style={{ ...styles.input }}
+    />
+  );
+};
+
+const useStyles = (
+  type: InputProps['variant'] | 'active',
+  disabled: InputProps['disabled'],
+  text: InputProps['text'],
+) => {
   const borderColor =
     type == 'default'
       ? 'background-subtle'
@@ -24,33 +50,25 @@ export const Input: FC<InputProps> = ({
       : type == 'error'
       ? 'text-error'
       : 'background-subtle';
-  const textColor = !editable
+  const textColor = disabled
     ? 'text-secondary'
     : text != ''
     ? 'text-primary'
     : 'text-secondary';
 
-  return (
-    <TextInput
-      placeholder="Input placeholder"
-      value={text}
-      onChangeText={onChange}
-      onFocus={() => setType('active')}
-      onBlur={() => setType(variant)}
-      editable={editable}
-      style={{
-        flex: 1,
-        margin: theme.spacing(2),
-        ...theme.typography['body-medium'],
-        color: theme.colors[textColor],
-        borderWidth: 1,
-        elevation: 2,
-        borderRadius: theme.spacing(1),
-        borderColor: theme.colors[borderColor],
-        paddingHorizontal: theme.spacing(4),
-        paddingVertical: theme.spacing(2),
-        backgroundColor: theme.colors['background-primary'],
-      }}
-    />
-  );
+  return StyleSheet.create({
+    input: {
+      color: theme.colors[textColor],
+      borderColor: theme.colors[borderColor],
+      flex: 1,
+      margin: theme.spacing(2),
+      ...theme.typography['body-medium'],
+      borderWidth: 1,
+      elevation: 2,
+      borderRadius: theme.spacing(1),
+      paddingHorizontal: theme.spacing(4),
+      paddingVertical: theme.spacing(2),
+      backgroundColor: theme.colors['background-primary'],
+    },
+  });
 };

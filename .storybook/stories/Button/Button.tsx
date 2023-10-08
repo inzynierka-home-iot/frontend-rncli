@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { theme } from '../../theme';
 import { Typography } from '../Typography/Typography';
 
@@ -18,15 +18,14 @@ export const Button: FC<ButtonProps> = ({
   variant = 'default',
   onPress,
   disabled = false,
+  hasFullWidth = false,
 }) => {
-  const styles = useSizes(variant, size, disabled);
+  const styles = useStyles(variant, size, disabled);
   const textColor = disabled ? 'text-secondary' : 'text-invertedPrimary';
 
   return (
     <TouchableOpacity
-      style={{
-        ...styles.container,
-      }}
+      style={[styles.container, hasFullWidth && styles.fullWidth]}
       disabled={disabled}
       onPress={onPress}
       activeOpacity={0.8}>
@@ -35,7 +34,7 @@ export const Button: FC<ButtonProps> = ({
   );
 };
 
-const useSizes = (
+const useStyles = (
   variant: ButtonProps['variant'],
   size: ButtonProps['size'],
   disabled: ButtonProps['disabled'],
@@ -49,12 +48,18 @@ const useSizes = (
     : 'text-error';
   const buttonSize = size === 'large' ? 4 : size === 'medium' ? 3 : 2;
 
-  return {
+  return StyleSheet.create({
     container: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      margin: theme.spacing(1),
       backgroundColor: theme.colors[buttonColor],
       paddingHorizontal: theme.spacing(buttonSize * 2),
       paddingVertical: theme.spacing(buttonSize),
       borderRadius: theme.spacing(buttonSize),
     },
-  };
+    fullWidth: {
+      flexGrow: 1,
+    },
+  });
 };

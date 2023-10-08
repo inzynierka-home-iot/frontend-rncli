@@ -37,5 +37,5 @@ export const Error = () => {
 export const Disabled = () => {
   const [text, setText] = useState('Input value');
 
-  return <Input editable={false} text={text} onChange={e => setText(e)} />;
+  return <Input disabled={true} text={text} onChange={e => setText(e)} />;
 };
