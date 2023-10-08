@@ -16,23 +16,19 @@ export const Input: FC<InputProps> = ({
   onChange,
 }) => {
   const [type, setType] = useState<InputProps['variant'] | 'active'>(variant);
+  const onFocus = useCallback(() => setType('active'), []);
+  const onBlur = useCallback(() => setType(variant), [variant]);
   const styles = useStyles(type, disabled, text);
-  const inputFocus = useCallback(
-    (inputType: InputProps['variant'] | 'active') => {
-      setType(inputType);
-    },
-    [type],
-  );
 
   return (
     <TextInput
       placeholder="Input placeholder"
       value={text}
       onChangeText={onChange}
-      onFocus={() => inputFocus('active')}
-      onBlur={() => inputFocus(variant)}
+      onFocus={onFocus}
+      onBlur={onBlur}
       editable={!disabled}
-      style={{ ...styles.input }}
+      style={styles.input}
     />
   );
 };

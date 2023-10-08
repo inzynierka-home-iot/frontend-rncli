@@ -18,14 +18,14 @@ export const AlertBanner: FC<AlertBannerProps> = ({
   variant = 'informative',
   onClose,
 }) => {
+  const styles = useStyles(variant);
+
   if (!isOpen) {
     return null;
   }
-  const styles = useStyles(variant);
-
   return (
-    <View style={{ ...styles.container }}>
-      <View style={{ ...styles.message }}>
+    <View style={styles.container}>
+      <View style={styles.message}>
         <Typography
           variant={'body-medium'}
           text={text}
@@ -33,13 +33,11 @@ export const AlertBanner: FC<AlertBannerProps> = ({
         />
       </View>
       <TouchableOpacity
-        style={{ ...styles.close }}
+        style={styles.close}
         activeOpacity={0.2}
         onPress={onClose}>
         <FontAwesomeIcon
-          style={{
-            ...styles.icon,
-          }}
+          style={styles.icon}
           icon={faXmark}
           color={theme.colors['text-invertedPrimary']}
         />

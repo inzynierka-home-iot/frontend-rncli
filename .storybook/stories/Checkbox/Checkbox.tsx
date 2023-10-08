@@ -19,7 +19,7 @@ export const Checkbox: FC<CheckboxProps> = ({
       isChecked={checked}
       onClick={onPress}
       checkBoxColor={useCheckboxColor(variant)}
-      style={{ ...styles.checkbox }}
+      style={styles.checkbox}
     />
   );
 };
