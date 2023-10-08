@@ -37,9 +37,9 @@ export const AlertBanner: FC<AlertBannerProps> = ({
         activeOpacity={0.2}
         onPress={onClose}>
         <FontAwesomeIcon
-          style={styles.icon}
           icon={faXmark}
           color={theme.colors['text-invertedPrimary']}
+          size={theme.spacing(8)}
         />
       </TouchableOpacity>
     </View>
@@ -64,7 +64,7 @@ const useStyles = (variant: AlertBannerProps['variant']) => {
       paddingHorizontal: theme.spacing(6),
       paddingVertical: theme.spacing(2),
       margin: theme.spacing(2),
-      borderRadius: theme.spacing(1),
+      borderRadius: theme.spacing(2),
     },
     message: {
       flex: 1,
@@ -72,10 +72,7 @@ const useStyles = (variant: AlertBannerProps['variant']) => {
     close: {
       justifyContent: 'center',
       alignItems: 'center',
-      padding: theme.spacing(3),
-    },
-    icon: {
-      transform: [{ scaleX: 1.8 }, { scaleY: 1.8 }],
+      padding: theme.spacing(2),
     },
   });
 };
