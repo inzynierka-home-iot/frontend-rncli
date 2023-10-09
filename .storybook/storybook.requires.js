@@ -53,6 +53,7 @@ const getStories = () => {
     './.storybook/stories/Input/Input.stories.tsx': require('./stories/Input/Input.stories'),
     './.storybook/stories/AlertBanner/AlertBanner.stories.tsx': require('./stories/AlertBanner/AlertBanner.stories'),
     './.storybook/stories/ListItem/ListItem.stories.tsx': require('./stories/ListItem/ListItem.stories'),
+    './.storybook/stories/Select/Select.stories.tsx': require('./stories/Select/Select.stories'),
   };
 };
 

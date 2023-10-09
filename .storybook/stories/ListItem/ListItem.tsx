@@ -53,6 +53,8 @@ const styles = StyleSheet.create({
   },
   leftPanel: {
     display: 'flex',
+    flex: 1,
+    flexWrap: 'wrap',
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
