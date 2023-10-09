@@ -2,7 +2,7 @@ import { hasErrorMessage } from './hasErrorMessage';
 import { mtproto } from './mtprotoClient';
 import { raiseTelegramError } from './raiseTelegramError';
 
-export const logIn2FA = async (
+export const logInCode = async (
   phone_number: string,
   phone_code_hash: string,
   phone_code: string,
@@ -23,8 +23,15 @@ export const logIn2FA = async (
     return res;
   } catch (e) {
     if (hasErrorMessage(e)) {
-      raiseTelegramError(e.error_message);
+      if (e.error_message === 'SESSION_PASSWORD_NEEDED') {
+        return '2fa';
+      } else {
+        raiseTelegramError(e.error_message);
+      }
     }
     return false;
   }
 };
+function confirm2FAPassword() {
+  throw new Error('Function not implemented.');
+}

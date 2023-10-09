@@ -8,6 +8,7 @@ import { ReadStoredValue } from '../../utils/EncryptedStorage';
 
 export type SignInData = {
   phoneNumber: string;
+  password: string;
   phoneCode: string;
 };
 
@@ -20,6 +21,7 @@ export const SignInForm = () => {
     defaultValues: {
       phoneNumber: '',
       phoneCode: '',
+      password: '',
     },
   });
 

@@ -4,8 +4,6 @@ import { Control, Controller, UseFormHandleSubmit } from 'react-hook-form';
 import { Button, TextInput } from 'react-native';
 import { SignInData } from './SignInForm';
 import { sendVerificationCode } from '../../utils';
-// import { showMessage, hideMessage } from 'react-native-flash-message';
-import { raiseTelegramError } from '../../utils/raiseTelegramError';
 
 type PhoneNumberFormProps = {
   control: Control<SignInData>;

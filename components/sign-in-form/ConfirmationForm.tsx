@@ -4,9 +4,10 @@ import { Control, Controller, UseFormHandleSubmit } from 'react-hook-form';
 import { Button, TextInput } from 'react-native';
 import { RootNavigationProps } from '../../App';
 import { SignInData } from './SignInForm';
-import { logIn2FA } from '../../utils/logIn2FA';
+import { logInCode } from '../../utils/logInCode';
 import { resolveBotID } from '../../utils/resolveBotID';
 import { ReadStoredValue, SaveStoredValue } from '../../utils/EncryptedStorage';
+import { Password2FAForm } from './Password2FAFom';
 
 type ConfirmationFormProps = {
   control: Control<SignInData>;
@@ -22,12 +23,16 @@ export const ConfirmationForm = ({
   const navigation = useNavigation<RootNavigationProps>();
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [is2FANeeded, setis2FANeeded] = useState(false);
 
-  const onConfirm = async ({ phoneNumber, phoneCode }: SignInData) => {
+  const onCode = async ({ phoneNumber, phoneCode }: SignInData) => {
     setIsButtonDisabled(true);
-    const res = await logIn2FA(phoneNumber, phoneCodeHash, phoneCode);
+    const res = await logInCode(phoneNumber, phoneCodeHash, phoneCode);
     setIsButtonDisabled(false);
-    if (res._ == 'auth.authorization') {
+
+    if (res === '2fa') {
+      setis2FANeeded(true);
+    } else if (res._ === 'auth.authorization') {
       const botAccessHash = await ReadStoredValue(
         'bot_conversation_access_hash',
       );
@@ -42,22 +47,28 @@ export const ConfirmationForm = ({
 
   return (
     <>
-      <Controller
-        control={control}
-        name="phoneCode"
-        render={({ field: { onChange, value } }) => (
-          <TextInput
-            placeholder="Telegram code you received from app"
-            onChangeText={onChange}
-            value={value}
+      {is2FANeeded ? (
+        <Password2FAForm control={control} handleSubmit={handleSubmit} />
+      ) : (
+        <>
+          <Controller
+            control={control}
+            name="phoneCode"
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                placeholder="Telegram code you received from app"
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
           />
-        )}
-      />
-      <Button
-        title="confirm your account"
-        disabled={isButtonDisabled}
-        onPress={handleSubmit(onConfirm)}
-      />
+          <Button
+            title="confirm your account"
+            disabled={isButtonDisabled}
+            onPress={handleSubmit(onCode)}
+          />
+        </>
+      )}
     </>
   );
 };
