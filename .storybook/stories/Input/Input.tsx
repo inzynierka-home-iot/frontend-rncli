@@ -51,6 +51,7 @@ const useStyles = (
     : text != ''
     ? 'text-primary'
     : 'text-secondary';
+  const elevation = !disabled ? 2 : 1;
 
   return StyleSheet.create({
     input: {
@@ -60,7 +61,7 @@ const useStyles = (
       margin: theme.spacing(2),
       ...theme.typography['body-medium'],
       borderWidth: 1,
-      elevation: 2,
+      elevation: elevation,
       borderRadius: theme.spacing(1),
       paddingHorizontal: theme.spacing(4),
       paddingVertical: theme.spacing(2),
