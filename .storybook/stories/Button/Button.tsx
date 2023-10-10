@@ -52,14 +52,13 @@ const useStyles = (
     container: {
       justifyContent: 'center',
       alignItems: 'center',
-      margin: theme.spacing(1),
       backgroundColor: theme.colors[buttonColor],
       paddingHorizontal: theme.spacing(buttonSize * 2),
       paddingVertical: theme.spacing(buttonSize),
       borderRadius: theme.spacing(buttonSize),
     },
     fullWidth: {
-      flexGrow: 1,
+      width: '100%',
     },
   });
 };

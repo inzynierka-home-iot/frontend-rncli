@@ -4,26 +4,33 @@ import { theme } from '../../theme';
 
 type InputProps = {
   text: string;
+  keyboardType?: 'default' | 'numeric';
+  placeholder?: string;
   variant?: 'default' | 'error';
   disabled?: boolean;
+  centerText?: boolean;
   onChange: (e: string) => void;
 };
 
 export const Input: FC<InputProps> = ({
   text,
+  keyboardType = 'default',
+  placeholder = 'Placeholder',
   variant = 'default',
   disabled = false,
+  centerText = false,
   onChange,
 }) => {
   const [type, setType] = useState<InputProps['variant'] | 'active'>(variant);
   const onFocus = useCallback(() => setType('active'), []);
   const onBlur = useCallback(() => setType(variant), [variant]);
-  const styles = useStyles(type, disabled, text);
+  const styles = useStyles(type, disabled, text, centerText);
 
   return (
     <TextInput
-      placeholder="Input placeholder"
+      placeholder={placeholder}
       value={text}
+      keyboardType={keyboardType}
       onChangeText={onChange}
       onFocus={onFocus}
       onBlur={onBlur}
@@ -37,6 +44,7 @@ const useStyles = (
   type: InputProps['variant'] | 'active',
   disabled: InputProps['disabled'],
   text: InputProps['text'],
+  centerText: InputProps['centerText'],
 ) => {
   const borderColor =
     type == 'default'
@@ -52,20 +60,21 @@ const useStyles = (
     ? 'text-primary'
     : 'text-secondary';
   const elevation = !disabled ? 2 : 1;
+  const textAlign = centerText ? 'center' : 'left';
 
   return StyleSheet.create({
     input: {
       color: theme.colors[textColor],
       borderColor: theme.colors[borderColor],
-      flex: 1,
-      margin: theme.spacing(2),
+      width: '100%',
       ...theme.typography['body-medium'],
       borderWidth: 1,
-      elevation: elevation,
+      elevation,
       borderRadius: theme.spacing(1),
       paddingHorizontal: theme.spacing(4),
       paddingVertical: theme.spacing(2),
       backgroundColor: theme.colors['background-primary'],
+      textAlign,
     },
   });
 };

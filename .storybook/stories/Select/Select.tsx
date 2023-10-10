@@ -11,6 +11,7 @@ type SelectProps = {
   variant?: 'default' | 'error';
   disabled?: boolean;
   index: number;
+  defaultText?: string;
   onSelect: (index: number) => void;
 };
 
@@ -19,14 +20,21 @@ export const Select: FC<SelectProps> = ({
   variant = 'default',
   disabled = false,
   index,
+  defaultText = 'Select',
   onSelect,
 }) => {
   const [type, setType] = useState<SelectProps['variant'] | 'active'>(variant);
   const onFocus = useCallback(() => setType('active'), []);
   const onBlur = useCallback(() => setType(variant), [variant]);
   const styles = useStyles(type, disabled);
-  const textColor = !disabled ? 'text-primary' : 'background-subtle';
+  const textColor =
+    index == -1
+      ? 'text-secondary'
+      : !disabled
+      ? 'text-primary'
+      : 'background-subtle';
   const expandColor = !disabled ? 'text-secondary' : 'background-subtle';
+  const text = index != -1 ? selectData[index].display : defaultText;
 
   return (
     <SelectDropdown
@@ -38,11 +46,7 @@ export const Select: FC<SelectProps> = ({
       buttonStyle={styles.container}
       renderCustomizedButtonChild={() => {
         return (
-          <Typography
-            variant={'body-large'}
-            text={selectData[index].display}
-            color={textColor}
-          />
+          <Typography variant={'body-large'} text={text} color={textColor} />
         );
       }}
       renderDropdownIcon={() => {
@@ -74,13 +78,12 @@ const useStyles = (
 
   return StyleSheet.create({
     container: {
-      flex: 1,
-      margin: theme.spacing(2),
+      width: '100%',
       backgroundColor: theme.colors['background-primary'],
       borderRadius: theme.spacing(1),
       borderWidth: 1,
       borderColor: theme.colors[borderColor],
-      elevation: elevation,
+      elevation,
       paddingHorizontal: theme.spacing(2),
     },
   });

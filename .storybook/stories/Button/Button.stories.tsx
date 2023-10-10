@@ -15,7 +15,6 @@ const MyButtonMeta = {
           alignItems: 'center',
           justifyContent: 'center',
           flex: 1,
-          flexDirection: 'row',
         }}>
         <Story />
       </View>
