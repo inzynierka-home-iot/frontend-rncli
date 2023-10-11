@@ -1,4 +1,4 @@
-import React, { StyleSheet, View } from 'react-native';
+import React, { Keyboard, StyleSheet, View } from 'react-native';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Control, Controller, UseFormHandleSubmit } from 'react-hook-form';
 // import { Button } from 'react-native';
@@ -32,6 +32,7 @@ export const PhoneNumberForm = ({
   >([{ display: 'Poland', value: '48' }]);
 
   const onLogin = async ({ diallingCode, phoneNumber }: SignInData) => {
+    Keyboard.dismiss();
     setIsButtonDisabled(true);
     const res = await sendVerificationCode('+' + diallingCode + phoneNumber);
     setIsButtonDisabled(false);
@@ -78,7 +79,7 @@ export const PhoneNumberForm = ({
                 <Input
                   text={value}
                   keyboardType="numeric"
-                  placeholder="Code"
+                  placeholder="Kod"
                   centerText={true}
                   onChange={onChange}
                 />
