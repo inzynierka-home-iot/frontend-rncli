@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { theme } from '../../theme';
 import { Typography } from '../Typography/Typography';
 
-type ButtonProps = {
+export type ButtonProps = {
   text: string;
   onPress: () => void;
   size?: 'small' | 'medium' | 'large';

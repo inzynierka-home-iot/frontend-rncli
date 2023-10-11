@@ -11,6 +11,7 @@ import { Typography } from '../../.storybook/stories/Typography/Typography';
 import { Input } from '../../.storybook/stories/Input/Input';
 import { theme } from '../../.storybook/theme';
 import { Button } from '../../.storybook/stories/Button/Button';
+import { Navbar } from '../../.storybook/stories/Navbar/Navbar';
 
 type ConfirmationFormProps = {
   control: Control<SignInData>;
@@ -26,9 +27,12 @@ export const ConfirmationForm = ({
   const navigation = useNavigation<RootNavigationProps>();
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [codeVariant, setCodeVariant] = useState<'default' | 'error'>(
+    'default',
+  );
 
   const onConfirm = async ({ phoneNumber, phoneCode }: SignInData) => {
-    Keyboard.dismiss();
+    setCodeVariant('default');
     setIsButtonDisabled(true);
     const res = await logIn2FA(phoneNumber, phoneCodeHash, phoneCode);
     setIsButtonDisabled(false);
@@ -39,41 +43,58 @@ export const ConfirmationForm = ({
       const botUserID = await ReadStoredValue('bot_user_id');
       if (!botAccessHash || !botUserID) await resolveBotID();
       navigation.navigate('Telegram');
+    } else {
+      setCodeVariant('error');
     }
+    Keyboard.dismiss();
   };
 
   return (
     <View style={styles.container}>
-      <Typography
-        variant={'body-small'}
-        text={
-          'Na Twoje konto w serwisie telegram został wysłany kod potwierdzający, podaj go aby kontynuować'
-        }
-        color="text-secondary"
+      <Navbar
+        text={'Zaloguj się'}
+        buttons={[
+          {
+            text: 'Wyloguj',
+            variant: 'error',
+            size: 'small',
+            onPress: () => {},
+          },
+        ]}
       />
-      <View style={styles.selectData}>
-        <View style={styles.inputs}>
-          <Controller
-            control={control}
-            name="phoneCode"
-            render={({ field: { onChange, value } }) => (
-              <Input
-                text={value}
-                keyboardType="numeric"
-                placeholder="Kod potwierdzający"
-                onChange={onChange}
-              />
-            )}
+      <View style={styles.content}>
+        <Typography
+          variant={'body-small'}
+          text={
+            'Na Twoje konto w serwisie telegram został wysłany kod potwierdzający, podaj go aby kontynuować'
+          }
+          color="text-secondary"
+        />
+        <View style={styles.provideData}>
+          <View style={styles.inputs}>
+            <Controller
+              control={control}
+              name="phoneCode"
+              render={({ field: { onChange, value } }) => (
+                <Input
+                  text={value}
+                  variant={codeVariant}
+                  keyboardType="numeric"
+                  placeholder="Kod potwierdzający"
+                  onChange={onChange}
+                />
+              )}
+            />
+          </View>
+        </View>
+        <View style={styles.buttonContainer}>
+          <Button
+            text={'Kontynuuj'}
+            disabled={isButtonDisabled}
+            hasFullWidth={true}
+            onPress={handleSubmit(onConfirm)}
           />
         </View>
-      </View>
-      <View style={styles.buttonContainer}>
-        <Button
-          text={'Kontynuuj'}
-          disabled={isButtonDisabled}
-          hasFullWidth={true}
-          onPress={handleSubmit(onConfirm)}
-        />
       </View>
     </View>
   );
@@ -82,15 +103,19 @@ export const ConfirmationForm = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: theme.spacing(7),
-    gap: theme.spacing(12),
+    gap: theme.spacing(5),
   },
-  selectData: {
+  content: {
+    flex: 1,
+    paddingHorizontal: theme.spacing(7),
+    gap: theme.spacing(5),
+  },
+  provideData: {
     gap: theme.spacing(6),
   },
   inputs: {
     flexDirection: 'row',
-    gap: theme.spacing(6),
+    gap: theme.spacing(4),
   },
   buttonContainer: {
     flexDirection: 'row',
