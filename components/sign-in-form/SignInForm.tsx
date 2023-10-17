@@ -35,7 +35,7 @@ export const SignInForm = () => {
     (async () => {
       const resLogging = await ReadStoredValue('4authKey');
       if (resLogging) {
-        navigation.navigate('Telegram');
+        navigation.navigate('DeviceList');
       }
     })();
   }, [navigation]);

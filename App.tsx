@@ -7,10 +7,12 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { SignInForm, TelegramForm } from './components';
 import { useEffect, useState } from 'react';
 import { connect } from './utils';
+import { DeviceList } from './views/DeviceList';
 
 export type RootStackParamList = {
   SignIn: undefined;
   Telegram: undefined;
+  DeviceList: undefined;
 };
 
 export type RootNavigationProps = StackNavigationProp<RootStackParamList>;
@@ -38,6 +40,7 @@ export default function App() {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="SignIn" component={SignInForm} />
           <Stack.Screen name="Telegram" component={TelegramForm} />
+          <Stack.Screen name="DeviceList" component={DeviceList} />
         </Stack.Navigator>
       ) : isError ? (
         <Text>Error</Text>

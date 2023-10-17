@@ -52,7 +52,7 @@ export const ConfirmationForm = ({
       if (!botAccessHash || !botUserID) {
         await resolveBotID();
       }
-      navigation.navigate('Telegram');
+      navigation.navigate('DeviceList');
     } else {
       setCodeVariant('error');
     }

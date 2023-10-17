@@ -3,12 +3,16 @@ import { Controller, useForm } from 'react-hook-form';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import { listenForMessages, sendIoTMessage } from '../../utils';
 import { ReadStoredValue } from '../../utils/EncryptedStorage';
+import { Navbar } from '../../.storybook/stories/Navbar/Navbar';
+import { useNavigation } from '@react-navigation/native';
+import { RootNavigationProps } from '../../App';
 
 type TelegramFormData = {
   telegramMessage: string;
 };
 
 export const TelegramForm = () => {
+  const navigation = useNavigation<RootNavigationProps>();
   const [receivedMessage, setReceivedMessage] = useState('');
   const [botUserID, setBotUserID] = useState('');
   const [botAccessHash, setBotAccessHash] = useState('');
@@ -45,6 +49,19 @@ export const TelegramForm = () => {
 
   return (
     <View>
+      <Navbar
+        text={'Lista urządzeń'}
+        buttons={[
+          {
+            text: 'Wyloguj',
+            variant: 'error',
+            size: 'small',
+            onPress: () => {
+              navigation.navigate('DeviceList');
+            },
+          },
+        ]}
+      />
       <Controller
         control={control}
         name="telegramMessage"
