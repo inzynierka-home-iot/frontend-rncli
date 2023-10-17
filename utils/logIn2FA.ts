@@ -18,7 +18,7 @@ export const logIn2FA = async (
       },
     );
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return false;
   }
 };
