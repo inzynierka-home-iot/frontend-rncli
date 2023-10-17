@@ -8,7 +8,9 @@ export const listenForMessages = async (
   mtproto.updates.on(
     'updateShortMessage',
     (updateInfo: { message: string; user_id: string }) => {
-      if (updateInfo.user_id == user_id) setReceivedMessage(updateInfo.message);
+      if (updateInfo.user_id == user_id) {
+        setReceivedMessage(updateInfo.message);
+      }
     },
   );
 };
