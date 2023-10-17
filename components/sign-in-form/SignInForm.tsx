@@ -25,6 +25,7 @@ export const SignInForm = () => {
 
   const { control, handleSubmit } = useForm<SignInData>({
     defaultValues: {
+      diallingCode: '',
       phoneNumber: '',
       phoneCode: '',
     },

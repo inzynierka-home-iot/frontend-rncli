@@ -31,17 +31,27 @@ export const ConfirmationForm = ({
     'default',
   );
 
-  const onConfirm = async ({ phoneNumber, phoneCode }: SignInData) => {
+  const onConfirm = async ({
+    diallingCode,
+    phoneNumber,
+    phoneCode,
+  }: SignInData) => {
     setCodeVariant('default');
     setIsButtonDisabled(true);
-    const res = await logIn2FA(phoneNumber, phoneCodeHash, phoneCode);
+    const res = await logIn2FA(
+      '+' + diallingCode + phoneNumber,
+      phoneCodeHash,
+      phoneCode,
+    );
     setIsButtonDisabled(false);
     if (res._ == 'auth.authorization') {
       const botAccessHash = await ReadStoredValue(
         'bot_conversation_access_hash',
       );
       const botUserID = await ReadStoredValue('bot_user_id');
-      if (!botAccessHash || !botUserID) await resolveBotID();
+      if (!botAccessHash || !botUserID) {
+        await resolveBotID();
+      }
       navigation.navigate('Telegram');
     } else {
       setCodeVariant('error');
