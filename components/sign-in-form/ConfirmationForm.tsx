@@ -58,7 +58,7 @@ export const ConfirmationForm = ({
         await resolveBotID();
       }
       SaveStoredValue('SignedIn', 'true');
-      navigation.replace('Telegram');
+      navigation.navigate('DeviceList');
     } else {
       setCodeVariant('error');
     }

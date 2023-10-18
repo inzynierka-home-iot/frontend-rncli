@@ -6,6 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { SignInForm, TelegramForm } from './components';
 import { useEffect, useState } from 'react';
 import { connect } from './utils';
+import { DeviceList } from './views/DeviceList';
 import FlashMessage from 'react-native-flash-message';
 import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
@@ -14,6 +15,7 @@ import { store } from './redux/store';
 export type RootStackParamList = {
   SignIn: undefined;
   Telegram: undefined;
+  DeviceList: undefined;
 };
 
 export type RootNavigationProps = StackNavigationProp<RootStackParamList>;
@@ -40,19 +42,9 @@ export default function App() {
       <NavigationContainer>
         {isConnected ? (
           <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen
-              name="SignIn"
-              component={SignInForm}
-              options={{ title: 'Sign in', headerBackVisible: false }}
-            />
-            <Stack.Screen
-              name="Telegram"
-              component={TelegramForm}
-              options={{
-                title: 'Dashboard',
-                headerBackVisible: false,
-              }}
-            />
+            <Stack.Screen name="DeviceList" component={DeviceList} />
+            <Stack.Screen name="SignIn" component={SignInForm} />
+            <Stack.Screen name="Telegram" component={TelegramForm} />
           </Stack.Navigator>
         ) : isError ? (
           <Text>Error</Text>

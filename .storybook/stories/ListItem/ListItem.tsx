@@ -41,12 +41,10 @@ export const ListItem: FC<ListItemProps> = ({ text, icon, onPress }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: theme.colors['background-neutral'],
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    margin: theme.spacing(2),
     padding: theme.spacing(5),
     borderRadius: theme.spacing(2),
     elevation: 2,

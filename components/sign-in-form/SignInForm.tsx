@@ -37,7 +37,7 @@ export const SignInForm = () => {
     (async () => {
       const resLogging = await ReadStoredValue('SignedIn');
       if (resLogging) {
-        navigation.replace('Telegram');
+        navigation.navigate('DeviceList');
       }
     })();
   }, [navigation]);

@@ -1,7 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Navbar } from './Navbar';
-import { Button } from '../Button/Button';
 
 const MyNavbarMeta = {
   title: 'Navbar',

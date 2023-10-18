@@ -1,5 +1,6 @@
 import { setDevices } from '../redux/devicesSlice';
 import { AppDispatch } from '../redux/store';
+import { Message } from '../types';
 import { mtproto } from './mtprotoClient';
 
 export const listenForMessages = async (
@@ -11,9 +12,11 @@ export const listenForMessages = async (
     'updateShortMessage',
     (updateInfo: { message: string; user_id: string }) => {
       if (updateInfo.user_id === user_id) {
-        setReceivedMessage(updateInfo.message);
-        // TODO set devices when we get proper response
-        dispatch(setDevices([]));
+        const message: Message = JSON.parse(updateInfo.message);
+        setReceivedMessage(message.res);
+        if (message.req == '*/*/*/get') {
+          dispatch(setDevices(message.res));
+        }
       }
     },
   );
