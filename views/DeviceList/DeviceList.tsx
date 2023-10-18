@@ -56,8 +56,8 @@ export const DeviceList = () => {
         style={styles.content}
         data={devices}
         renderItem={({ item: device }) => createDeviceElement(device)}
-        keyExtractor={device => createDeviceKey(device)}
-        ItemSeparatorComponent={() => createSeparatingElement()}
+        keyExtractor={createDeviceKey}
+        ItemSeparatorComponent={createSeparatingElement}
       />
     </View>
   );

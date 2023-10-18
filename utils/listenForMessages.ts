@@ -10,12 +10,12 @@ export const listenForMessages = async (
 ) => {
   mtproto.updates.on(
     'updateShortMessage',
-    (updateInfo: { message: Message; user_id: string }) => {
+    (updateInfo: { message: string; user_id: string }) => {
       if (updateInfo.user_id === user_id) {
-        setReceivedMessage(updateInfo.message.res);
-        // TODO set devices when we get proper response
-        if (updateInfo.message.req == '*/*/*/get') {
-          dispatch(setDevices(updateInfo.message.res));
+        const message: Message = JSON.parse(updateInfo.message);
+        setReceivedMessage(message.res);
+        if (message.req == '*/*/*/get') {
+          dispatch(setDevices(message.res));
         }
       }
     },
