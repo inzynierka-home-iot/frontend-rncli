@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { Control, Controller, UseFormHandleSubmit } from 'react-hook-form';
 import { Button, TextInput } from 'react-native';
 import { SignInData } from './SignInForm';
-import { sendVerificationCode } from '../../utils';
+import { confirm2FAPassword, sendVerificationCode } from '../../utils';
 
 type PhoneNumberFormProps = {
   control: Control<SignInData>;

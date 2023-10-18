@@ -32,6 +32,3 @@ export const logInCode = async (
     return false;
   }
 };
-function confirm2FAPassword() {
-  throw new Error('Function not implemented.');
-}
