@@ -1,13 +1,15 @@
 import 'stream-browserify';
 import 'react-native-quick-crypto';
 import React, { Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { SignInForm, TelegramForm } from './components';
 import { useEffect, useState } from 'react';
 import { connect } from './utils';
 import { DeviceList } from './views/DeviceList';
+import { Provider } from 'react-redux';
+import { NavigationContainer } from '@react-navigation/native';
+import { store } from './redux/store';
 
 export type RootStackParamList = {
   SignIn: undefined;
@@ -35,19 +37,20 @@ export default function App() {
   }, []);
 
   return (
-    <NavigationContainer>
-      {isConnected ? (
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="SignIn" component={SignInForm} />
-          <Stack.Screen name="Telegram" component={TelegramForm} />
-          <Stack.Screen name="DeviceList" component={DeviceList} />
-        </Stack.Navigator>
-      ) : isError ? (
-        <Text>Error</Text>
-      ) : (
-        <Text>Loading</Text>
-      )}
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        {isConnected ? (
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="SignIn" component={SignInForm} />
+            <Stack.Screen name="Telegram" component={TelegramForm} />
+          </Stack.Navigator>
+        ) : isError ? (
+          <Text>Error</Text>
+        ) : (
+          <Text>Loading</Text>
+        )}
+      </NavigationContainer>
+    </Provider>
   );
 }
 

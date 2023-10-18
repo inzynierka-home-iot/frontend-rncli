@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useAppDispatch } from '../../redux/hooks';
 import { listenForMessages, sendIoTMessage } from '../../utils';
 import { ReadStoredValue } from '../../utils/EncryptedStorage';
 import { Navbar } from '../../.storybook/stories/Navbar/Navbar';
@@ -17,6 +18,8 @@ export const TelegramForm = () => {
   const [botUserID, setBotUserID] = useState('');
   const [botAccessHash, setBotAccessHash] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+  const dispatch = useAppDispatch();
 
   const { control, handleSubmit } = useForm<TelegramFormData>({
     defaultValues: {
@@ -44,8 +47,8 @@ export const TelegramForm = () => {
   }, []);
 
   useEffect(() => {
-    listenForMessages(setReceivedMessage, botUserID);
-  }, [botUserID]);
+    listenForMessages(setReceivedMessage, botUserID, dispatch);
+  }, [botUserID, dispatch]);
 
   return (
     <View>
