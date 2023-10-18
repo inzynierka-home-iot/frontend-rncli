@@ -9,12 +9,22 @@ export const SaveStoredValue = async (key: string, value: string) => {
 };
 
 export const ReadStoredValue = async (key: string) => {
-  return await EncryptedStorage.getItem(key);
+  const res = await EncryptedStorage.getItem(key);
+
+  return res;
 };
 
 export const RemoveStoredValue = async (key: string) => {
   try {
     await EncryptedStorage.removeItem(key);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const ClearStorage = async () => {
+  try {
+    await EncryptedStorage.clear();
   } catch (error) {
     console.log(error);
   }

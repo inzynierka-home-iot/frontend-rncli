@@ -1,17 +1,32 @@
+import { ReadStoredValue } from './EncryptedStorage';
+import { hasErrorMessage } from './hasErrorMessage';
 import { mtproto } from './mtprotoClient';
+import { raiseTelegramError } from './raiseTelegramError';
 
 export const sendVerificationCode = async (
   phone_number: string,
-): Promise<false | { phone_code_hash: string }> => {
+): Promise<{ success: boolean; res: any; }> => {
   try {
-    return await mtproto.call('auth.sendCode', {
+    const storedTokens = await ReadStoredValue('FutureAuthTokens');
+    const logout_tokens = storedTokens ? JSON.parse(storedTokens) : [];
+    let tokens: any[][] = [];
+    logout_tokens.forEach((arr: any[]) => {
+      tokens.push(Object.values(arr));
+    });
+    const res = await mtproto.call('auth.sendCode', {
       phone_number,
       settings: {
         _: 'codeSettings',
+        flags: 6,
+        logout_tokens: tokens,
       },
     });
+    return { success: true, res: res };
   } catch (e) {
-    console.error(e);
-    return false;
+    if (hasErrorMessage(e)) {
+      raiseTelegramError(e.error_message);
+    }
+
+    return { success: false, res: {} };
   }
 };

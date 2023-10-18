@@ -4,9 +4,10 @@ import { Control, Controller, UseFormHandleSubmit } from 'react-hook-form';
 import { Keyboard, StyleSheet, View } from 'react-native';
 import { RootNavigationProps } from '../../App';
 import { SignInData } from './SignInForm';
-import { logIn2FA } from '../../utils/logIn2FA';
+import { logInCode } from '../../utils/logInCode';
 import { resolveBotID } from '../../utils/resolveBotID';
-import { ReadStoredValue } from '../../utils/EncryptedStorage';
+import { ReadStoredValue, SaveStoredValue } from '../../utils/EncryptedStorage';
+import { Password2FAForm } from './Password2FAFom';
 import { Typography } from '../../.storybook/stories/Typography/Typography';
 import { Input } from '../../.storybook/stories/Input/Input';
 import { theme } from '../../.storybook/theme';
@@ -30,21 +31,25 @@ export const ConfirmationForm = ({
   const [codeVariant, setCodeVariant] = useState<'default' | 'error'>(
     'default',
   );
+  const [is2FANeeded, setis2FANeeded] = useState(false);
 
-  const onConfirm = async ({
+  const onCode = async ({
     diallingCode,
     phoneNumber,
     phoneCode,
   }: SignInData) => {
     setCodeVariant('default');
     setIsButtonDisabled(true);
-    const res = await logIn2FA(
+    const res = await logInCode(
       '+' + diallingCode + phoneNumber,
       phoneCodeHash,
       phoneCode,
     );
     setIsButtonDisabled(false);
-    if (res._ == 'auth.authorization') {
+
+    if (res === '2fa') {
+      setis2FANeeded(true);
+    } else if (res._ === 'auth.authorization') {
       const botAccessHash = await ReadStoredValue(
         'bot_conversation_access_hash',
       );
@@ -52,7 +57,8 @@ export const ConfirmationForm = ({
       if (!botAccessHash || !botUserID) {
         await resolveBotID();
       }
-      navigation.navigate('Telegram');
+      SaveStoredValue('SignedIn', 'true');
+      navigation.replace('Telegram');
     } else {
       setCodeVariant('error');
     }
@@ -68,44 +74,48 @@ export const ConfirmationForm = ({
             text: 'Wyloguj',
             variant: 'error',
             size: 'small',
-            onPress: () => {},
+            onPress: () => { },
           },
         ]}
       />
-      <View style={styles.content}>
-        <Typography
-          variant={'body-small'}
-          text={
-            'Na Twoje konto w serwisie telegram został wysłany kod potwierdzający, podaj go aby kontynuować'
-          }
-          color="text-secondary"
-        />
-        <View style={styles.provideData}>
-          <View style={styles.inputs}>
-            <Controller
-              control={control}
-              name="phoneCode"
-              render={({ field: { onChange, value } }) => (
-                <Input
-                  text={value}
-                  variant={codeVariant}
-                  keyboardType="numeric"
-                  placeholder="Kod potwierdzający"
-                  onChange={onChange}
-                />
-              )}
+      {is2FANeeded ? (
+        <Password2FAForm control={control} handleSubmit={handleSubmit} />
+      ) : (
+        <View style={styles.content}>
+          <Typography
+            variant={'body-small'}
+            text={
+              'Na Twoje konto w serwisie telegram został wysłany kod potwierdzający, podaj go aby kontynuować'
+            }
+            color="text-secondary"
+          />
+          <View style={styles.provideData}>
+            <View style={styles.inputs}>
+              <Controller
+                control={control}
+                name="phoneCode"
+                render={({ field: { onChange, value } }) => (
+                  <Input
+                    text={value}
+                    variant={codeVariant}
+                    keyboardType="numeric"
+                    placeholder="Kod potwierdzający"
+                    onChange={onChange}
+                  />
+                )}
+              />
+            </View>
+          </View>
+          <View style={styles.buttonContainer}>
+            <Button
+              text={'Kontynuuj'}
+              disabled={isButtonDisabled}
+              hasFullWidth={true}
+              onPress={handleSubmit(onCode)}
             />
           </View>
         </View>
-        <View style={styles.buttonContainer}>
-          <Button
-            text={'Kontynuuj'}
-            disabled={isButtonDisabled}
-            hasFullWidth={true}
-            onPress={handleSubmit(onConfirm)}
-          />
-        </View>
-      </View>
+      )}
     </View>
   );
 };

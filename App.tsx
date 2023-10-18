@@ -6,6 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { SignInForm, TelegramForm } from './components';
 import { useEffect, useState } from 'react';
 import { connect } from './utils';
+import FlashMessage from 'react-native-flash-message';
 import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { store } from './redux/store';
@@ -39,14 +40,26 @@ export default function App() {
       <NavigationContainer>
         {isConnected ? (
           <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="SignIn" component={SignInForm} />
-            <Stack.Screen name="Telegram" component={TelegramForm} />
+            <Stack.Screen
+              name="SignIn"
+              component={SignInForm}
+              options={{ title: 'Sign in', headerBackVisible: false }}
+            />
+            <Stack.Screen
+              name="Telegram"
+              component={TelegramForm}
+              options={{
+                title: 'Dashboard',
+                headerBackVisible: false,
+              }}
+            />
           </Stack.Navigator>
         ) : isError ? (
           <Text>Error</Text>
         ) : (
           <Text>Loading</Text>
         )}
+        <FlashMessage position="top" />
       </NavigationContainer>
     </Provider>
   );

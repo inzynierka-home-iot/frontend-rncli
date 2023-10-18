@@ -4,6 +4,7 @@ import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useAppDispatch } from '../../redux/hooks';
 import { listenForMessages, sendIoTMessage } from '../../utils';
 import { ReadStoredValue } from '../../utils/EncryptedStorage';
+import { LogoutButton } from '../navigation';
 
 type TelegramFormData = {
   telegramMessage: string;
@@ -16,7 +17,6 @@ export const TelegramForm = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const dispatch = useAppDispatch();
-
   const { control, handleSubmit } = useForm<TelegramFormData>({
     defaultValues: {
       telegramMessage: '',
@@ -65,6 +65,7 @@ export const TelegramForm = () => {
         disabled={isButtonDisabled}
         onPress={handleSubmit(onSubmit)}
       />
+      <LogoutButton />
       <Text style={styles.message}>Message:</Text>
       <Text style={styles.message}>{receivedMessage}</Text>
     </View>
