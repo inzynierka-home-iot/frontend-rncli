@@ -5,8 +5,15 @@ import { PhoneNumberForm } from './PhoneNumberForm';
 import { RootNavigationProps } from '../../App';
 import { useNavigation } from '@react-navigation/native';
 import { ReadStoredValue } from '../../utils/EncryptedStorage';
+import {
+  Keyboard,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 
 export type SignInData = {
+  diallingCode: string;
   phoneNumber: string;
   password: string;
   phoneCode: string;
@@ -19,6 +26,7 @@ export const SignInForm = () => {
 
   const { control, handleSubmit } = useForm<SignInData>({
     defaultValues: {
+      diallingCode: '',
       phoneNumber: '',
       phoneCode: '',
       password: '',
@@ -35,20 +43,28 @@ export const SignInForm = () => {
   }, [navigation]);
 
   return (
-    <>
-      {phoneCodeHash ? (
-        <ConfirmationForm
-          control={control}
-          handleSubmit={handleSubmit}
-          phoneCodeHash={phoneCodeHash}
-        />
-      ) : (
-        <PhoneNumberForm
-          control={control}
-          handleSubmit={handleSubmit}
-          setPhoneCodeHash={setPhoneCodeHash}
-        />
-      )}
-    </>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.container}>
+        {phoneCodeHash ? (
+          <ConfirmationForm
+            control={control}
+            handleSubmit={handleSubmit}
+            phoneCodeHash={phoneCodeHash}
+          />
+        ) : (
+          <PhoneNumberForm
+            control={control}
+            handleSubmit={handleSubmit}
+            setPhoneCodeHash={setPhoneCodeHash}
+          />
+        )}
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

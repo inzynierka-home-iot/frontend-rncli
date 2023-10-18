@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
-import {
-  listenForMessages,
-  logoutFromTelegram,
-  sendIoTMessage,
-} from '../../utils';
+import { useAppDispatch } from '../../redux/hooks';
+import { listenForMessages, sendIoTMessage } from '../../utils';
 import { ReadStoredValue } from '../../utils/EncryptedStorage';
-import { useNavigation } from '@react-navigation/native';
-import { RootNavigationProps } from '../../App';
 import { LogoutButton } from '../navigation';
 
 type TelegramFormData = {
@@ -20,7 +15,8 @@ export const TelegramForm = () => {
   const [botUserID, setBotUserID] = useState('');
   const [botAccessHash, setBotAccessHash] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  const navigation = useNavigation<RootNavigationProps>();
+
+  const dispatch = useAppDispatch();
   const { control, handleSubmit } = useForm<TelegramFormData>({
     defaultValues: {
       telegramMessage: '',
@@ -47,8 +43,8 @@ export const TelegramForm = () => {
   }, []);
 
   useEffect(() => {
-    listenForMessages(setReceivedMessage, botUserID);
-  }, [botUserID]);
+    listenForMessages(setReceivedMessage, botUserID, dispatch);
+  }, [botUserID, dispatch]);
 
   return (
     <View>
