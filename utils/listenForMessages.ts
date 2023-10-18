@@ -1,5 +1,6 @@
 import { setDevices } from '../redux/devicesSlice';
 import { AppDispatch } from '../redux/store';
+import { Message } from '../types';
 import { mtproto } from './mtprotoClient';
 
 export const listenForMessages = async (
@@ -9,11 +10,13 @@ export const listenForMessages = async (
 ) => {
   mtproto.updates.on(
     'updateShortMessage',
-    (updateInfo: { message: string; user_id: string }) => {
+    (updateInfo: { message: Message; user_id: string }) => {
       if (updateInfo.user_id === user_id) {
-        setReceivedMessage(updateInfo.message);
+        setReceivedMessage(updateInfo.message.res);
         // TODO set devices when we get proper response
-        dispatch(setDevices([]));
+        if (updateInfo.message.req == '*/*/*/get') {
+          dispatch(setDevices(updateInfo.message.res));
+        }
       }
     },
   );
