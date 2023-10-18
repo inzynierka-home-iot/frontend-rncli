@@ -39,9 +39,9 @@ export const DeviceList = () => {
         keyExtractor={device =>
           device.location + '/' + device.node + '/' + device.id
         }
-        ItemSeparatorComponent={() => {
-          return <View style={{ marginVertical: theme.spacing(2) }}></View>;
-        }}
+        ItemSeparatorComponent={() => (
+          <View style={{ marginVertical: theme.spacing(2) }} />
+        )}
       />
     </View>
   );
