@@ -7,6 +7,7 @@ import { ReadStoredValue } from '../../utils/EncryptedStorage';
 import { Navbar } from '../../.storybook/stories/Navbar/Navbar';
 import { useNavigation } from '@react-navigation/native';
 import { RootNavigationProps } from '../../App';
+import { LogoutButton } from '../navigation';
 
 type TelegramFormData = {
   telegramMessage: string;
@@ -20,7 +21,6 @@ export const TelegramForm = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const dispatch = useAppDispatch();
-
   const { control, handleSubmit } = useForm<TelegramFormData>({
     defaultValues: {
       telegramMessage: '',
@@ -82,6 +82,7 @@ export const TelegramForm = () => {
         disabled={isButtonDisabled}
         onPress={handleSubmit(onSubmit)}
       />
+      <LogoutButton />
       <Text style={styles.message}>Message:</Text>
       <Text style={styles.message}>{receivedMessage}</Text>
     </View>

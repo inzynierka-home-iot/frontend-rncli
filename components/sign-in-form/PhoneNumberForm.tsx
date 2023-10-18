@@ -39,8 +39,8 @@ export const PhoneNumberForm = ({
     setIsButtonDisabled(true);
     const res = await sendVerificationCode('+' + diallingCode + phoneNumber);
     setIsButtonDisabled(false);
-    if (res) {
-      setPhoneCodeHash(res.phone_code_hash);
+    if (res.success && res.res) {
+      setPhoneCodeHash(res.res.phone_code_hash);
     } else {
       setPhoneVariant('error');
     }
@@ -62,7 +62,7 @@ export const PhoneNumberForm = ({
             text: 'Wyloguj',
             variant: 'error',
             size: 'small',
-            onPress: () => {},
+            onPress: () => { },
           },
         ]}
       />

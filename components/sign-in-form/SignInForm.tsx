@@ -15,6 +15,7 @@ import {
 export type SignInData = {
   diallingCode: string;
   phoneNumber: string;
+  password: string;
   phoneCode: string;
 };
 
@@ -28,12 +29,13 @@ export const SignInForm = () => {
       diallingCode: '',
       phoneNumber: '',
       phoneCode: '',
+      password: '',
     },
   });
 
   useEffect(() => {
     (async () => {
-      const resLogging = await ReadStoredValue('4authKey');
+      const resLogging = await ReadStoredValue('SignedIn');
       if (resLogging) {
         navigation.navigate('DeviceList');
       }

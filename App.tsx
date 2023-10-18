@@ -7,6 +7,7 @@ import { SignInForm, TelegramForm } from './components';
 import { useEffect, useState } from 'react';
 import { connect } from './utils';
 import { DeviceList } from './views/DeviceList';
+import FlashMessage from 'react-native-flash-message';
 import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { store } from './redux/store';
@@ -50,6 +51,7 @@ export default function App() {
         ) : (
           <Text>Loading</Text>
         )}
+        <FlashMessage position="top" />
       </NavigationContainer>
     </Provider>
   );
