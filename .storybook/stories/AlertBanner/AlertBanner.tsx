@@ -5,7 +5,7 @@ import { Typography } from '../Typography/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
-type AlertBannerProps = {
+export type AlertBannerProps = {
   text: string;
   isOpen: boolean;
   variant?: 'success' | 'informative' | 'error';
@@ -51,8 +51,8 @@ const useStyles = (variant: AlertBannerProps['variant']) => {
     variant == 'success'
       ? 'text-success'
       : variant == 'informative'
-      ? 'text-informative'
-      : 'text-error';
+        ? 'text-informative'
+        : 'text-error';
 
   return StyleSheet.create({
     container: {

@@ -5,16 +5,15 @@ import { useAppDispatch } from '../../redux/hooks';
 import { listenForMessages, sendIoTMessage } from '../../utils';
 import { ReadStoredValue } from '../../utils/EncryptedStorage';
 import { Navbar } from '../../.storybook/stories/Navbar/Navbar';
-import { useNavigation } from '@react-navigation/native';
-import { RootNavigationProps } from '../../App';
 import { LogoutButton } from '../navigation';
+import { useAppNavigation } from '../../hooks';
 
 type TelegramFormData = {
   telegramMessage: string;
 };
 
 export const TelegramForm = () => {
-  const navigation = useNavigation<RootNavigationProps>();
+  const navigation = useAppNavigation();
   const [receivedMessage, setReceivedMessage] = useState('');
   const [botUserID, setBotUserID] = useState('');
   const [botAccessHash, setBotAccessHash] = useState('');

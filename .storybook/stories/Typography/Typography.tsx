@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Text } from 'react-native';
 import { ColorKeys, theme, TypographyKeys } from '../../theme';
 
-type TypographyProps = {
+export type TypographyProps = {
   variant: TypographyKeys;
   text: string;
   color?: ColorKeys;

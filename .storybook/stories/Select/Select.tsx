@@ -1,12 +1,12 @@
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import React, { FC, useCallback, useState } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import { theme } from '../../theme';
 import { Typography } from '../Typography/Typography';
 
-type SelectProps = {
+export type SelectProps = {
   selectData: Array<{ display: string; value: string }>;
   variant?: 'default' | 'error';
   disabled?: boolean;
@@ -31,8 +31,8 @@ export const Select: FC<SelectProps> = ({
     index == -1
       ? 'text-secondary'
       : !disabled
-      ? 'text-primary'
-      : 'background-subtle';
+        ? 'text-primary'
+        : 'background-subtle';
   const expandColor = !disabled ? 'text-secondary' : 'background-subtle';
   const text = index != -1 ? selectData[index].display : defaultText;
 
@@ -70,10 +70,10 @@ const useStyles = (
     type == 'default'
       ? 'background-subtle'
       : type == 'active'
-      ? 'action-selected'
-      : type == 'error'
-      ? 'text-error'
-      : 'background-subtle';
+        ? 'action-selected'
+        : type == 'error'
+          ? 'text-error'
+          : 'background-subtle';
   const elevation = !disabled ? 2 : 1;
 
   return StyleSheet.create({

@@ -2,55 +2,37 @@ import 'stream-browserify';
 import 'react-native-quick-crypto';
 import React, { Text } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { SignInForm, TelegramForm } from './components';
-import { useEffect, useState } from 'react';
-import { connect } from './utils';
-import { DeviceList } from './views/DeviceList';
+import { TelegramForm } from './components';
+import { ConfirmAuthView, DeviceListView, LoginView } from './views';
 import FlashMessage from 'react-native-flash-message';
 import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { store } from './redux/store';
-
-export type RootStackParamList = {
-  SignIn: undefined;
-  Telegram: undefined;
-  DeviceList: undefined;
-};
-
-export type RootNavigationProps = StackNavigationProp<RootStackParamList>;
+import { useTelegramConnection } from './hooks';
+import { RootStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
-  const [isConnected, setIsConnected] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const { isConnected, isError } = useTelegramConnection();
 
-  useEffect(() => {
-    (async () => {
-      const res = await connect();
-      if (res) {
-        setIsConnected(true);
-      } else {
-        setIsError(true);
-      }
-    })();
-  }, []);
+  if (isError) {
+    return <Text>Error</Text>;
+  }
+
+  if (!isConnected) {
+    return <Text>Loading</Text>;
+  }
 
   return (
     <Provider store={store}>
       <NavigationContainer>
-        {isConnected ? (
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="DeviceList" component={DeviceList} />
-            <Stack.Screen name="SignIn" component={SignInForm} />
-            <Stack.Screen name="Telegram" component={TelegramForm} />
-          </Stack.Navigator>
-        ) : isError ? (
-          <Text>Error</Text>
-        ) : (
-          <Text>Loading</Text>
-        )}
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Login" component={LoginView} />
+          <Stack.Screen name="ConfirmAuth" component={ConfirmAuthView} />
+          <Stack.Screen name="DeviceList" component={DeviceListView} />
+          <Stack.Screen name="Telegram" component={TelegramForm} />
+        </Stack.Navigator>
         <FlashMessage position="top" />
       </NavigationContainer>
     </Provider>

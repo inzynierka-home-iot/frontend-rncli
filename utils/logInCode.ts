@@ -19,7 +19,6 @@ export const logInCode = async (
         syncAuth: false,
       },
     );
-    console.log(res);
     return res;
   } catch (e) {
     if (hasErrorMessage(e)) {

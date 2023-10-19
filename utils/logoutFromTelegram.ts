@@ -24,12 +24,10 @@ const updateFutureAuthTokens = async (token: number[]) => {
 export const logoutFromTelegram = async (navigation: any) => {
   try {
     const res = await mtproto.call('auth.logOut');
-    console.log(res);
     if (res._ === 'auth.loggedOut') {
       await updateFutureAuthTokens(res.future_auth_token);
       await RemoveStoredValue('SignedIn');
-      // await ClearStorage();
-      navigation.replace('SignIn');
+      navigation.navigate('Login');
     }
     return res;
   } catch (e) {
