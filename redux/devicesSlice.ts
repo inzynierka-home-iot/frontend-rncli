@@ -6,76 +6,8 @@ interface DeviceState {
   devices: Device[];
 }
 
-const mockedData = {
-  devices: [
-    {
-      location: 'home-1',
-      id: '0',
-      nodeId: '1',
-      type: 'S_LIGHT',
-      name: 'Green LED',
-    },
-    {
-      location: 'home-1',
-      id: '1',
-      nodeId: '1',
-      type: 'S_TEMP',
-      name: 'Temperature sensor',
-    },
-    {
-      location: 'home-1',
-      id: '2',
-      nodeId: '1',
-      type: 'S_LIGHT',
-      name: 'Yellow LED',
-    },
-    {
-      location: 'home-1',
-      id: '3',
-      nodeId: '1',
-      type: 'S_LIGHT',
-      name: 'Red LED',
-    },
-    {
-      location: 'home-1',
-      id: '4',
-      nodeId: '1',
-      type: 'S_LOCK',
-      name: 'Button',
-    },
-    {
-      location: 'home-1',
-      id: '5',
-      nodeId: '1',
-      type: 'S_LOCK',
-      name: 'Button',
-    },
-    {
-      location: 'home-1',
-      id: '6',
-      nodeId: '1',
-      type: 'S_LOCK',
-      name: 'Button',
-    },
-    {
-      location: 'home-1',
-      id: '7',
-      nodeId: '1',
-      type: 'S_LIGHT',
-      name: 'Red LED',
-    },
-    {
-      location: 'home-1',
-      id: '8',
-      nodeId: '1',
-      type: 'S_LIGHT',
-      name: 'Red LED',
-    },
-  ],
-};
-
 const initialState: DeviceState = {
-  devices: mockedData.devices,
+  devices: [],
 };
 
 export const devicesSlice = createSlice({
@@ -105,3 +37,53 @@ export const selectDeviceWithId = (
   );
 
 export default devicesSlice.reducer;
+
+// const mockedData = {
+//   devices: [
+//     {
+//       location: 'home-1',
+//       id: '0',
+//       node: '1',
+//       type: 'S_LIGHT',
+//       name: 'Green LED',
+//     },
+//     {
+//       location: 'home-1',
+//       id: '1',
+//       node: '1',
+//       type: 'S_TEMP',
+//       name: 'Temperature sensor',
+//     },
+//     {
+//       location: 'home-1',
+//       id: '2',
+//       node: '1',
+//       type: 'S_LIGHT',
+//       name: 'Yellow LED',
+//     },
+//     {
+//       location: 'home-1',
+//       id: '3',
+//       node: '1',
+//       type: 'S_LIGHT',
+//       name: 'Red LED',
+//     },
+//     { location: 'home-1', id: '4', node: '1', type: 'S_LOCK', name: 'Button' },
+//     { location: 'home-1', id: '5', node: '1', type: 'S_LOCK', name: 'Button' },
+//     { location: 'home-1', id: '6', node: '1', type: 'S_LOCK', name: 'Button' },
+//     {
+//       location: 'home-1',
+//       id: '7',
+//       node: '1',
+//       type: 'S_LIGHT',
+//       name: 'Red LED',
+//     },
+//     {
+//       location: 'home-1',
+//       id: '8',
+//       node: '1',
+//       type: 'S_LIGHT',
+//       name: 'Red LED',
+//     },
+//   ],
+// };
