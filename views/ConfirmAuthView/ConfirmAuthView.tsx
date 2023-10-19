@@ -12,9 +12,12 @@ import { theme } from '../../.storybook/theme';
 import { ConfirmationForm, Password2FAForm } from '../../components';
 import { RootStackParamList, SignInData } from '../../types';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'ConfirmAuth'>;
+type ConfirmAuthViewProps = NativeStackScreenProps<
+  RootStackParamList,
+  'ConfirmAuth'
+>;
 
-export const ConfirmAuthView = ({ route }: Props) => {
+export const ConfirmAuthView = ({ route }: ConfirmAuthViewProps) => {
   const [is2FANeeded, setis2FANeeded] = useState(false);
 
   const { phoneCodeHash, phoneNumber, diallingCode } = route.params;

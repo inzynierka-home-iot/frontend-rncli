@@ -7,7 +7,71 @@ interface DeviceState {
 }
 
 const initialState: DeviceState = {
-  devices: [],
+  devices: [
+    {
+      location: 'home-1',
+      id: '0',
+      nodeId: '1',
+      type: 'S_LIGHT',
+      name: 'Green LED',
+    },
+    {
+      location: 'home-1',
+      id: '1',
+      nodeId: '1',
+      type: 'S_TEMP',
+      name: 'Temperature sensor',
+    },
+    {
+      location: 'home-1',
+      id: '2',
+      nodeId: '1',
+      type: 'S_LIGHT',
+      name: 'Yellow LED',
+    },
+    {
+      location: 'home-1',
+      id: '3',
+      nodeId: '1',
+      type: 'S_LIGHT',
+      name: 'Red LED',
+    },
+    {
+      location: 'home-1',
+      id: '4',
+      nodeId: '1',
+      type: 'S_LOCK',
+      name: 'Button',
+    },
+    {
+      location: 'home-1',
+      id: '5',
+      nodeId: '1',
+      type: 'S_LOCK',
+      name: 'Button',
+    },
+    {
+      location: 'home-1',
+      id: '6',
+      nodeId: '1',
+      type: 'S_LOCK',
+      name: 'Button',
+    },
+    {
+      location: 'home-1',
+      id: '7',
+      nodeId: '1',
+      type: 'S_LIGHT',
+      name: 'Red LED',
+    },
+    {
+      location: 'home-1',
+      id: '8',
+      nodeId: '1',
+      type: 'S_LIGHT',
+      name: 'Red LED',
+    },
+  ],
 };
 
 export const devicesSlice = createSlice({

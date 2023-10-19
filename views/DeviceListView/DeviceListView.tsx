@@ -14,16 +14,8 @@ import {
 import { ListItem, Navbar } from '../../.storybook/stories';
 import { styles } from './DeviceListView.styles';
 
-const createDeviceElement = (device: Device) => (
-  <ListItem
-    text={device.name}
-    icon={getDeviceIcon(device.type)}
-    onPress={() => { }}
-  />
-);
-
 const createDeviceKey = (device: Device) =>
-  device.location + '/' + device.node + '/' + device.id;
+  device.location + '/' + device.nodeId + '/' + device.id;
 
 const createSeparatingElement = () => <View style={styles.separatingElement} />;
 
@@ -39,6 +31,22 @@ export const DeviceListView = () => {
   const handleLogout = useCallback(() => {
     logoutFromTelegram(navigation);
   }, [navigation]);
+
+  const createDeviceElement = (device: Device) => (
+    <ListItem
+      text={device.name}
+      icon={getDeviceIcon(device.type)}
+      onPress={() => {
+        navigation.navigate('LightView', {
+          location: device.location,
+          node: device.nodeId,
+          lightId: device.id,
+          botHash,
+          botId,
+        });
+      }}
+    />
+  );
 
   return (
     <View style={styles.container}>
@@ -56,7 +64,9 @@ export const DeviceListView = () => {
       <FlatList
         style={styles.content}
         data={devices}
-        renderItem={({ item: device }) => createDeviceElement(device)}
+        renderItem={({ item: device }) =>
+          createDeviceElement(device, navigation)
+        }
         keyExtractor={createDeviceKey}
         ItemSeparatorComponent={createSeparatingElement}
       />

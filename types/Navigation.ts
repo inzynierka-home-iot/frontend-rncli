@@ -9,6 +9,13 @@ export type RootStackParamList = {
   };
   Telegram: undefined;
   DeviceList: undefined;
+  Light: {
+    location: string;
+    node: string;
+    lightId: string;
+    botHash: string;
+    botId: string;
+  };
 };
 
 export type RootNavigationProps = StackNavigationProp<RootStackParamList>;
