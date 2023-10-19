@@ -8,11 +8,11 @@ import { logoutFromTelegram } from '../../utils';
 import {
   useAppNavigation,
   useInitialDevices,
+  useListenForHomeBotMessages,
   useResolveBotData,
 } from '../../hooks';
 import { ListItem, Navbar } from '../../.storybook/stories';
 import { styles } from './DeviceListView.styles';
-import { useListenForHomeBotMessages } from '../../hooks/useListenForHomeBotMessages';
 
 const createDeviceElement = (device: Device) => (
   <ListItem
