@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import {
   CountryDiallingCode,
   getCountriesCodes,
-} from '../utils/getCountriesCodes';
+} from '../../../utils/getCountriesCodes';
 
 export const useCountryDiallingCodes = () => {
   const [countryDiallingCodes, setCountryDiallingCodes] = useState<

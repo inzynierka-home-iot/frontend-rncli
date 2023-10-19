@@ -15,6 +15,7 @@ export const listenForMessages = async (
         if (message.req === '/*/*/*/get/') {
           dispatch(setDevices(message.res));
         }
+        // TODO handle change status of the light, when we get response from backend
       }
     },
   );

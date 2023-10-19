@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { ReadStoredValue } from '../utils/EncryptedStorage';
+import { ReadStoredValue } from '../utils';
 import { useAppNavigation } from './useAppNavigation';
 
 export const useNavigateAuthUsers = () => {

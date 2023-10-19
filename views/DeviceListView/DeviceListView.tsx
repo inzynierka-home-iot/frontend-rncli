@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { FlatList, View } from 'react-native';
-import { getDeviceIcon } from '../../utils/getDeviceIcon';
+import { getDeviceIcon } from '../../utils';
 import { Device } from '../../types';
 import { useAppSelector } from '../../redux/hooks';
 import { selectDevices } from '../../redux/devicesSlice';
@@ -13,6 +13,7 @@ import {
 } from '../../hooks';
 import { ListItem, Navbar } from '../../.storybook/stories';
 import { styles } from './DeviceListView.styles';
+import { getDeviceViewName } from './utils';
 
 const createDeviceKey = (device: Device) =>
   device.location + '/' + device.nodeId + '/' + device.id;
@@ -37,10 +38,10 @@ export const DeviceListView = () => {
       text={device.name}
       icon={getDeviceIcon(device.type)}
       onPress={() => {
-        navigation.navigate('LightView', {
+        navigation.navigate(getDeviceViewName(device.type), {
           location: device.location,
-          node: device.nodeId,
-          lightId: device.id,
+          nodeId: device.nodeId,
+          deviceId: device.id,
           botHash,
           botId,
         });
@@ -64,9 +65,7 @@ export const DeviceListView = () => {
       <FlatList
         style={styles.content}
         data={devices}
-        renderItem={({ item: device }) =>
-          createDeviceElement(device, navigation)
-        }
+        renderItem={({ item: device }) => createDeviceElement(device)}
         keyExtractor={createDeviceKey}
         ItemSeparatorComponent={createSeparatingElement}
       />

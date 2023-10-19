@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react';
 import { Keyboard } from 'react-native';
-import { InputProps } from '../.storybook/stories';
-import { SignInData } from '../types';
-import { sendVerificationCode } from '../utils';
-import { useAppNavigation } from './useAppNavigation';
+import { InputProps } from '../../../.storybook/stories';
+import { SignInData } from '../../../types';
+import { sendVerificationCode } from '../../../utils';
+import { useAppNavigation } from '../../../hooks/useAppNavigation';
 
 export const useSendVerificationCode = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);

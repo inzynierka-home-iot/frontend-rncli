@@ -21,7 +21,6 @@ export const sendVerificationCode = async (
         logout_tokens: tokens,
       },
     });
-    console.log(res);
     return { success: true, res };
   } catch (e) {
     if (hasErrorMessage(e)) {

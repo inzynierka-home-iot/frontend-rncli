@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Control, Controller, UseFormHandleSubmit } from 'react-hook-form';
 import { Button, TextInput } from 'react-native';
-import { confirm2FAPassword } from '../../utils/confirm2FAPassword';
-import { ReadStoredValue, SaveStoredValue } from '../../utils/EncryptedStorage';
-import { resolveBotID } from '../../utils/resolveBotID';
+import {
+  confirm2FAPassword,
+  ReadStoredValue,
+  resolveBotID,
+  SaveStoredValue,
+} from '../../utils';
 import { useAppNavigation } from '../../hooks';
 import { SignInData } from '../../types';
 
@@ -21,7 +24,6 @@ export const Password2FAForm = ({
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const onConfirm = async ({ password }: SignInData) => {
-    console.log(password);
     setIsButtonDisabled(true);
     const res = await confirm2FAPassword(password);
     setIsButtonDisabled(false);

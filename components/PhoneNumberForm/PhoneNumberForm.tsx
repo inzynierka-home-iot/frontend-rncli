@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { Control, Controller, UseFormHandleSubmit } from 'react-hook-form';
 import { styles } from './PhoneNumberForm.styles';
 import type { SignInData } from '../../types';
-import { useCountryDiallingCodes, useSendVerificationCode } from '../../hooks';
 import { Input, Select, Typography, Button } from '../../.storybook/stories';
+import { useCountryDiallingCodes, useSendVerificationCode } from './hooks';
 
 type PhoneNumberFormProps = {
   control: Control<SignInData>;

@@ -31,7 +31,7 @@ export default function App() {
           <Stack.Screen name="Login" component={LoginView} />
           <Stack.Screen name="ConfirmAuth" component={ConfirmAuthView} />
           <Stack.Screen name="DeviceList" component={DeviceListView} />
-          <Stack.Screen name="LightView" component={LightView} />
+          <Stack.Screen name="Light" component={LightView} />
           <Stack.Screen name="Telegram" component={TelegramForm} />
         </Stack.Navigator>
         <FlashMessage position="top" />

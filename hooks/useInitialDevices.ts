@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { sendIoTMessage } from '../utils';
+import { sendAPIRequest } from '../utils';
 
 export const useInitialDevices = (
   botId: string | null,
@@ -7,7 +7,14 @@ export const useInitialDevices = (
 ) => {
   useEffect(() => {
     if (botId && botAccessHash) {
-      sendIoTMessage('/*/*/*/get/', botAccessHash, botId);
+      sendAPIRequest({
+        location: '*',
+        nodeId: '*',
+        deviceId: '*',
+        action: 'get',
+        botHash: botAccessHash,
+        botId,
+      });
     }
   }, [botId, botAccessHash]);
 };
