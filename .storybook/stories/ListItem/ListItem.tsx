@@ -6,7 +6,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { theme } from '../../theme';
 import { Typography } from '../Typography/Typography';
 
-type ListItemProps = {
+export type ListItemProps = {
   text: string;
   icon?: IconDefinition;
   onPress: () => void;

@@ -5,7 +5,7 @@ import { Typography } from '../Typography/Typography';
 
 export type ButtonProps = {
   text: string;
-  onPress: () => void;
+  onPress: (...args: any) => any;
   size?: 'small' | 'medium' | 'large';
   variant?: 'default' | 'error' | 'success';
   disabled?: boolean;
@@ -42,10 +42,10 @@ const useStyles = (
   const buttonColor = disabled
     ? 'background-subtle'
     : variant == 'default'
-    ? 'text-informative'
-    : variant == 'success'
-    ? 'text-success'
-    : 'text-error';
+      ? 'text-informative'
+      : variant == 'success'
+        ? 'text-success'
+        : 'text-error';
   const buttonSize = size === 'large' ? 4 : size === 'medium' ? 3 : 2;
 
   return StyleSheet.create({

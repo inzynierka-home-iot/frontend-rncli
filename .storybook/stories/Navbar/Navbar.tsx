@@ -4,7 +4,7 @@ import { Typography } from '../Typography/Typography';
 import { theme } from '../../theme';
 import { Button, ButtonProps } from '../Button/Button';
 
-type NavbarProps = {
+export type NavbarProps = {
   text: string;
   buttons?: Array<ButtonProps>;
 };

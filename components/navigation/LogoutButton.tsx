@@ -1,11 +1,10 @@
 import React from 'react';
 import { Button } from 'react-native';
 import { logoutFromTelegram } from '../../utils';
-import { useNavigation } from '@react-navigation/native';
-import { RootNavigationProps } from '../../App';
+import { useAppNavigation } from '../../hooks';
 
 export const LogoutButton = () => {
-  const navigation = useNavigation<RootNavigationProps>();
+  const navigation = useAppNavigation();
 
   const logout = () => {
     logoutFromTelegram(navigation);

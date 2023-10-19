@@ -2,7 +2,7 @@ import React, { FC, useCallback, useState } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 import { theme } from '../../theme';
 
-type InputProps = {
+export type InputProps = {
   text: string;
   keyboardType?: 'default' | 'numeric';
   placeholder?: string;
@@ -50,15 +50,15 @@ const useStyles = (
     type == 'default'
       ? 'background-subtle'
       : type == 'active'
-      ? 'action-selected'
-      : type == 'error'
-      ? 'text-error'
-      : 'background-subtle';
+        ? 'action-selected'
+        : type == 'error'
+          ? 'text-error'
+          : 'background-subtle';
   const textColor = disabled
     ? 'text-secondary'
     : text != ''
-    ? 'text-primary'
-    : 'text-secondary';
+      ? 'text-primary'
+      : 'text-secondary';
   const elevation = !disabled ? 2 : 1;
   const textAlign = centerText ? 'center' : 'left';
 

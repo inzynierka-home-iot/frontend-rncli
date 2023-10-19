@@ -3,7 +3,7 @@ import CheckBox from 'react-native-check-box';
 import { theme } from '../../theme';
 import { StyleSheet } from 'react-native';
 
-type CheckboxProps = {
+export type CheckboxProps = {
   variant?: 'default' | 'success' | 'error';
   checked: boolean;
   onPress: () => void;
@@ -29,8 +29,8 @@ const useCheckboxColor = (variant: CheckboxProps['variant']) => {
     variant == 'default'
       ? 'text-informative'
       : variant == 'success'
-      ? 'text-success'
-      : 'text-error';
+        ? 'text-success'
+        : 'text-error';
   return theme.colors[checkboxColor];
 };
 

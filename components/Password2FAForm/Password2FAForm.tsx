@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
 import { Control, Controller, UseFormHandleSubmit } from 'react-hook-form';
 import { Button, TextInput } from 'react-native';
-import { RootNavigationProps } from '../../App';
-import { SignInData } from './SignInForm';
 import { confirm2FAPassword } from '../../utils/confirm2FAPassword';
 import { ReadStoredValue, SaveStoredValue } from '../../utils/EncryptedStorage';
 import { resolveBotID } from '../../utils/resolveBotID';
+import { useAppNavigation } from '../../hooks';
+import { SignInData } from '../../types';
 
 type Password2FAFormProps = {
   control: Control<SignInData>;
@@ -17,7 +16,7 @@ export const Password2FAForm = ({
   control,
   handleSubmit,
 }: Password2FAFormProps) => {
-  const navigation = useNavigation<RootNavigationProps>();
+  const navigation = useAppNavigation();
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
