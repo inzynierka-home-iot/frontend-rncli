@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { FlatList, View } from 'react-native';
 import { getDeviceIcon } from '../../utils/getDeviceIcon';
-import { Device } from '../../types';
+import { Device, RootNavigationProps } from '../../types';
 import { useAppSelector } from '../../redux/hooks';
 import { selectDevices } from '../../redux/devicesSlice';
 import { logoutFromTelegram } from '../../utils';
@@ -14,11 +14,16 @@ import {
 import { ListItem, Navbar } from '../../.storybook/stories';
 import { styles } from './DeviceListView.styles';
 
-const createDeviceElement = (device: Device) => (
+const createDeviceElement = (
+  device: Device,
+  navigation: RootNavigationProps,
+) => (
   <ListItem
     text={device.name}
     icon={getDeviceIcon(device.type)}
-    onPress={() => { }}
+    onPress={() => {
+      navigation.navigate('Telegram');
+    }}
   />
 );
 
@@ -52,11 +57,14 @@ export const DeviceListView = () => {
             onPress: handleLogout,
           },
         ]}
+        backButton={false}
       />
       <FlatList
         style={styles.content}
         data={devices}
-        renderItem={({ item: device }) => createDeviceElement(device)}
+        renderItem={({ item: device }) =>
+          createDeviceElement(device, navigation)
+        }
         keyExtractor={createDeviceKey}
         ItemSeparatorComponent={createSeparatingElement}
       />

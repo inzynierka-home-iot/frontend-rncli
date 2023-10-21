@@ -31,7 +31,7 @@ export const ConfirmAuthView = ({ route }: Props) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container}>
-        <Navbar text="Zaloguj się" />
+        <Navbar text="Zaloguj się" backButton={false} />
         {is2FANeeded ? (
           <Password2FAForm control={control} handleSubmit={handleSubmit} />
         ) : (

@@ -46,13 +46,13 @@ export const TelegramForm = () => {
   }, []);
 
   useEffect(() => {
-    listenForMessages(setReceivedMessage, botUserID, dispatch);
+    listenForMessages(botUserID, dispatch);
   }, [botUserID, dispatch]);
 
   return (
     <View>
       <Navbar
-        text={'Lista urządzeń'}
+        text={'Test'}
         buttons={[
           {
             text: 'Wyloguj',
