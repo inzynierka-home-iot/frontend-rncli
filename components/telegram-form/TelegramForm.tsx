@@ -52,7 +52,7 @@ export const TelegramForm = () => {
   return (
     <View>
       <Navbar
-        text={'Test'}
+        text="Test"
         buttons={[
           {
             text: 'Wyloguj',
