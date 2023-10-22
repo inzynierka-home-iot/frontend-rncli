@@ -38,6 +38,7 @@ export const DeviceListView = () => {
       text={device.name}
       icon={getDeviceIcon(device.type)}
       onPress={() => {
+        console.log(getDeviceViewName(device.type));
         navigation.navigate(getDeviceViewName(device.type), {
           location: device.location,
           nodeId: device.nodeId,

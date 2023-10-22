@@ -1,7 +1,7 @@
 import { DeviceType } from '../../../types';
 
 const DEVICE_TO_VIEW: Record<DeviceType, string> = {
-  S_LIGHT: 'Light',
+  S_BINARY: 'Light',
   S_LOCK: 'Lock',
   S_TEMP: 'TemperatureSensor',
 };
