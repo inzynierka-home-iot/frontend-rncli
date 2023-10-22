@@ -23,7 +23,7 @@ const createDeviceElement = (device: Device) => (
 );
 
 const createDeviceKey = (device: Device) =>
-  device.location + '/' + device.node + '/' + device.id;
+  device.location + '/' + device.nodeId + '/' + device.id;
 
 const createSeparatingElement = () => <View style={styles.separatingElement} />;
 
