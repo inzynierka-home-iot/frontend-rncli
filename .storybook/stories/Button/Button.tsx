@@ -14,9 +14,9 @@ export type ButtonProps = {
 
 export const Button: FC<ButtonProps> = ({
   text,
+  onPress,
   size = 'large',
   variant = 'default',
-  onPress,
   disabled = false,
   hasFullWidth = false,
 }) => {

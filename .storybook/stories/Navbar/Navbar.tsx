@@ -9,13 +9,13 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 export type NavbarProps = {
   text: string;
-  buttons?: Array<ButtonProps>;
+  button?: ButtonProps;
   backButton?: boolean;
 };
 
 export const Navbar: FC<NavbarProps> = ({
   text,
-  buttons = [],
+  button = null,
   backButton = true,
 }) => {
   const navigation = useAppNavigation();
@@ -23,17 +23,9 @@ export const Navbar: FC<NavbarProps> = ({
   return (
     <View style={styles.container}>
       <Typography variant={'header-small'} text={text} />
-      {(!!buttons.length || backButton) && (
+      {(button || backButton) && (
         <View style={styles.buttons}>
-          {buttons.map((button, index) => (
-            <Button
-              key={`Button${index}`}
-              text={button.text}
-              variant={button.variant}
-              size={button.size}
-              onPress={button.onPress}
-            />
-          ))}
+          {button && <Button {...button} />}
           {backButton && (
             <IconButton
               icon={faChevronLeft}

@@ -11,7 +11,7 @@ import {
   useListenForHomeBotMessages,
   useResolveBotData,
 } from '../../hooks';
-import { ListItem, Navbar } from '../../.storybook/stories';
+import { ButtonProps, ListItem, Navbar } from '../../.storybook/stories';
 import { styles } from './DeviceListView.styles';
 
 const createDeviceElement = (
@@ -45,18 +45,18 @@ export const DeviceListView = () => {
     logoutFromTelegram(navigation);
   }, [navigation]);
 
+  const logoutButtonProps: ButtonProps = {
+    text: 'Wyloguj',
+    variant: 'error',
+    size: 'small',
+    onPress: handleLogout,
+  };
+
   return (
     <View style={styles.container}>
       <Navbar
         text="Lista urządzeń"
-        buttons={[
-          {
-            text: 'Wyloguj',
-            variant: 'error',
-            size: 'small',
-            onPress: handleLogout,
-          },
-        ]}
+        button={logoutButtonProps}
         backButton={false}
       />
       <FlatList

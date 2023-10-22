@@ -7,14 +7,18 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 export type IconButtonProps = {
   icon: IconDefinition;
   onPress: (...args: any) => any;
+  variant?: 'default' | 'error' | 'success';
   disabled?: boolean;
 };
 
 export const IconButton: FC<IconButtonProps> = ({
   icon,
   onPress,
+  variant = 'default',
   disabled = false,
 }) => {
+  const styles = useStyles(variant, disabled);
+
   return (
     <TouchableOpacity
       style={styles.container}
@@ -26,10 +30,23 @@ export const IconButton: FC<IconButtonProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: theme.colors['background-neutral'],
-    padding: theme.spacing(2),
-    borderRadius: theme.spacing(6),
-  },
-});
+const useStyles = (
+  variant: IconButtonProps['variant'],
+  disabled: IconButtonProps['disabled'],
+) => {
+  const buttonColor = disabled
+    ? 'background-subtle'
+    : variant == 'default'
+    ? 'background-neutral'
+    : variant == 'success'
+    ? 'text-success'
+    : 'text-error';
+
+  return StyleSheet.create({
+    container: {
+      backgroundColor: theme.colors[buttonColor],
+      padding: theme.spacing(2),
+      borderRadius: theme.spacing(6),
+    },
+  });
+};

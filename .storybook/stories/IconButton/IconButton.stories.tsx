@@ -26,3 +26,21 @@ const MyIconButtonMeta = {
 export default MyIconButtonMeta;
 
 export const Basic = {};
+
+export const Success = {
+  args: {
+    variant: 'success',
+  },
+};
+
+export const Error = {
+  args: {
+    variant: 'error',
+  },
+};
+
+export const Disabled = {
+  args: {
+    disabled: true,
+  },
+};
