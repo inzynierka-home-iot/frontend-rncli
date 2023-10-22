@@ -14,13 +14,26 @@ export const devicesSlice = createSlice({
   name: 'devices',
   initialState,
   reducers: {
-    setDevices: (state, action: PayloadAction<Device[]>) => {
+    setInitialDevice: (state, action: PayloadAction<Device[]>) => {
       state.devices = action.payload;
+    },
+    addDevice: (state, action: PayloadAction<Device>) => {
+      state.devices.push(action.payload);
+    },
+    removeDevice: (state, action: PayloadAction<Device>) => {
+      const { location, nodeId, id } = action.payload;
+      state.devices = state.devices.filter(
+        device =>
+          device.location !== location ||
+          device.nodeId !== nodeId ||
+          device.id !== id,
+      );
     },
   },
 });
 
-export const { setDevices } = devicesSlice.actions;
+export const { setInitialDevice, addDevice, removeDevice } =
+  devicesSlice.actions;
 
 export const selectDevices = (state: RootState) => state.devices;
 

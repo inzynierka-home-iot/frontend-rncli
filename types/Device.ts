@@ -1,7 +1,7 @@
 export type Device = {
   location: string;
   id: string;
-  node: string;
+  nodeId: string;
   type: string;
   name: string;
 };
