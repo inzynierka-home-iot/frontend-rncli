@@ -48,7 +48,7 @@ export const DeviceListView = () => {
       }}
     />
   );
-  
+
   const logoutButtonProps: ButtonProps = {
     text: 'Wyloguj',
     variant: 'error',
@@ -66,9 +66,7 @@ export const DeviceListView = () => {
       <FlatList
         style={styles.content}
         data={devices}
-        renderItem={({ item: device }) =>
-          createDeviceElement(device, navigation)
-        }
+        renderItem={({ item: device }) => createDeviceElement(device)}
         keyExtractor={createDeviceKey}
         ItemSeparatorComponent={createSeparatingElement}
       />
