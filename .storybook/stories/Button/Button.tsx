@@ -14,9 +14,9 @@ export type ButtonProps = {
 
 export const Button: FC<ButtonProps> = ({
   text,
+  onPress,
   size = 'large',
   variant = 'default',
-  onPress,
   disabled = false,
   hasFullWidth = false,
 }) => {
@@ -42,10 +42,10 @@ const useStyles = (
   const buttonColor = disabled
     ? 'background-subtle'
     : variant == 'default'
-      ? 'text-informative'
-      : variant == 'success'
-        ? 'text-success'
-        : 'text-error';
+    ? 'text-informative'
+    : variant == 'success'
+    ? 'text-success'
+    : 'text-error';
   const buttonSize = size === 'large' ? 4 : size === 'medium' ? 3 : 2;
 
   return StyleSheet.create({

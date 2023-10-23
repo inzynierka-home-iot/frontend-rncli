@@ -7,6 +7,7 @@ import { ReadStoredValue } from '../../utils/EncryptedStorage';
 import { Navbar } from '../../.storybook/stories/Navbar/Navbar';
 import { LogoutButton } from '../navigation';
 import { useAppNavigation } from '../../hooks';
+import { ButtonProps } from '../../.storybook/stories';
 
 type TelegramFormData = {
   telegramMessage: string;
@@ -46,24 +47,21 @@ export const TelegramForm = () => {
   }, []);
 
   useEffect(() => {
-    listenForMessages(setReceivedMessage, botUserID, dispatch);
+    listenForMessages(botUserID, dispatch);
   }, [botUserID, dispatch]);
+
+  const logoutButtonProps: ButtonProps = {
+    text: 'Wyloguj',
+    variant: 'error',
+    size: 'small',
+    onPress: () => {
+      navigation.navigate('DeviceList');
+    },
+  };
 
   return (
     <View>
-      <Navbar
-        text={'Lista urządzeń'}
-        buttons={[
-          {
-            text: 'Wyloguj',
-            variant: 'error',
-            size: 'small',
-            onPress: () => {
-              navigation.navigate('DeviceList');
-            },
-          },
-        ]}
-      />
+      <Navbar text="Test" button={logoutButtonProps} />
       <Controller
         control={control}
         name="telegramMessage"
