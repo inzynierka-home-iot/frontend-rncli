@@ -2,6 +2,7 @@ import {
   setInitialDevice,
   addDevice,
   removeDevice,
+  setDeviceValues,
 } from '../redux/devicesSlice';
 import { AppDispatch } from '../redux/store';
 import { Message } from '../types';
@@ -16,9 +17,19 @@ export const listenForMessages = async (
     (updateInfo: { message: string; user_id: string }) => {
       if (updateInfo.user_id === user_id) {
         const message: Message = JSON.parse(updateInfo.message);
-        const command = message.req.split('/')[4];
+        const [_, location, nodeId, deviceId, command] = message.req.split('/');
         if (message.req === '/*/*/*/get/') {
           dispatch(setInitialDevice(message.res));
+        }
+        if (command === 'set') {
+          dispatch(
+            setDeviceValues({
+              location,
+              nodeId,
+              deviceId,
+              values: message.res.values,
+            }),
+          );
         }
         if (command === 'connected') {
           dispatch(addDevice(message.res.device));
@@ -26,7 +37,6 @@ export const listenForMessages = async (
         if (command === 'disconnected') {
           dispatch(removeDevice(message.res.device));
         }
-        // TODO handle change status of the light, when we get response from backend
       }
     },
   );

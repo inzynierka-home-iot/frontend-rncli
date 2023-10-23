@@ -7,7 +7,7 @@ import {
 import { DeviceType } from '../types/Device';
 
 const DEVICE_ICONS: Record<DeviceType, IconDefinition> = {
-  S_LIGHT: faLightbulb,
+  S_BINARY: faLightbulb,
   S_TEMP: faTemperature2,
   S_LOCK: faLock,
 };
