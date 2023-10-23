@@ -26,6 +26,7 @@ export const listenForMessages = async (
         if (command === 'disconnected') {
           dispatch(removeDevice(message.res.device));
         }
+        // TODO handle change status of the light, when we get response from backend
       }
     },
   );

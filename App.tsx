@@ -3,7 +3,7 @@ import 'react-native-quick-crypto';
 import React, { Text } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TelegramForm } from './components';
-import { ConfirmAuthView, DeviceListView, LoginView } from './views';
+import { ConfirmAuthView, DeviceListView, LightView, LoginView } from './views';
 import FlashMessage from 'react-native-flash-message';
 import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
@@ -31,6 +31,7 @@ export default function App() {
           <Stack.Screen name="Login" component={LoginView} />
           <Stack.Screen name="ConfirmAuth" component={ConfirmAuthView} />
           <Stack.Screen name="DeviceList" component={DeviceListView} />
+          <Stack.Screen name="Light" component={LightView} />
           <Stack.Screen name="Telegram" component={TelegramForm} />
         </Stack.Navigator>
         <FlashMessage position="top" />

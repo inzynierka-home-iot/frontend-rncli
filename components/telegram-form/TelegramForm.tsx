@@ -3,7 +3,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useAppDispatch } from '../../redux/hooks';
 import { listenForMessages, sendIoTMessage } from '../../utils';
-import { ReadStoredValue } from '../../utils/EncryptedStorage';
+import { ReadStoredValue } from '../../utils';
 import { Navbar } from '../../.storybook/stories/Navbar/Navbar';
 import { LogoutButton } from '../navigation';
 import { useAppNavigation } from '../../hooks';

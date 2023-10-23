@@ -16,9 +16,9 @@ export const getCountriesCodes = async () => {
     },
   );
   const polandIndex = countryDiallingCodes.findIndex((country: any) => {
-    return country.display == 'Poland';
+    return country.display === 'Poland';
   });
-  if (polandIndex != -1) {
+  if (polandIndex !== -1) {
     moveElementToBeginning(countryDiallingCodes, polandIndex);
   }
   return countryDiallingCodes;

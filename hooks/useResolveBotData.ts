@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ReadStoredValue } from '../utils/EncryptedStorage';
+import { ReadStoredValue } from '../utils';
 
 export const useResolveBotData = () => {
   const [botAccessHash, setBotAccessHash] = useState<string | null>(null);

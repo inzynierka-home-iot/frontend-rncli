@@ -3,12 +3,12 @@ import { Keyboard } from 'react-native';
 import { InputProps } from '../../../.storybook/stories';
 import { useAppNavigation } from '../../../hooks';
 import { SignInData } from '../../../types';
-import { logInCode } from '../../../utils';
 import {
+  logInCode,
   ReadStoredValue,
   SaveStoredValue,
-} from '../../../utils/EncryptedStorage';
-import { resolveBotID } from '../../../utils/resolveBotID';
+  resolveBotID,
+} from '../../../utils';
 
 export const useConfirmCodeClick = (
   phoneCodeHash: string,

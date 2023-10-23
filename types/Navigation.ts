@@ -1,5 +1,13 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 
+type DeviceViewRouteParams = {
+  location: string;
+  nodeId: string;
+  deviceId: string;
+  botHash: string;
+  botId: string;
+};
+
 export type RootStackParamList = {
   Login: undefined;
   ConfirmAuth: {
@@ -9,6 +17,7 @@ export type RootStackParamList = {
   };
   Telegram: undefined;
   DeviceList: undefined;
+  Light: DeviceViewRouteParams;
 };
 
 export type RootNavigationProps = StackNavigationProp<RootStackParamList>;

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { FlatList, View } from 'react-native';
-import { getDeviceIcon } from '../../utils/getDeviceIcon';
-import { Device, RootNavigationProps } from '../../types';
+import { getDeviceIcon } from '../../utils';
+import { Device } from '../../types';
 import { useAppSelector } from '../../redux/hooks';
 import { selectDevices } from '../../redux/devicesSlice';
 import { logoutFromTelegram } from '../../utils';
@@ -13,19 +13,7 @@ import {
 } from '../../hooks';
 import { ButtonProps, ListItem, Navbar } from '../../.storybook/stories';
 import { styles } from './DeviceListView.styles';
-
-const createDeviceElement = (
-  device: Device,
-  navigation: RootNavigationProps,
-) => (
-  <ListItem
-    text={device.name}
-    icon={getDeviceIcon(device.type)}
-    onPress={() => {
-      navigation.navigate('Telegram');
-    }}
-  />
-);
+import { getDeviceViewName } from './utils';
 
 const createDeviceKey = (device: Device) =>
   device.location + '/' + device.nodeId + '/' + device.id;
@@ -45,6 +33,22 @@ export const DeviceListView = () => {
     logoutFromTelegram(navigation);
   }, [navigation]);
 
+  const createDeviceElement = (device: Device) => (
+    <ListItem
+      text={device.name}
+      icon={getDeviceIcon(device.type)}
+      onPress={() => {
+        navigation.navigate(getDeviceViewName(device.type), {
+          location: device.location,
+          nodeId: device.nodeId,
+          deviceId: device.id,
+          botHash,
+          botId,
+        });
+      }}
+    />
+  );
+  
   const logoutButtonProps: ButtonProps = {
     text: 'Wyloguj',
     variant: 'error',

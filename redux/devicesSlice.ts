@@ -36,6 +36,18 @@ export const { setInitialDevice, addDevice, removeDevice } =
   devicesSlice.actions;
 
 export const selectDevices = (state: RootState) => state.devices;
+export const selectDeviceWithId = (
+  state: RootState,
+  location: string,
+  nodeId: string,
+  id: string,
+) =>
+  state.devices.devices.find(
+    device =>
+      device.location === location &&
+      device.nodeId === nodeId &&
+      device.id === id,
+  );
 
 export default devicesSlice.reducer;
 
