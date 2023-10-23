@@ -12,7 +12,7 @@ const mockedData = {
       location: 'home-1',
       id: '0',
       nodeId: '1',
-      type: 'S_LIGHT',
+      type: 'S_BINARY',
       name: 'Green LED',
       values: {
         V_STATUS: '0',
@@ -34,7 +34,7 @@ const mockedData = {
       location: 'home-1',
       id: '2',
       nodeId: '1',
-      type: 'S_LIGHT',
+      type: 'S_BINARY',
       name: 'Yellow LED',
       values: {
         V_STATUS: '1',
@@ -45,7 +45,7 @@ const mockedData = {
       location: 'home-1',
       id: '3',
       nodeId: '1',
-      type: 'S_LIGHT',
+      type: 'S_BINARY',
       name: 'Red LED',
       values: {
         V_STATUS: '0',
@@ -80,7 +80,7 @@ const mockedData = {
       location: 'home-1',
       id: '7',
       nodeId: '1',
-      type: 'S_LIGHT',
+      type: 'S_BINARY',
       name: 'Red LED',
       values: {
         V_STATUS: '1',
@@ -91,7 +91,7 @@ const mockedData = {
       location: 'home-1',
       id: '8',
       nodeId: '1',
-      type: 'S_LIGHT',
+      type: 'S_BINARY',
       name: 'Red LED',
       values: {
         V_STATUS: '0',
