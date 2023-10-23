@@ -1,6 +1,6 @@
 import { sendIoTMessage } from './sendIoTMessage';
 
-type SendAPIRequestFunciton = (params: {
+type SendAPIRequestFunction = (params: {
   location: string;
   nodeId: string;
   deviceId: string;
@@ -10,7 +10,7 @@ type SendAPIRequestFunciton = (params: {
   botId: string;
 }) => Promise<any>;
 
-export const sendAPIRequest: SendAPIRequestFunciton = ({
+export const sendAPIRequest: SendAPIRequestFunction = ({
   location,
   nodeId,
   deviceId,

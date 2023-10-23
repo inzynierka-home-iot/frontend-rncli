@@ -18,6 +18,7 @@ export type RootStackParamList = {
   Telegram: undefined;
   DeviceList: undefined;
   Light: DeviceViewRouteParams;
+  TempSensor: DeviceViewRouteParams;
 };
 
 export type RootNavigationProps = StackNavigationProp<RootStackParamList>;

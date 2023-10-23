@@ -20,15 +20,14 @@ type LightValues = {
 
 export type Light = Device<LightValues, DeviceType.S_BINARY>;
 
-type TemperatureSensorValues = {
-  V_STATUS: string;
+type TempSensorValues = {
+  V_TEMP: string;
   V_ID?: string;
+  SUBSCRIBE?: boolean;
+  HISTORY?: string[];
 };
 
-export type TemperatureSensor = Device<
-  TemperatureSensorValues,
-  DeviceType.S_TEMP
->;
+export type TempSensor = Device<TempSensorValues, DeviceType.S_TEMP>;
 
 type ButtonValues = {
   V_LOCK_STATUS: string;

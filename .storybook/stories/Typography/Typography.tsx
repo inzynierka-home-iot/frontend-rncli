@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Text } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { ColorKeys, theme, TypographyKeys } from '../../theme';
 
 export type TypographyProps = {
@@ -13,10 +13,10 @@ export const Typography: FC<TypographyProps> = ({
   text,
   color = 'text-primary',
 }) => {
-  const styles = {
+  const styles = StyleSheet.create({
     ...theme.typography[variant],
     color: theme.colors[color],
-  };
+  });
 
   return <Text style={styles}>{text}</Text>;
 };

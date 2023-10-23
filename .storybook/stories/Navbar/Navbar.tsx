@@ -56,9 +56,4 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: theme.spacing(4),
   },
-  backButton: {
-    backgroundColor: theme.colors['background-neutral'],
-    padding: theme.spacing(2),
-    borderRadius: theme.spacing(6),
-  },
 });

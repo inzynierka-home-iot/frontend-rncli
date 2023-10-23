@@ -21,7 +21,11 @@ export const listenForMessages = async (
         if (message.req === '/*/*/*/get/') {
           dispatch(setInitialDevice(message.res));
         }
-        if (command === 'set') {
+        if (
+          command === 'set' ||
+          command === 'status' ||
+          command === 'statusAll'
+        ) {
           dispatch(
             setDeviceValues({
               location,
@@ -30,11 +34,9 @@ export const listenForMessages = async (
               values: message.res.values,
             }),
           );
-        }
-        if (command === 'connected') {
+        } else if (command === 'connected') {
           dispatch(addDevice(message.res.device));
-        }
-        if (command === 'disconnected') {
+        } else if (command === 'disconnected') {
           dispatch(removeDevice(message.res.device));
         }
       }

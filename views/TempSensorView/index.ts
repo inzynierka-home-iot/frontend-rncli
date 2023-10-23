@@ -1,0 +1,1 @@
+export { TempSensorView } from './TempSensorView';
