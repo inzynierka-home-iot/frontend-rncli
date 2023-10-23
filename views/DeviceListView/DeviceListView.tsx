@@ -11,7 +11,7 @@ import {
   useListenForHomeBotMessages,
   useResolveBotData,
 } from '../../hooks';
-import { ListItem, Navbar } from '../../.storybook/stories';
+import { ButtonProps, ListItem, Navbar } from '../../.storybook/stories';
 import { styles } from './DeviceListView.styles';
 import { getDeviceViewName } from './utils';
 
@@ -48,24 +48,27 @@ export const DeviceListView = () => {
       }}
     />
   );
+  
+  const logoutButtonProps: ButtonProps = {
+    text: 'Wyloguj',
+    variant: 'error',
+    size: 'small',
+    onPress: handleLogout,
+  };
 
   return (
     <View style={styles.container}>
       <Navbar
         text="Lista urządzeń"
-        buttons={[
-          {
-            text: 'Wyloguj',
-            variant: 'error',
-            size: 'small',
-            onPress: handleLogout,
-          },
-        ]}
+        button={logoutButtonProps}
+        backButton={false}
       />
       <FlatList
         style={styles.content}
         data={devices}
-        renderItem={({ item: device }) => createDeviceElement(device)}
+        renderItem={({ item: device }) =>
+          createDeviceElement(device, navigation)
+        }
         keyExtractor={createDeviceKey}
         ItemSeparatorComponent={createSeparatingElement}
       />

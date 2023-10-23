@@ -3,25 +3,39 @@ import { StyleSheet, View } from 'react-native';
 import { Typography } from '../Typography/Typography';
 import { theme } from '../../theme';
 import { Button, ButtonProps } from '../Button/Button';
+import { IconButton } from '../IconButton/IconButton';
+import { useAppNavigation } from '../../../hooks';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 export type NavbarProps = {
   text: string;
-  buttons?: Array<ButtonProps>;
+  button?: ButtonProps;
+  backButton?: boolean;
 };
 
-export const Navbar: FC<NavbarProps> = ({ text, buttons = [] }) => {
+export const Navbar: FC<NavbarProps> = ({
+  text,
+  button = null,
+  backButton = true,
+}) => {
+  const navigation = useAppNavigation();
+
   return (
     <View style={styles.container}>
       <Typography variant={'header-small'} text={text} />
-      {buttons.map((button, index) => (
-        <Button
-          key={`Button${index}`}
-          text={button.text}
-          variant={button.variant}
-          size={button.size}
-          onPress={button.onPress}
-        />
-      ))}
+      {(button || backButton) && (
+        <View style={styles.buttons}>
+          {button && <Button {...button} />}
+          {backButton && (
+            <IconButton
+              icon={faChevronLeft}
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+          )}
+        </View>
+      )}
     </View>
   );
 };
@@ -29,6 +43,7 @@ export const Navbar: FC<NavbarProps> = ({ text, buttons = [] }) => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
+    height: theme.spacing(19),
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: theme.spacing(4),
@@ -36,5 +51,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: theme.colors['text-invertedPrimary'],
     elevation: 2,
+  },
+  buttons: {
+    flexDirection: 'row',
+    gap: theme.spacing(4),
+  },
+  backButton: {
+    backgroundColor: theme.colors['background-neutral'],
+    padding: theme.spacing(2),
+    borderRadius: theme.spacing(6),
   },
 });
