@@ -48,6 +48,7 @@ try {
 const getStories = () => {
   return {
     './.storybook/stories/Button/Button.stories.tsx': require('./stories/Button/Button.stories.tsx'),
+    './.storybook/stories/IconButton/IconButton.stories.tsx': require('./stories/IconButton/IconButton.stories.tsx'),
     './.storybook/stories/Typography/Typography.stories.tsx': require('./stories/Typography/Typography.stories.tsx'),
     './.storybook/stories/Checkbox/Checkbox.stories.tsx': require('./stories/Checkbox/Checkbox.stories.tsx'),
     './.storybook/stories/Input/Input.stories.tsx': require('./stories/Input/Input.stories'),

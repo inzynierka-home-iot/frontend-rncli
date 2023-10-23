@@ -11,7 +11,7 @@ import {
   useListenForHomeBotMessages,
   useResolveBotData,
 } from '../../hooks';
-import { ListItem, Navbar } from '../../.storybook/stories';
+import { ButtonProps, ListItem, Navbar } from '../../.storybook/stories';
 import { styles } from './DeviceListView.styles';
 import { getDeviceViewName } from './utils';
 
@@ -38,7 +38,6 @@ export const DeviceListView = () => {
       text={device.name}
       icon={getDeviceIcon(device.type)}
       onPress={() => {
-        console.log(getDeviceViewName(device.type));
         navigation.navigate(getDeviceViewName(device.type), {
           location: device.location,
           nodeId: device.nodeId,
@@ -50,18 +49,19 @@ export const DeviceListView = () => {
     />
   );
 
+  const logoutButtonProps: ButtonProps = {
+    text: 'Wyloguj',
+    variant: 'error',
+    size: 'small',
+    onPress: handleLogout,
+  };
+
   return (
     <View style={styles.container}>
       <Navbar
         text="Lista urządzeń"
-        buttons={[
-          {
-            text: 'Wyloguj',
-            variant: 'error',
-            size: 'small',
-            onPress: handleLogout,
-          },
-        ]}
+        button={logoutButtonProps}
+        backButton={false}
       />
       <FlatList
         style={styles.content}

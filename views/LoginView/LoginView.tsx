@@ -27,7 +27,7 @@ export const LoginView = () => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container}>
-        <Navbar text="Zaloguj się" />
+        <Navbar text="Zaloguj się" backButton={false} />
         <PhoneNumberForm control={control} handleSubmit={handleSubmit} />
       </View>
     </TouchableWithoutFeedback>

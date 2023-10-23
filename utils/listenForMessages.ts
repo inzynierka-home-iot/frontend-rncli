@@ -1,4 +1,9 @@
-import { setDevices, setDeviceValues } from '../redux/devicesSlice';
+import {
+  setInitialDevice,
+  addDevice,
+  removeDevice,
+  setDeviceValues,
+} from '../redux/devicesSlice';
 import { AppDispatch } from '../redux/store';
 import { Message } from '../types';
 import { mtproto } from './mtprotoClient';
@@ -12,18 +17,25 @@ export const listenForMessages = async (
     (updateInfo: { message: string; user_id: string }) => {
       if (updateInfo.user_id === user_id) {
         const message: Message = JSON.parse(updateInfo.message);
-        const [_, location, nodeId, deviceId, command, values] =
-          message.req.split('/');
+        const [_, location, nodeId, deviceId, command] = message.req.split('/');
         if (message.req === '/*/*/*/get/') {
-          dispatch(setDevices(message.res));
+          dispatch(setInitialDevice(message.res));
         }
         if (command === 'set') {
-          const newValues = {
-            V_STATUS: values[values.length - 1],
-          };
           dispatch(
-            setDeviceValues({ location, nodeId, deviceId, values: newValues }),
+            setDeviceValues({
+              location,
+              nodeId,
+              deviceId,
+              values: message.res.values,
+            }),
           );
+        }
+        if (command === 'connected') {
+          dispatch(addDevice(message.res.device));
+        }
+        if (command === 'disconnected') {
+          dispatch(removeDevice(message.res.device));
         }
       }
     },

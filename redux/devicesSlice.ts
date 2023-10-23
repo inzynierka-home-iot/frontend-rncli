@@ -109,7 +109,7 @@ export const devicesSlice = createSlice({
   name: 'devices',
   initialState,
   reducers: {
-    setDevices: (state, action: PayloadAction<Device[]>) => {
+    setInitialDevice: (state, action: PayloadAction<Device[]>) => {
       state.devices = action.payload;
     },
     setDeviceValues: (
@@ -129,15 +129,32 @@ export const devicesSlice = createSlice({
           device.id === deviceId,
       );
       if (searchedDevice) {
-        searchedDevice.values = values;
+        searchedDevice.values = {
+          ...searchedDevice.values,
+          ...values,
+        };
       }
+    },
+    addDevice: (state, action: PayloadAction<Device>) => {
+      state.devices.push(action.payload);
+    },
+    removeDevice: (state, action: PayloadAction<Device>) => {
+      const { location, nodeId, id } = action.payload;
+      state.devices = state.devices.filter(
+        device =>
+          device.location !== location ||
+          device.nodeId !== nodeId ||
+          device.id !== id,
+      );
     },
   },
 });
 
-export const { setDevices, setDeviceValues } = devicesSlice.actions;
+export const { setInitialDevice, setDeviceValues, addDevice, removeDevice } =
+  devicesSlice.actions;
 
 export const selectDevices = (state: RootState) => state.devices;
+
 export const selectDeviceWithId = (
   state: RootState,
   location: string,
