@@ -7,6 +7,11 @@ import { RootStackParamList } from '../../types';
 import { sendAPIRequest } from '../../utils';
 import { styles } from './TempSensorView.styles';
 import { TempSensor } from '../../types/Device';
+import { useMemo } from 'react';
+import { useTempHistory } from '../../hooks/useTempHistory';
+import { selectTempSensorState } from '../../redux/currentTempSensorSlice';
+import { useListenForHomeBotMessages } from '../../hooks';
+import { DataChart } from '../../.storybook/stories/DataChart';
 
 type TempSensorViewProps = NativeStackScreenProps<
   RootStackParamList,
@@ -14,7 +19,14 @@ type TempSensorViewProps = NativeStackScreenProps<
 >;
 
 export const TempSensorView = ({ route }: TempSensorViewProps) => {
-  const { deviceId, nodeId, botHash, botId, location } = route.params;
+  const { location, nodeId, deviceId, botId, botHash } = route.params;
+
+  useTempHistory(location, nodeId, deviceId, botId, botHash);
+
+  const { currentTempSensorHistory, subscription } = useAppSelector(
+    selectTempSensorState,
+  );
+  useListenForHomeBotMessages(botId);
 
   const tempSensor = useAppSelector(state =>
     selectDeviceWithId(state, location, nodeId, deviceId),
@@ -27,26 +39,24 @@ export const TempSensorView = ({ route }: TempSensorViewProps) => {
     action: 'status',
     botHash,
     botId,
+    additionalParams: 'V_TEMP',
   };
 
   const handleGetTemp = () =>
     sendAPIRequest({
       ...tempSensorActionBaseParams,
-      additionalParams: 'V_TEMP',
     });
 
   const handleGetTempHistory = () =>
     sendAPIRequest({
       ...tempSensorActionBaseParams,
       action: 'statusAll',
-      additionalParams: 'V_TEMP',
     });
 
   const handleSubscribe = () => {
     sendAPIRequest({
       ...tempSensorActionBaseParams,
       action: 'subscribe',
-      additionalParams: 'V_TEMP',
     });
   };
 
@@ -54,9 +64,16 @@ export const TempSensorView = ({ route }: TempSensorViewProps) => {
     sendAPIRequest({
       ...tempSensorActionBaseParams,
       action: 'unsubscribe',
-      additionalParams: 'V_TEMP',
     });
   };
+
+  const tempValue = useMemo(
+    () =>
+      (
+        Math.round(parseFloat(tempSensor?.values.V_TEMP) * 100) / 100
+      ).toString(),
+    [tempSensor.values.V_TEMP],
+  );
 
   if (!tempSensor) {
     return (
@@ -68,15 +85,21 @@ export const TempSensorView = ({ route }: TempSensorViewProps) => {
     <View style={styles.container}>
       <Navbar text={`${location} - ${nodeId} - ${tempSensor?.name}`} />
       <View style={styles.content}>
-        <Typography variant="body-medium" text="Aktualna temperatura: " />
-        <Typography variant="body-medium" text={tempSensor?.values.V_TEMP} />
-        <Button text="Pobierz" hasFullWidth onPress={handleGetTemp} />
+        <Typography
+          variant="body-medium"
+          text={`Aktualna temperatura: ${tempValue}`}
+        />
+        <Button
+          text="Pobierz aktualną temperaturę"
+          hasFullWidth
+          onPress={handleGetTemp}
+        />
         <Button
           text="Pobierz historię"
           hasFullWidth
           onPress={handleGetTempHistory}
         />
-        {tempSensor.values.SUBSCRIBE ? (
+        {subscription ? (
           <Button
             text="Anuluj subskrypcję"
             variant="error"
@@ -91,9 +114,14 @@ export const TempSensorView = ({ route }: TempSensorViewProps) => {
             onPress={handleSubscribe}
           />
         )}
-        {/* TODO */}
-        {!!tempSensor.values.HISTORY?.length && (
-          <Typography variant="body-medium" text="WYKRESIK" />
+        {!!currentTempSensorHistory.length && (
+          <View>
+            <Typography
+              variant="body-medium"
+              text={`Wykres z ostatnich ${currentTempSensorHistory.length} odczytów`}
+            />
+            <DataChart chartData={currentTempSensorHistory} />
+          </View>
         )}
       </View>
     </View>

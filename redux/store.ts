@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import devicesSlice from './devicesSlice';
+import currentTempSensorSlice from './currentTempSensorSlice';
 
 export const store = configureStore({
   reducer: {
     devices: devicesSlice,
+    currentTempSensorHistory: currentTempSensorSlice,
   },
 });
 

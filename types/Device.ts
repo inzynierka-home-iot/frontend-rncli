@@ -24,7 +24,6 @@ type TempSensorValues = {
   V_TEMP: string;
   V_ID?: string;
   SUBSCRIBE?: boolean;
-  HISTORY?: string[];
 };
 
 export type TempSensor = Device<TempSensorValues, DeviceType.S_TEMP>;

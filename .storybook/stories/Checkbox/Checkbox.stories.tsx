@@ -22,12 +22,14 @@ export const Basic = () => {
 
   return <Checkbox checked={checked} onPress={onPress} />;
 };
+
 export const Success = () => {
   const [checked, setChecked] = useState(true);
   const onPress = () => setChecked(!checked);
 
   return <Checkbox variant="success" checked={checked} onPress={onPress} />;
 };
+
 export const Error = () => {
   const [checked, setChecked] = useState(true);
   const onPress = () => setChecked(!checked);
