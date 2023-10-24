@@ -5,7 +5,7 @@ import currentTempSensorSlice from './currentTempSensorSlice';
 export const store = configureStore({
   reducer: {
     devices: devicesSlice,
-    currentTempSensorHistory: currentTempSensorSlice,
+    tempSensor: currentTempSensorSlice,
   },
 });
 

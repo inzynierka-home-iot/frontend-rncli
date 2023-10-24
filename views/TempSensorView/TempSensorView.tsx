@@ -9,8 +9,6 @@ import { styles } from './TempSensorView.styles';
 import { TempSensor } from '../../types/Device';
 import { useMemo } from 'react';
 import { useTempHistory } from '../../hooks/useTempHistory';
-import { selectTempSensorState } from '../../redux/currentTempSensorSlice';
-import { useListenForHomeBotMessages } from '../../hooks';
 import { DataChart } from '../../.storybook/stories/DataChart';
 
 type TempSensorViewProps = NativeStackScreenProps<
@@ -21,12 +19,13 @@ type TempSensorViewProps = NativeStackScreenProps<
 export const TempSensorView = ({ route }: TempSensorViewProps) => {
   const { location, nodeId, deviceId, botId, botHash } = route.params;
 
-  useTempHistory(location, nodeId, deviceId, botId, botHash);
-
-  const { currentTempSensorHistory, subscription } = useAppSelector(
-    selectTempSensorState,
-  );
-  useListenForHomeBotMessages(botId);
+  const { currentTempSensorHistory, subscription } = useTempHistory({
+    location,
+    nodeId,
+    deviceId,
+    botId,
+    botHash,
+  });
 
   const tempSensor = useAppSelector(state =>
     selectDeviceWithId(state, location, nodeId, deviceId),
@@ -68,10 +67,7 @@ export const TempSensorView = ({ route }: TempSensorViewProps) => {
   };
 
   const tempValue = useMemo(
-    () =>
-      (
-        Math.round(parseFloat(tempSensor?.values.V_TEMP) * 100) / 100
-      ).toString(),
+    () => Math.round(tempSensor?.values.V_TEMP * 100) / 100,
     [tempSensor.values.V_TEMP],
   );
 

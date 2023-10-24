@@ -41,7 +41,6 @@ const currentTempSensorSlice = createSlice({
 export const { setTempHistory, setTempSubscription } =
   currentTempSensorSlice.actions;
 
-export const selectTempSensorState = (state: RootState) =>
-  state.currentTempSensorHistory;
+export const selectTempSensorState = (state: RootState) => state.tempSensor;
 
 export default currentTempSensorSlice.reducer;

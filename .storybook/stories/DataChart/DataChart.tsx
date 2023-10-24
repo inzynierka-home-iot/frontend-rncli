@@ -8,43 +8,47 @@ export type DataChartProps = {
   chartData: ChartData[];
 };
 
+const HEIGHT_CALC_FACTOR = 1.5;
+
 export const DataChart: FC<DataChartProps> = ({ chartData }) => {
-  const [chartWidth, setChartWidth] = useState<number>(0);
+  const [chartWidth, setChartWidth] = useState(0);
+  const chartHeight = chartWidth / HEIGHT_CALC_FACTOR;
 
   const onLayout = (event: LayoutChangeEvent) => {
     const width = event.nativeEvent.layout.width;
     setChartWidth(width);
   };
 
-  const chartConfig = useMemo(() => {
-    return {
+  const chartConfig = useMemo(
+    () => ({
       backgroundColor: '#e26a00',
       backgroundGradientFrom: '#fb8c00',
       backgroundGradientTo: '#ffa726',
       decimalPlaces: 2,
       color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    };
-  }, []);
-
-  return (
-    <View onLayout={onLayout}>
-      <LineChart
-        data={{
-          labels: chartData.map(chartElement => chartElement.date),
-          datasets: [
-            {
-              data: chartData.map(chartElement => chartElement.value),
-            },
-          ],
-        }}
-        width={chartWidth}
-        height={chartWidth / 1.5}
-        chartConfig={chartConfig}
-        bezier
-        style={styles.chart}
-      />
-    </View>
+    }),
+    [],
   );
+
+  const lineChart = (
+    <LineChart
+      data={{
+        labels: chartData.map(chartElement => chartElement.date),
+        datasets: [
+          {
+            data: chartData.map(chartElement => chartElement.value),
+          },
+        ],
+      }}
+      width={chartWidth}
+      height={chartHeight}
+      chartConfig={chartConfig}
+      bezier
+      style={styles.chart}
+    />
+  );
+
+  return <View onLayout={onLayout}>{lineChart}</View>;
 };
 
 const styles = StyleSheet.create({
