@@ -106,7 +106,7 @@ const initialState: DeviceState = {
   devices: mockedData.devices,
 };
 
-const devicesSlice = createSlice({
+export const devicesSlice = createSlice({
   name: 'devices',
   initialState,
   reducers: {

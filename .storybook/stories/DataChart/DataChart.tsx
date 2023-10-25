@@ -6,11 +6,17 @@ import { theme } from '../../theme';
 
 export type DataChartProps = {
   chartData: ChartData[];
+  prefix?: string;
+  suffix?: string;
 };
 
 const HEIGHT_CALC_FACTOR = 1.5;
 
-export const DataChart: FC<DataChartProps> = ({ chartData }) => {
+export const DataChart: FC<DataChartProps> = ({
+  chartData,
+  prefix = '',
+  suffix = '',
+}) => {
   const [chartWidth, setChartWidth] = useState(0);
   const chartHeight = chartWidth / HEIGHT_CALC_FACTOR;
 
@@ -21,34 +27,37 @@ export const DataChart: FC<DataChartProps> = ({ chartData }) => {
 
   const chartConfig = useMemo(
     () => ({
-      backgroundColor: '#e26a00',
-      backgroundGradientFrom: '#fb8c00',
-      backgroundGradientTo: '#ffa726',
-      decimalPlaces: 2,
+      backgroundGradientFrom: theme.colors['background-gradient-from'],
+      backgroundGradientTo: theme.colors['background-gradient-to'],
+      decimalPlaces: 1,
       color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
     }),
     [],
   );
 
-  const lineChart = (
-    <LineChart
-      data={{
-        labels: chartData.map(chartElement => chartElement.date),
-        datasets: [
-          {
-            data: chartData.map(chartElement => chartElement.value),
-          },
-        ],
-      }}
-      width={chartWidth}
-      height={chartHeight}
-      chartConfig={chartConfig}
-      bezier
-      style={styles.chart}
-    />
-  );
+  const chartContent = {
+    labels: chartData.map(chartElement => chartElement.date),
+    datasets: [
+      {
+        data: chartData.map(chartElement => chartElement.value),
+      },
+    ],
+  };
 
-  return <View onLayout={onLayout}>{lineChart}</View>;
+  return (
+    <View onLayout={onLayout}>
+      <LineChart
+        data={chartContent}
+        width={chartWidth}
+        height={chartHeight}
+        chartConfig={chartConfig}
+        yAxisLabel={prefix}
+        yAxisSuffix={suffix}
+        bezier
+        style={styles.chart}
+      />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({

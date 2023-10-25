@@ -10,6 +10,7 @@ import { TempSensor } from '../../types/Device';
 import { useMemo } from 'react';
 import { useTempHistory } from '../../hooks/useTempHistory';
 import { DataChart } from '../../.storybook/stories/DataChart';
+import { selectTempSensorSubscription } from '../../redux/currentTempSensorSlice';
 
 type TempSensorViewProps = NativeStackScreenProps<
   RootStackParamList,
@@ -19,13 +20,15 @@ type TempSensorViewProps = NativeStackScreenProps<
 export const TempSensorView = ({ route }: TempSensorViewProps) => {
   const { location, nodeId, deviceId, botId, botHash } = route.params;
 
-  const { currentTempSensorHistory, subscription } = useTempHistory({
+  const currentTempSensorHistory = useTempHistory({
     location,
     nodeId,
     deviceId,
     botId,
     botHash,
   });
+
+  const subscription = useAppSelector(selectTempSensorSubscription);
 
   const tempSensor = useAppSelector(state =>
     selectDeviceWithId(state, location, nodeId, deviceId),
@@ -83,7 +86,7 @@ export const TempSensorView = ({ route }: TempSensorViewProps) => {
       <View style={styles.content}>
         <Typography
           variant="body-medium"
-          text={`Aktualna temperatura: ${tempValue}`}
+          text={`Aktualna temperatura: ${tempValue}°C`}
         />
         <Button
           text="Pobierz aktualną temperaturę"
@@ -111,12 +114,12 @@ export const TempSensorView = ({ route }: TempSensorViewProps) => {
           />
         )}
         {!!currentTempSensorHistory.length && (
-          <View>
+          <View style={styles.tempChart}>
             <Typography
               variant="body-medium"
               text={`Wykres z ostatnich ${currentTempSensorHistory.length} odczytów`}
             />
-            <DataChart chartData={currentTempSensorHistory} />
+            <DataChart chartData={currentTempSensorHistory} suffix="°C" />
           </View>
         )}
       </View>

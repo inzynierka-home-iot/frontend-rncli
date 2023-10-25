@@ -25,7 +25,7 @@ const initialState: TempSensorState = {
   subscription: mockedData.subscription,
 };
 
-const currentTempSensorSlice = createSlice({
+export const currentTempSensorSlice = createSlice({
   name: 'history',
   initialState,
   reducers: {
@@ -41,6 +41,10 @@ const currentTempSensorSlice = createSlice({
 export const { setTempHistory, setTempSubscription } =
   currentTempSensorSlice.actions;
 
-export const selectTempSensorState = (state: RootState) => state.tempSensor;
+export const selectTempSensorHistory = (state: RootState) =>
+  state.tempSensor.currentTempSensorHistory;
+
+export const selectTempSensorSubscription = (state: RootState) =>
+  state.tempSensor.subscription;
 
 export default currentTempSensorSlice.reducer;

@@ -25,7 +25,7 @@ export const IconButton: FC<IconButtonProps> = ({
       disabled={disabled}
       onPress={onPress}
       activeOpacity={0.5}>
-      <FontAwesomeIcon icon={icon} size={theme.spacing(6)} color="#ffffff" />
+      <FontAwesomeIcon icon={icon} size={theme.spacing(5)} color="#ffffff" />
     </TouchableOpacity>
   );
 };
@@ -45,7 +45,7 @@ const useStyles = (
   return StyleSheet.create({
     container: {
       backgroundColor: theme.colors[buttonColor],
-      padding: theme.spacing(2),
+      padding: theme.spacing(1),
       borderRadius: theme.spacing(6),
     },
   });

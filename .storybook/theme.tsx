@@ -17,6 +17,8 @@ export const theme: Theme = {
     'action-hover': '#303f9f',
     'action-active': '#273377',
     'action-selected': '#113997',
+    'background-gradient-from': '#3282d9',
+    'background-gradient-to': '#1c599c',
   },
   typography: {
     'header-large': {
@@ -80,7 +82,9 @@ export type ColorKeys =
   | 'action-primary'
   | 'action-hover'
   | 'action-active'
-  | 'action-selected';
+  | 'action-selected'
+  | 'background-gradient-from'
+  | 'background-gradient-to';
 
 export type Theme = {
   spacing: (num: number) => number;

@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { sendAPIRequest } from '../utils';
 import { useAppSelector } from '../redux/hooks';
-import { selectTempSensorState } from '../redux/currentTempSensorSlice';
 import { RootStackParamList } from '../types/Navigation';
+import { selectTempSensorHistory } from '../redux/currentTempSensorSlice';
 
 export const useTempHistory = ({
   location,
@@ -25,5 +25,5 @@ export const useTempHistory = ({
     }
   }, [botId, botHash]);
 
-  return useAppSelector(selectTempSensorState);
+  return useAppSelector(selectTempSensorHistory);
 };
