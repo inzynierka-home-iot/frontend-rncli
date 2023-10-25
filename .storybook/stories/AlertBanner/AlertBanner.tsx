@@ -51,12 +51,13 @@ const useStyles = (variant: AlertBannerProps['variant']) => {
     variant == 'success'
       ? 'text-success'
       : variant == 'informative'
-        ? 'text-informative'
-        : 'text-error';
+      ? 'text-informative'
+      : 'text-error';
 
   return StyleSheet.create({
     container: {
-      flex: 1,
+      position: 'absolute',
+      top: 0,
       backgroundColor: theme.colors[backgroundColor],
       flexDirection: 'row',
       alignItems: 'center',

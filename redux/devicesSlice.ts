@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Device } from '../types';
+import { Device, DeviceType } from '../types';
 import { RootState } from './store';
 
 interface DeviceState {
@@ -12,7 +12,7 @@ const mockedData = {
       location: 'home-1',
       id: '0',
       nodeId: '1',
-      type: 'S_BINARY',
+      type: DeviceType.S_BINARY,
       name: 'Green LED',
       values: {
         V_STATUS: '0',
@@ -23,18 +23,19 @@ const mockedData = {
       location: 'home-1',
       id: '1',
       nodeId: '1',
-      type: 'S_TEMP',
-      name: 'Temperature sensor',
+      type: DeviceType.S_TEMP,
+      name: 'Temp sensor',
       values: {
-        V_TEMP: 23.375,
+        V_TEMP: '23.375',
         V_ID: null,
+        SUBSCRIBE: false,
       },
     },
     {
       location: 'home-1',
       id: '2',
       nodeId: '1',
-      type: 'S_BINARY',
+      type: DeviceType.S_BINARY,
       name: 'Yellow LED',
       values: {
         V_STATUS: '1',
@@ -45,7 +46,7 @@ const mockedData = {
       location: 'home-1',
       id: '3',
       nodeId: '1',
-      type: 'S_BINARY',
+      type: DeviceType.S_BINARY,
       name: 'Red LED',
       values: {
         V_STATUS: '0',
@@ -56,7 +57,7 @@ const mockedData = {
       location: 'home-1',
       id: '4',
       nodeId: '1',
-      type: 'S_LOCK',
+      type: DeviceType.S_LOCK,
       name: 'Button',
       values: { V_LOCK_STATUS: '0' },
     },
@@ -64,7 +65,7 @@ const mockedData = {
       location: 'home-1',
       id: '5',
       nodeId: '1',
-      type: 'S_LOCK',
+      type: DeviceType.S_LOCK,
       name: 'Button',
       values: { V_LOCK_STATUS: '0' },
     },
@@ -72,7 +73,7 @@ const mockedData = {
       location: 'home-1',
       id: '6',
       nodeId: '1',
-      type: 'S_LOCK',
+      type: DeviceType.S_LOCK,
       name: 'Button',
       values: { V_LOCK_STATUS: '0' },
     },
@@ -80,7 +81,7 @@ const mockedData = {
       location: 'home-1',
       id: '7',
       nodeId: '1',
-      type: 'S_BINARY',
+      type: DeviceType.S_BINARY,
       name: 'Red LED',
       values: {
         V_STATUS: '1',
@@ -91,7 +92,7 @@ const mockedData = {
       location: 'home-1',
       id: '8',
       nodeId: '1',
-      type: 'S_BINARY',
+      type: DeviceType.S_BINARY,
       name: 'Red LED',
       values: {
         V_STATUS: '0',

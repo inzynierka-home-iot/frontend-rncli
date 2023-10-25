@@ -22,20 +22,16 @@ export const Navbar: FC<NavbarProps> = ({
 
   return (
     <View style={styles.container}>
-      <Typography variant={'header-small'} text={text} />
-      {(button || backButton) && (
-        <View style={styles.buttons}>
-          {button && <Button {...button} />}
-          {backButton && (
-            <IconButton
-              icon={faChevronLeft}
-              onPress={() => {
-                navigation.goBack();
-              }}
-            />
-          )}
-        </View>
+      {backButton && (
+        <IconButton
+          icon={faChevronLeft}
+          onPress={() => {
+            navigation.goBack();
+          }}
+        />
       )}
+      <Typography variant="header-small" text={text} />
+      {button && <Button {...button} />}
     </View>
   );
 };
@@ -51,14 +47,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: theme.colors['text-invertedPrimary'],
     elevation: 2,
-  },
-  buttons: {
-    flexDirection: 'row',
-    gap: theme.spacing(4),
-  },
-  backButton: {
-    backgroundColor: theme.colors['background-neutral'],
-    padding: theme.spacing(2),
-    borderRadius: theme.spacing(6),
   },
 });
