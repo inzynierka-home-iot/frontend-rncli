@@ -30,7 +30,7 @@ export const Navbar: FC<NavbarProps> = ({
           }}
         />
       )}
-      <Typography variant={'header-small'} text={text} />
+      <Typography variant="header-small" text={text} />
       {button && <Button {...button} />}
     </View>
   );
