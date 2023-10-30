@@ -11,6 +11,7 @@ import { store } from './redux/store';
 import { useTelegramConnection } from './hooks';
 import { RootStackParamList } from './types';
 import { TempSensorView } from './views/TempSensorView';
+import { Loading } from './.storybook/stories/Loading';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -22,7 +23,7 @@ export default function App() {
   }
 
   if (!isConnected) {
-    return <Text>Loading</Text>;
+    return <Loading />;
   }
 
   return (

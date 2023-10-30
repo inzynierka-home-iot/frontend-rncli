@@ -102,7 +102,8 @@ const mockedData = {
 };
 
 const initialState: DeviceState = {
-  devices: mockedData.devices,
+  // devices: mockedData.devices,
+  devices: [],
 };
 
 export const devicesSlice = createSlice({
@@ -153,7 +154,9 @@ export const devicesSlice = createSlice({
 export const { setInitialDevice, setDeviceValues, addDevice, removeDevice } =
   devicesSlice.actions;
 
-export const selectDevices = (state: RootState) => state.devices;
+export const selectDevices = (state: RootState) => state.devices.devices;
+
+export const selectReload = (state: RootState) => !state.devices.devices.length;
 
 export const selectDeviceWithId = (
   state: RootState,
