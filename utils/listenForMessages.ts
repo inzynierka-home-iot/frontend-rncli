@@ -32,10 +32,12 @@ export const listenForMessages = async (
         if (message.req === '/*/*/*/get/') {
           dispatch(setInitialDevice(message.res));
         } else if (command === 'set' || command === 'status') {
-          const values =
-            command === 'set'
-              ? paramsToObject(message.req.split('?')[1])
-              : message.res;
+          let values = message.res;
+          if (command === 'set') {
+            if (message.res.status) {
+              values = paramsToObject(message.req.split('?')[1]);
+            }
+          }
           dispatch(
             setDeviceValues({
               location,
