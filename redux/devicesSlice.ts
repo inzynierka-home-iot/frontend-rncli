@@ -28,7 +28,6 @@ const mockedData = {
       values: {
         V_TEMP: '23.375',
         V_ID: null,
-        SUBSCRIBE: false,
       },
     },
     {

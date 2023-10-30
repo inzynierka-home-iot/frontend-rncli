@@ -36,7 +36,7 @@ export const DataChart: FC<DataChartProps> = ({
   );
 
   const chartContent = {
-    labels: chartData.map(chartElement => chartElement.date),
+    labels: chartData.map(chartElement => chartElement.index),
     datasets: [
       {
         data: chartData.map(chartElement => chartElement.value),

@@ -9,6 +9,16 @@ import { AppDispatch } from '../redux/store';
 import { Message } from '../types';
 import { mtproto } from './mtprotoClient';
 
+const paramsToObject = (params: string) => {
+  const paramsList = params.split('&');
+  const paramObj: any = {};
+  for (let param of paramsList) {
+    const [key, value] = param.split('=');
+    paramObj[key] = value;
+  }
+  return paramObj;
+};
+
 export const listenForMessages = async (
   user_id: string,
   dispatch: AppDispatch,
@@ -21,14 +31,19 @@ export const listenForMessages = async (
         const [_, location, nodeId, deviceId, command] = message.req.split('/');
         if (message.req === '/*/*/*/get/') {
           dispatch(setInitialDevice(message.res));
-        }
-        if (command === 'set' || command === 'status') {
+        } else if (command === 'set' || command === 'status') {
+          let values = message.res;
+          if (command === 'set') {
+            if (message.res.status) {
+              values = paramsToObject(message.req.split('?')[1]);
+            }
+          }
           dispatch(
             setDeviceValues({
               location,
               nodeId,
               deviceId,
-              values: message.res.values,
+              values,
             }),
           );
         } else if (command === 'statusAll') {
