@@ -29,8 +29,11 @@ export const currentTempSensorSlice = createSlice({
   name: 'history',
   initialState,
   reducers: {
-    setTempHistory: (state, action: PayloadAction<ChartData[]>) => {
-      state.currentTempSensorHistory = action.payload;
+    setTempHistory: (state, action: PayloadAction<number[]>) => {
+      state.currentTempSensorHistory = action.payload.map((number, i) => ({
+        date: i.toString(),
+        value: number,
+      }));
     },
     setTempSubscription: (state, action: PayloadAction<boolean>) => {
       state.subscription = action.payload;
