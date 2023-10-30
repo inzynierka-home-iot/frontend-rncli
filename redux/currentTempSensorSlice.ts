@@ -9,13 +9,13 @@ interface TempSensorState {
 
 const mockedData = {
   currentTempSensorHistory: [
-    { date: '1', value: 23.255 },
-    { date: '2', value: 24.546 },
-    { date: '3', value: 22.342 },
-    { date: '4', value: 25.362 },
-    { date: '5', value: 27.355 },
-    { date: '6', value: 24.825 },
-    { date: '7', value: 21.367 },
+    { index: '1', value: 23.255 },
+    { index: '2', value: 24.546 },
+    { index: '3', value: 22.342 },
+    { index: '4', value: 25.362 },
+    { index: '5', value: 27.355 },
+    { index: '6', value: 24.825 },
+    { index: '7', value: 21.367 },
   ] as ChartData[],
   subscription: false,
 };
@@ -30,8 +30,8 @@ export const currentTempSensorSlice = createSlice({
   initialState,
   reducers: {
     setTempHistory: (state, action: PayloadAction<number[]>) => {
-      state.currentTempSensorHistory = action.payload.map((number, i) => ({
-        date: i.toString(),
+      state.currentTempSensorHistory = action.payload.map((number, index) => ({
+        index: index.toString(),
         value: number,
       }));
     },
