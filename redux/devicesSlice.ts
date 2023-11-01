@@ -3,7 +3,8 @@ import { Device, DeviceType } from '../types';
 import { RootState } from './store';
 
 interface DeviceState {
-  devices: Device[];
+  devicesList: Device[];
+  isLoading: boolean;
 }
 
 const mockedData = {
@@ -98,12 +99,13 @@ const mockedData = {
         V_WATT: null,
       },
     },
-  ],
+  ] as Device[],
 };
 
 const initialState: DeviceState = {
   // devices: mockedData.devices,
-  devices: [],
+  devicesList: [],
+  isLoading: true,
 };
 
 export const devicesSlice = createSlice({
@@ -111,7 +113,8 @@ export const devicesSlice = createSlice({
   initialState,
   reducers: {
     setInitialDevice: (state, action: PayloadAction<Device[]>) => {
-      state.devices = action.payload;
+      state.devicesList = action.payload;
+      state.isLoading = false;
     },
     setDeviceValues: (
       state,
@@ -123,7 +126,7 @@ export const devicesSlice = createSlice({
       }>,
     ) => {
       const { location, nodeId, deviceId, values } = action.payload;
-      const searchedDevice = state.devices.find(
+      const searchedDevice = state.devicesList.find(
         device =>
           device.location === location &&
           device.nodeId === nodeId &&
@@ -137,26 +140,35 @@ export const devicesSlice = createSlice({
       }
     },
     addDevice: (state, action: PayloadAction<Device>) => {
-      state.devices.push(action.payload);
+      state.devicesList.push(action.payload);
     },
     removeDevice: (state, action: PayloadAction<Device>) => {
       const { location, nodeId, id } = action.payload;
-      state.devices = state.devices.filter(
+      state.devicesList = state.devicesList.filter(
         device =>
           device.location !== location ||
           device.nodeId !== nodeId ||
           device.id !== id,
       );
     },
+    startLoading: state => {
+      state.isLoading = true;
+    },
   },
 });
 
-export const { setInitialDevice, setDeviceValues, addDevice, removeDevice } =
-  devicesSlice.actions;
+export const {
+  setInitialDevice,
+  setDeviceValues,
+  addDevice,
+  removeDevice,
+  startLoading,
+} = devicesSlice.actions;
 
-export const selectDevices = (state: RootState) => state.devices.devices;
+export const selectDevices = (state: RootState) => state.devices.devicesList;
 
-export const selectReload = (state: RootState) => !state.devices.devices.length;
+export const selectDevicesLoading = (state: RootState) =>
+  state.devices.isLoading;
 
 export const selectDeviceWithId = (
   state: RootState,
@@ -164,7 +176,7 @@ export const selectDeviceWithId = (
   nodeId: string,
   id: string,
 ) =>
-  state.devices.devices.find(
+  state.devices.devicesList.find(
     device =>
       device.location === location &&
       device.nodeId === nodeId &&

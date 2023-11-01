@@ -6,15 +6,13 @@ export const useInitialDevices = (
   botAccessHash: string | null,
 ) => {
   useEffect(() => {
-    if (botId && botAccessHash) {
-      sendAPIRequest({
-        location: '*',
-        nodeId: '*',
-        deviceId: '*',
-        action: 'get',
-        botHash: botAccessHash,
-        botId,
-      });
-    }
+    sendAPIRequest({
+      location: '*',
+      nodeId: '*',
+      deviceId: '*',
+      action: 'get',
+      botHash: botAccessHash,
+      botId,
+    });
   }, [botId, botAccessHash]);
 };

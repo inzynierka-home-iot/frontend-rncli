@@ -11,7 +11,7 @@ import { store } from './redux/store';
 import { useTelegramConnection } from './hooks';
 import { RootStackParamList } from './types';
 import { TempSensorView } from './views/TempSensorView';
-import { Loading } from './.storybook/stories/Loading';
+import { LoadingWrapper } from './components/LoadingWrapper';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -22,24 +22,25 @@ export default function App() {
     return <Text>Error</Text>;
   }
 
-  if (!isConnected) {
-    return <Loading />;
-  }
-
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Login" component={LoginView} />
-          <Stack.Screen name="ConfirmAuth" component={ConfirmAuthView} />
-          <Stack.Screen name="DeviceList" component={DeviceListView} />
-          <Stack.Screen name="Light" component={LightView} />
-          <Stack.Screen name="TempSensor" component={TempSensorView} />
-          <Stack.Screen name="Telegram" component={TelegramForm} />
-        </Stack.Navigator>
-        <FlashMessage position="top" />
-      </NavigationContainer>
-    </Provider>
+    <LoadingWrapper
+      isLoading={!isConnected}
+      children={
+        <Provider store={store}>
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="Login" component={LoginView} />
+              <Stack.Screen name="ConfirmAuth" component={ConfirmAuthView} />
+              <Stack.Screen name="DeviceList" component={DeviceListView} />
+              <Stack.Screen name="Light" component={LightView} />
+              <Stack.Screen name="TempSensor" component={TempSensorView} />
+              <Stack.Screen name="Telegram" component={TelegramForm} />
+            </Stack.Navigator>
+            <FlashMessage position="top" />
+          </NavigationContainer>
+        </Provider>
+      }
+    />
   );
 }
 
