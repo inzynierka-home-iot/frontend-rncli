@@ -6,8 +6,8 @@ type SendAPIRequestFunction = (params: {
   deviceId: string;
   action: string;
   additionalParams?: string;
-  botHash: string;
-  botId: string;
+  botHash: string | null;
+  botId: string | null;
 }) => Promise<any>;
 
 export const sendAPIRequest: SendAPIRequestFunction = ({
@@ -18,11 +18,15 @@ export const sendAPIRequest: SendAPIRequestFunction = ({
   additionalParams = '',
   botHash,
   botId,
-}) =>
-  sendIoTMessage(
-    `/${location}/${nodeId}/${deviceId}/${action}/${
-      additionalParams ? `?${additionalParams}` : ''
-    }`,
-    botHash,
-    botId,
-  );
+}) => {
+  if (botId && botHash) {
+    return sendIoTMessage(
+      `/${location}/${nodeId}/${deviceId}/${action}/${
+        additionalParams ? `?${additionalParams}` : ''
+      }`,
+      botHash,
+      botId,
+    );
+  }
+  return Promise.resolve();
+};
