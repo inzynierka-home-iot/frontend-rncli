@@ -23,7 +23,7 @@ export const useTempHistory = ({
         botId,
       });
     }
-  }, [botId, botHash]);
+  }, [botId, botHash, location, nodeId, deviceId]);
 
   const tempSensorHistory = useAppSelector(selectTempSensorHistory);
 

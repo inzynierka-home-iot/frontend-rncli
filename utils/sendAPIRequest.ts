@@ -5,24 +5,31 @@ type SendAPIRequestFunction = (params: {
   nodeId: string;
   deviceId: string;
   action: string;
-  additionalParams?: string;
+  additionalParams?: Object;
   botHash: string;
   botId: string;
-}) => Promise<any>;
+}) => any;
 
 export const sendAPIRequest: SendAPIRequestFunction = ({
   location,
   nodeId,
   deviceId,
   action,
-  additionalParams = '',
+  additionalParams = {},
   botHash,
   botId,
-}) =>
+}) => {
+  const isParamsString = typeof additionalParams === 'string';
+  const params = isParamsString
+    ? additionalParams
+    : Object.entries(additionalParams)
+      .map(([key, value]) => `${key}=${value}`)
+      .join('&');
+
   sendIoTMessage(
-    `/${location}/${nodeId}/${deviceId}/${action}/${
-      additionalParams ? `?${additionalParams}` : ''
+    `/${location}/${nodeId}/${deviceId}/${action}/${params ? `?${params}` : ''
     }`,
     botHash,
     botId,
   );
+};

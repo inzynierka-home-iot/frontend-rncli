@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Checkbox } from './Checkbox';
 

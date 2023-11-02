@@ -35,27 +35,27 @@ export const LightView = ({ route }: LightViewProps) => {
   const handleLightOn = () =>
     sendAPIRequest({
       ...lightActionBaseParams,
-      additionalParams: 'V_STATUS=1',
+      additionalParams: { V_STATUS: 1 },
     });
 
   const handleLightOff = () =>
     sendAPIRequest({
       ...lightActionBaseParams,
-      additionalParams: 'V_STATUS=0',
+      additionalParams: { V_STATUS: 0 },
     });
 
   const handleAllLightsOn = () =>
     sendAPIRequest({
       ...lightActionBaseParams,
       deviceId: '*',
-      additionalParams: 'V_STATUS=1',
+      additionalParams: { V_STATUS: 1 },
     });
 
   const handleAllLightsOff = () =>
     sendAPIRequest({
       ...lightActionBaseParams,
       deviceId: '*',
-      additionalParams: 'V_STATUS=0',
+      additionalParams: { V_STATUS: 0 },
     });
 
   if (!light) {
@@ -70,9 +70,8 @@ export const LightView = ({ route }: LightViewProps) => {
       <View style={styles.content}>
         <Typography
           variant="body-medium"
-          text={`Aktualny status lampy to: ${
-            status ? 'Włączona' : 'Wyłączona'
-          }`}
+          text={`Aktualny status lampy to: ${status ? 'Włączona' : 'Wyłączona'
+            }`}
         />
         {status ? (
           <Button text="Wyłącz" hasFullWidth onPress={handleLightOff} />

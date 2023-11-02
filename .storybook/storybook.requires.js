@@ -43,20 +43,21 @@ if (parameters) {
 
 try {
   argsEnhancers.forEach(enhancer => addArgsEnhancer(enhancer));
-} catch {}
+} catch { }
 
 const getStories = () => {
   return {
-    './.storybook/stories/Button/Button.stories.tsx': require('./stories/Button/Button.stories.tsx'),
-    './.storybook/stories/IconButton/IconButton.stories.tsx': require('./stories/IconButton/IconButton.stories.tsx'),
-    './.storybook/stories/Typography/Typography.stories.tsx': require('./stories/Typography/Typography.stories.tsx'),
-    './.storybook/stories/Checkbox/Checkbox.stories.tsx': require('./stories/Checkbox/Checkbox.stories.tsx'),
-    './.storybook/stories/Input/Input.stories.tsx': require('./stories/Input/Input.stories'),
     './.storybook/stories/AlertBanner/AlertBanner.stories.tsx': require('./stories/AlertBanner/AlertBanner.stories'),
-    './.storybook/stories/ListItem/ListItem.stories.tsx': require('./stories/ListItem/ListItem.stories'),
-    './.storybook/stories/Select/Select.stories.tsx': require('./stories/Select/Select.stories'),
-    './.storybook/stories/Navbar/Navbar.stories.tsx': require('./stories/Navbar/Navbar.stories'),
+    './.storybook/stories/Button/Button.stories.tsx': require('./stories/Button/Button.stories.tsx'),
+    './.storybook/stories/Checkbox/Checkbox.stories.tsx': require('./stories/Checkbox/Checkbox.stories.tsx'),
     './.storybook/stories/DataChart/DataChart.stories.tsx': require('./stories/DataChart/DataChart.stories'),
+    './.storybook/stories/DatePicker/ScheduleDatePicker.stories.tsx': require('./stories/DatePicker/ScheduleDatePicker.stories'),
+    './.storybook/stories/IconButton/IconButton.stories.tsx': require('./stories/IconButton/IconButton.stories.tsx'),
+    './.storybook/stories/Input/Input.stories.tsx': require('./stories/Input/Input.stories'),
+    './.storybook/stories/ListItem/ListItem.stories.tsx': require('./stories/ListItem/ListItem.stories'),
+    './.storybook/stories/Navbar/Navbar.stories.tsx': require('./stories/Navbar/Navbar.stories'),
+    './.storybook/stories/Select/Select.stories.tsx': require('./stories/Select/Select.stories'),
+    './.storybook/stories/Typography/Typography.stories.tsx': require('./stories/Typography/Typography.stories.tsx'),
   };
 };
 
