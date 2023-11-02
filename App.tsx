@@ -23,24 +23,21 @@ export default function App() {
   }
 
   return (
-    <LoadingWrapper
-      isLoading={!isConnected}
-      children={
-        <Provider store={store}>
-          <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="Login" component={LoginView} />
-              <Stack.Screen name="ConfirmAuth" component={ConfirmAuthView} />
-              <Stack.Screen name="DeviceList" component={DeviceListView} />
-              <Stack.Screen name="Light" component={LightView} />
-              <Stack.Screen name="TempSensor" component={TempSensorView} />
-              <Stack.Screen name="Telegram" component={TelegramForm} />
-            </Stack.Navigator>
-            <FlashMessage position="top" />
-          </NavigationContainer>
-        </Provider>
-      }
-    />
+    <LoadingWrapper isLoading={!isConnected}>
+      <Provider store={store}>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Login" component={LoginView} />
+            <Stack.Screen name="ConfirmAuth" component={ConfirmAuthView} />
+            <Stack.Screen name="DeviceList" component={DeviceListView} />
+            <Stack.Screen name="Light" component={LightView} />
+            <Stack.Screen name="TempSensor" component={TempSensorView} />
+            <Stack.Screen name="Telegram" component={TelegramForm} />
+          </Stack.Navigator>
+          <FlashMessage position="top" />
+        </NavigationContainer>
+      </Provider>
+    </LoadingWrapper>
   );
 }
 

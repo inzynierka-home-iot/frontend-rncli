@@ -37,7 +37,6 @@ export const DeviceListView = () => {
 
   const devices = useAppSelector(selectDevices);
   const loading = useAppSelector(selectDevicesLoading);
-  const reload = !devices.length;
 
   const [botId, botHash] = useResolveBotData();
   useInitialDevices(botId, botHash);
@@ -82,7 +81,7 @@ export const DeviceListView = () => {
     onPress: handleLogout,
   };
 
-  const child = reload ? (
+  const child = !devices.length ? (
     <View style={styles.reload}>
       <Typography variant={'body-large'} text="Brak dostępnych urządzeń" />
       <Button text="Odśwież listę" size="small" onPress={reloadDevices} />
@@ -104,7 +103,7 @@ export const DeviceListView = () => {
         button={logoutButtonProps}
         backButton={false}
       />
-      <LoadingWrapper isLoading={loading} children={child} />
+      <LoadingWrapper isLoading={loading}>{child}</LoadingWrapper>
     </View>
   );
 };
