@@ -81,21 +81,6 @@ export const DeviceListView = () => {
     onPress: handleLogout,
   };
 
-  const child = !devices.length ? (
-    <View style={styles.reload}>
-      <Typography variant={'body-large'} text="Brak dostępnych urządzeń" />
-      <Button text="Odśwież listę" size="small" onPress={reloadDevices} />
-    </View>
-  ) : (
-    <FlatList
-      style={styles.content}
-      data={devices}
-      renderItem={({ item: device }) => createDeviceElement(device)}
-      keyExtractor={createDeviceKey}
-      ItemSeparatorComponent={createSeparatingElement}
-    />
-  );
-
   return (
     <View style={styles.container}>
       <Navbar
@@ -103,7 +88,25 @@ export const DeviceListView = () => {
         button={logoutButtonProps}
         backButton={false}
       />
-      <LoadingWrapper isLoading={loading}>{child}</LoadingWrapper>
+      <LoadingWrapper isLoading={loading}>
+        {!devices.length ? (
+          <View style={styles.reload}>
+            <Typography
+              variant={'body-large'}
+              text="Brak dostępnych urządzeń"
+            />
+            <Button text="Odśwież listę" size="small" onPress={reloadDevices} />
+          </View>
+        ) : (
+          <FlatList
+            style={styles.content}
+            data={devices}
+            renderItem={({ item: device }) => createDeviceElement(device)}
+            keyExtractor={createDeviceKey}
+            ItemSeparatorComponent={createSeparatingElement}
+          />
+        )}
+      </LoadingWrapper>
     </View>
   );
 };
