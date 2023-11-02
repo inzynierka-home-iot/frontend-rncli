@@ -47,5 +47,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: theme.colors['text-invertedPrimary'],
     elevation: 2,
+    zIndex: 1,
   },
 });

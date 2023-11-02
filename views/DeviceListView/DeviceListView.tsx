@@ -1,9 +1,13 @@
 import React, { useCallback } from 'react';
 import { FlatList, View } from 'react-native';
-import { getDeviceIcon } from '../../utils';
+import { getDeviceIcon, sendAPIRequest } from '../../utils';
 import { Device } from '../../types';
-import { useAppSelector } from '../../redux/hooks';
-import { selectDevices } from '../../redux/devicesSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import {
+  selectDevices,
+  selectDevicesLoading,
+  startLoading,
+} from '../../redux/devicesSlice';
 import { logoutFromTelegram } from '../../utils';
 import {
   useAppNavigation,
@@ -11,9 +15,16 @@ import {
   useListenForHomeBotMessages,
   useResolveBotData,
 } from '../../hooks';
-import { ButtonProps, ListItem, Navbar } from '../../.storybook/stories';
+import {
+  Button,
+  ButtonProps,
+  ListItem,
+  Navbar,
+  Typography,
+} from '../../.storybook/stories';
 import { styles } from './DeviceListView.styles';
 import { getDeviceViewName } from './utils';
+import { LoadingWrapper } from '../../components/LoadingWrapper';
 
 const createDeviceKey = (device: Device) =>
   device.location + '/' + device.nodeId + '/' + device.id;
@@ -22,8 +33,10 @@ const createSeparatingElement = () => <View style={styles.separatingElement} />;
 
 export const DeviceListView = () => {
   const navigation = useAppNavigation();
+  const dispatch = useAppDispatch();
 
-  const { devices } = useAppSelector(selectDevices);
+  const devices = useAppSelector(selectDevices);
+  const loading = useAppSelector(selectDevicesLoading);
 
   const [botId, botHash] = useResolveBotData();
   useInitialDevices(botId, botHash);
@@ -32,6 +45,18 @@ export const DeviceListView = () => {
   const handleLogout = useCallback(() => {
     logoutFromTelegram(navigation);
   }, [navigation]);
+
+  const reloadDevices = () => {
+    dispatch(startLoading());
+    sendAPIRequest({
+      location: '*',
+      nodeId: '*',
+      deviceId: '*',
+      action: 'get',
+      botHash,
+      botId,
+    });
+  };
 
   const createDeviceElement = (device: Device) => (
     <ListItem
@@ -63,13 +88,25 @@ export const DeviceListView = () => {
         button={logoutButtonProps}
         backButton={false}
       />
-      <FlatList
-        style={styles.content}
-        data={devices}
-        renderItem={({ item: device }) => createDeviceElement(device)}
-        keyExtractor={createDeviceKey}
-        ItemSeparatorComponent={createSeparatingElement}
-      />
+      <LoadingWrapper isLoading={loading}>
+        {!devices.length ? (
+          <View style={styles.reload}>
+            <Typography
+              variant={'body-large'}
+              text="Brak dostępnych urządzeń"
+            />
+            <Button text="Odśwież listę" size="small" onPress={reloadDevices} />
+          </View>
+        ) : (
+          <FlatList
+            style={styles.content}
+            data={devices}
+            renderItem={({ item: device }) => createDeviceElement(device)}
+            keyExtractor={createDeviceKey}
+            ItemSeparatorComponent={createSeparatingElement}
+          />
+        )}
+      </LoadingWrapper>
     </View>
   );
 };

@@ -58,6 +58,7 @@ const getStories = () => {
     './.storybook/stories/Navbar/Navbar.stories.tsx': require('./stories/Navbar/Navbar.stories'),
     './.storybook/stories/Select/Select.stories.tsx': require('./stories/Select/Select.stories'),
     './.storybook/stories/Typography/Typography.stories.tsx': require('./stories/Typography/Typography.stories.tsx'),
+    './.storybook/stories/Loading/Loading.stories.tsx': require('./stories/Loading/Loading.stories'),
   };
 };
 

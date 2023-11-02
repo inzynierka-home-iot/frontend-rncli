@@ -5,10 +5,10 @@ type SendAPIRequestFunction = (params: {
   nodeId: string;
   deviceId: string;
   action: string;
-  additionalParams?: Object;
-  botHash: string;
-  botId: string;
-}) => any;
+  additionalParams?: Object | string;
+  botHash: string | null;
+  botId: string | null;
+}) => Promise<any>;
 
 export const sendAPIRequest: SendAPIRequestFunction = ({
   location,
@@ -26,10 +26,13 @@ export const sendAPIRequest: SendAPIRequestFunction = ({
       .map(([key, value]) => `${key}=${value}`)
       .join('&');
 
-  sendIoTMessage(
-    `/${location}/${nodeId}/${deviceId}/${action}/${params ? `?${params}` : ''
-    }`,
-    botHash,
-    botId,
-  );
+  if (botId && botHash) {
+    return sendIoTMessage(
+      `/${location}/${nodeId}/${deviceId}/${action}/${params ? `?${params}` : ''
+      }`,
+      botHash,
+      botId,
+    );
+  }
+  return Promise.resolve();
 };
