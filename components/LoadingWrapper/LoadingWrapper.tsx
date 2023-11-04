@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactNode } from 'react';
+import React, { PropsWithChildren, ReactNode } from 'react';
 import { Loading } from '../../.storybook/stories/Loading';
 
 type LoadingWrapperProps = (
@@ -8,10 +8,10 @@ type LoadingWrapperProps = (
 export const LoadingWrapper: LoadingWrapperProps = ({
   isLoading,
   children,
-}) => {
+}): ReactNode => {
   if (isLoading) {
     return <Loading />;
   }
 
-  return children;
+  return <>{children}</>;
 };

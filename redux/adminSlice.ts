@@ -2,12 +2,18 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface AdminState {
   isWaitingForName: boolean;
-  isWaitingForId: boolean;
+  isWaitingForUsername: boolean;
+  isUsernameTakenError: boolean;
+  isUsernameInvalidError: boolean;
+  newBotToken: string;
 }
 
 const initialState: AdminState = {
   isWaitingForName: false,
-  isWaitingForId: false,
+  isWaitingForUsername: false,
+  isUsernameTakenError: false,
+  isUsernameInvalidError: false,
+  newBotToken: '',
 };
 
 export const adminSlice = createSlice({
@@ -17,12 +23,27 @@ export const adminSlice = createSlice({
     setIsWaitingForName: (state, action: PayloadAction<boolean>) => {
       state.isWaitingForName = action.payload;
     },
-    setIsWaitingForId: (state, action: PayloadAction<boolean>) => {
-      state.isWaitingForId = action.payload;
+    setIsWaitingForUsername: (state, action: PayloadAction<boolean>) => {
+      state.isWaitingForUsername = action.payload;
+    },
+    setIsUsernameTakenError: (state, action: PayloadAction<boolean>) => {
+      state.isUsernameTakenError = action.payload;
+    },
+    setIsUsernameInvalidError: (state, action: PayloadAction<boolean>) => {
+      state.isUsernameInvalidError = action.payload;
+    },
+    setNewBotToken: (state, action: PayloadAction<string>) => {
+      state.newBotToken = action.payload;
     },
   },
 });
 
-export const { setIsWaitingForName, setIsWaitingForId } = adminSlice.actions;
+export const {
+  setIsWaitingForName,
+  setIsWaitingForUsername,
+  setIsUsernameTakenError,
+  setIsUsernameInvalidError,
+  setNewBotToken,
+} = adminSlice.actions;
 
 export default adminSlice.reducer;

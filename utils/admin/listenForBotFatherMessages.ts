@@ -1,4 +1,10 @@
-import { setIsWaitingForId, setIsWaitingForName } from '../../redux/adminSlice';
+import {
+  setNewBotToken,
+  setIsWaitingForUsername,
+  setIsWaitingForName,
+  setIsUsernameTakenError,
+  setIsUsernameInvalidError,
+} from '../../redux/adminSlice';
 import { AppDispatch } from '../../redux/store';
 import { mtproto } from '../mtprotoClient';
 
@@ -7,6 +13,16 @@ const newBotResponse =
 
 const provideIdResponse =
   "Good. Now let's choose a username for your bot. It must end in `bot`. Like this, for example: TetrisBot or tetris_bot.";
+
+const createBotNameTakenError =
+  'Sorry, this username is already taken. Please try something different.';
+
+const createBotNameInvalidError = 'Sorry, this username is invalid.';
+
+const createBotSuccess = 'Done! Congratulations on your new bot.';
+
+const hashStart = 'Use this token to access the HTTP API:';
+const hashEnd = 'Keep your token secure and store it safely';
 
 export const listenForBotFatherMessages = async (
   user_id: string,
@@ -19,7 +35,6 @@ export const listenForBotFatherMessages = async (
       updates: { message: { message: string } }[];
     }) => {
       const users = updateInfo.users.map(({ id }) => id);
-      console.log(users);
       if (users.includes(user_id)) {
         const messages = updateInfo.updates.map(
           ({ message }) => message.message,
@@ -28,7 +43,26 @@ export const listenForBotFatherMessages = async (
           dispatch(setIsWaitingForName(true));
         }
         if (messages.includes(provideIdResponse)) {
-          dispatch(setIsWaitingForId(true));
+          dispatch(setIsWaitingForName(false));
+          dispatch(setIsWaitingForUsername(true));
+        }
+        if (messages.includes(createBotNameTakenError)) {
+          dispatch(setIsUsernameTakenError(true));
+          dispatch(setIsUsernameInvalidError(false));
+        }
+        if (messages.includes(createBotNameInvalidError)) {
+          dispatch(setIsUsernameInvalidError(true));
+          dispatch(setIsUsernameTakenError(false));
+        }
+        const successMessage = messages.find(message =>
+          message.includes(createBotSuccess),
+        );
+        if (successMessage) {
+          dispatch(setIsWaitingForName(false));
+          dispatch(setIsWaitingForUsername(false));
+          const messageWithHashStart = successMessage.split(hashStart)[1];
+          const hash = messageWithHashStart.split(hashEnd)[0];
+          dispatch(setNewBotToken(hash));
         }
       }
     },
