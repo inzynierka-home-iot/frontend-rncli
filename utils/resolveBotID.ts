@@ -1,12 +1,9 @@
 import { SaveStoredValue } from './EncryptedStorage';
 import { BOT_NAME } from './env';
-import { mtproto } from './mtprotoClient';
+import { resolveUserID } from './resolveUserID';
 
 export const resolveBotID = async () => {
-  const res = await mtproto.call('contacts.resolveUsername', {
-    username: BOT_NAME,
-  });
-  const { access_hash, id } = res.users[0];
+  const { access_hash, id } = await resolveUserID(BOT_NAME);
   SaveStoredValue('bot_conversation_access_hash', access_hash);
   SaveStoredValue('bot_user_id', id);
 };

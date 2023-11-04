@@ -12,6 +12,7 @@ import { useTelegramConnection } from './hooks';
 import { RootStackParamList } from './types';
 import { TempSensorView } from './views/TempSensorView';
 import { LoadingWrapper } from './components/LoadingWrapper';
+import { AdminView } from './views/AdminView/AdminView';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -27,6 +28,7 @@ export default function App() {
       <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Admin" component={AdminView} />
             <Stack.Screen name="Login" component={LoginView} />
             <Stack.Screen name="ConfirmAuth" component={ConfirmAuthView} />
             <Stack.Screen name="DeviceList" component={DeviceListView} />

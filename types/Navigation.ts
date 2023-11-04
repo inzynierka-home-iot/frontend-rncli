@@ -9,6 +9,7 @@ type DeviceViewRouteParams = {
 };
 
 export type RootStackParamList = {
+  Admin: undefined;
   Login: undefined;
   ConfirmAuth: {
     phoneCodeHash: string;
