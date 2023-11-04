@@ -1,0 +1,1 @@
+export { LocationListView } from './LocationListView';

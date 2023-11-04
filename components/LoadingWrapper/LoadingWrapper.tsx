@@ -8,10 +8,10 @@ type LoadingWrapperProps = (
 export const LoadingWrapper: LoadingWrapperProps = ({
   isLoading,
   children,
-}): ReactNode => {
+}) => {
   if (isLoading) {
     return <Loading />;
   }
 
-  return <>{children}</>;
+  return <>{children || null}</>;
 };

@@ -1,50 +1,46 @@
-import React, { useCallback } from 'react';
+import React, { FC } from 'react';
 import { FlatList, View } from 'react-native';
 import { getDeviceIcon, sendAPIRequest } from '../../utils';
-import { Device } from '../../types';
+import { Device, RootStackParamList } from '../../types';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
   selectDevices,
   selectDevicesLoading,
   startLoading,
 } from '../../redux/devicesSlice';
-import { logoutFromTelegram } from '../../utils';
 import {
   useAppNavigation,
   useInitialDevices,
   useListenForHomeBotMessages,
-  useResolveBotData,
 } from '../../hooks';
-import {
-  Button,
-  ButtonProps,
-  ListItem,
-  Navbar,
-  Typography,
-} from '../../.storybook/stories';
+import { Button, ListItem, Typography } from '../../.storybook/stories';
 import { styles } from './DeviceListView.styles';
 import { getDeviceViewName } from './utils';
 import { LoadingWrapper } from '../../components/LoadingWrapper';
+import { NavbarWithLogout } from '../../components';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 const createDeviceKey = (device: Device) =>
   device.location + '/' + device.nodeId + '/' + device.id;
 
 const createSeparatingElement = () => <View style={styles.separatingElement} />;
 
-export const DeviceListView = () => {
+type DeviceListViewProps = NativeStackScreenProps<
+  RootStackParamList,
+  'DeviceList'
+>;
+
+export const DeviceListView: FC<DeviceListViewProps> = ({ route }) => {
+  const { botId, botHash } = route.params;
+
   const navigation = useAppNavigation();
   const dispatch = useAppDispatch();
 
   const devices = useAppSelector(selectDevices);
   const loading = useAppSelector(selectDevicesLoading);
 
-  const [botId, botHash] = useResolveBotData();
   useInitialDevices(botId, botHash);
   useListenForHomeBotMessages(botId);
-
-  const handleLogout = useCallback(() => {
-    logoutFromTelegram(navigation);
-  }, [navigation]);
 
   const reloadDevices = () => {
     dispatch(startLoading());
@@ -74,27 +70,13 @@ export const DeviceListView = () => {
     />
   );
 
-  const logoutButtonProps: ButtonProps = {
-    text: 'Wyloguj',
-    variant: 'error',
-    size: 'small',
-    onPress: handleLogout,
-  };
-
   return (
     <View style={styles.container}>
-      <Navbar
-        text="Lista urządzeń"
-        button={logoutButtonProps}
-        backButton={false}
-      />
+      <NavbarWithLogout text="Lista urządzeń" backButton />
       <LoadingWrapper isLoading={loading}>
         {!devices.length ? (
           <View style={styles.reload}>
-            <Typography
-              variant={'body-large'}
-              text="Brak dostępnych urządzeń"
-            />
+            <Typography variant="body-large" text="Brak dostępnych urządzeń" />
             <Button text="Odśwież listę" size="small" onPress={reloadDevices} />
           </View>
         ) : (

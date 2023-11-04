@@ -9,7 +9,6 @@ type DeviceViewRouteParams = {
 };
 
 export type RootStackParamList = {
-  Admin: undefined;
   Login: undefined;
   ConfirmAuth: {
     phoneCodeHash: string;
@@ -17,7 +16,12 @@ export type RootStackParamList = {
     phoneNumber: string;
   };
   Telegram: undefined;
-  DeviceList: undefined;
+  LocationList: undefined;
+  Admin: undefined;
+  DeviceList: {
+    botHash: string;
+    botId: string;
+  };
   Light: DeviceViewRouteParams;
   TempSensor: DeviceViewRouteParams;
 };

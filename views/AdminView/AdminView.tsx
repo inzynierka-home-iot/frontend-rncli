@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Navbar } from '../../.storybook/stories';
 import { LoadingWrapper } from '../../components/LoadingWrapper';
 import { sendIoTMessage } from '../../utils';
-import { styles } from './AdminViewStyles';
+import { styles } from './AdminView.styles';
 import { LocationInput } from './components';
 import { BotNameInput } from './components/BotNameInput';
 import { BotTokenLabel } from './components/BotTokenLabel';
