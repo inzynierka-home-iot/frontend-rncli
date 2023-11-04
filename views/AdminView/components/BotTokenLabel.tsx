@@ -19,6 +19,7 @@ export const BotTokenLabel = () => {
         variant="body-medium"
         text={newBotToken}
         color="text-success"
+        selectable
       />
       <Typography
         variant="body-medium"

@@ -1,11 +1,11 @@
-import React, { PropsWithChildren, ReactNode } from 'react';
+import React, { FC, PropsWithChildren } from 'react';
 import { Loading } from '../../.storybook/stories/Loading';
 
-type LoadingWrapperProps = (
-  params: PropsWithChildren<{ isLoading: boolean }>,
-) => ReactNode;
+type LoadingWrapperProps = {
+  isLoading: boolean;
+};
 
-export const LoadingWrapper: LoadingWrapperProps = ({
+export const LoadingWrapper: FC<PropsWithChildren<LoadingWrapperProps>> = ({
   isLoading,
   children,
 }) => {

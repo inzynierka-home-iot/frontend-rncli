@@ -60,6 +60,8 @@ export const listenForBotFatherMessages = async (
         if (successMessage) {
           dispatch(setIsWaitingForName(false));
           dispatch(setIsWaitingForUsername(false));
+          dispatch(setIsUsernameInvalidError(false));
+          dispatch(setIsUsernameTakenError(false));
           const messageWithHashStart = successMessage.split(hashStart)[1];
           const hash = messageWithHashStart.split(hashEnd)[0];
           dispatch(setNewBotToken(hash));

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { Navbar } from '../../.storybook/stories';
 import { LoadingWrapper } from '../../components/LoadingWrapper';
 import { sendIoTMessage } from '../../utils';
@@ -23,17 +23,19 @@ export const AdminView = () => {
     <View style={styles.container}>
       <Navbar text="Dodaj nową lokalizację" />
       <LoadingWrapper isLoading={!botFatherAccessHash || !botFatherId}>
-        <View style={styles.content}>
-          <LocationInput
-            botFatherAccessHash={botFatherAccessHash!}
-            botFatherId={botFatherId!}
-          />
-          <BotNameInput
-            botFatherAccessHash={botFatherAccessHash!}
-            botFatherId={botFatherId!}
-          />
-          <BotTokenLabel />
-        </View>
+        <ScrollView>
+          <View style={styles.content}>
+            <LocationInput
+              botFatherAccessHash={botFatherAccessHash!}
+              botFatherId={botFatherId!}
+            />
+            <BotNameInput
+              botFatherAccessHash={botFatherAccessHash!}
+              botFatherId={botFatherId!}
+            />
+            <BotTokenLabel />
+          </View>
+        </ScrollView>
       </LoadingWrapper>
     </View>
   );

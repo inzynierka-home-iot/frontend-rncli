@@ -154,6 +154,10 @@ export const devicesSlice = createSlice({
     startLoading: state => {
       state.isLoading = true;
     },
+    clearState: state => {
+      state.devicesList = [];
+      state.isLoading = true;
+    },
   },
 });
 
@@ -163,6 +167,7 @@ export const {
   addDevice,
   removeDevice,
   startLoading,
+  clearState,
 } = devicesSlice.actions;
 
 export const selectDevices = (state: RootState) => state.devices.devicesList;
