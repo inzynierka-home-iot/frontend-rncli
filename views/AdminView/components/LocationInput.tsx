@@ -14,7 +14,7 @@ type Props = {
   botFatherId: string;
 };
 
-export const LocalisationInput: FC<Props> = ({
+export const LocationInput: FC<Props> = ({
   botFatherAccessHash,
   botFatherId,
 }) => {

@@ -4,7 +4,7 @@ import { Navbar } from '../../.storybook/stories';
 import { LoadingWrapper } from '../../components/LoadingWrapper';
 import { sendIoTMessage } from '../../utils';
 import { styles } from './AdminViewStyles';
-import { LocalisationInput } from './components';
+import { LocationInput } from './components';
 import { BotNameInput } from './components/BotNameInput';
 import { BotTokenLabel } from './components/BotTokenLabel';
 import { useBotFatherId, useListenForBotFather } from './hooks';
@@ -24,7 +24,7 @@ export const AdminView = () => {
       <Navbar text="Dodaj nową lokalizację" />
       <LoadingWrapper isLoading={!botFatherAccessHash || !botFatherId}>
         <View style={styles.content}>
-          <LocalisationInput
+          <LocationInput
             botFatherAccessHash={botFatherAccessHash!}
             botFatherId={botFatherId!}
           />
