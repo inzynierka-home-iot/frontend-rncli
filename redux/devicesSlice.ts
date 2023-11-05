@@ -53,12 +53,52 @@ const mockedData = {
         V_DIRECTION: 128,
       },
     },
+    {
+      location: 'home-1',
+      id: '4',
+      nodeId: '1',
+      type: DeviceType.S_DISTANCE,
+      name: 'Czujnik odległości',
+      values: {
+        V_DISTANCE: 50,
+      },
+    },
+    {
+      location: 'home-1',
+      id: '5',
+      nodeId: '1',
+      type: DeviceType.S_HUM,
+      name: 'Czujnik wilgotności',
+      values: {
+        V_HUM: 30,
+      },
+    },
+    {
+      location: 'home-1',
+      id: '6',
+      nodeId: '1',
+      type: DeviceType.S_LIGHT_LEVEL,
+      name: 'Czujnik światła',
+      values: {
+        V_LIGHT_LEVEL: 27,
+      },
+    },
+    {
+      location: 'home-1',
+      id: '7',
+      nodeId: '1',
+      type: DeviceType.S_MOTION,
+      name: 'Czujnik ruchu',
+      values: {
+        V_LIGHT_LEVEL: 0,
+      },
+    },
   ] as Device[],
 };
 
 const initialState: DeviceState = {
-  devicesList: mockedData.devices,
-  // devicesList: [],
+  // devicesList: mockedData.devices,
+  devicesList: [],
   isLoading: false,
 };
 

@@ -23,19 +23,45 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
     selectDeviceWithId(state, location, nodeId, deviceId),
   ) as Fan;
 
-  const [temp, onTempChange] = useInputValue(fan.values.V_TEMP.toString());
-  const [direction, onDirectionChange] = useInputValue(
-    fan.values.V_DIRECTION.toString(),
-  );
+  const [temp, onTempChange] = useInputValue(fan.values.V_TEMP);
+  const [direction, onDirectionChange] = useInputValue(fan.values.V_DIRECTION);
   const [percantage, onPercentageChange] = useInputValue(
-    fan.values.V_PERCANTAGE.toString(),
+    fan.values.V_PERCENTAGE,
   );
 
   const handleChangeFanParams = () => {
     sendAPIRequest({
       ...route.params,
       action: 'set',
-      additionalParams: `V_TEMP=${temp}&V_DIRECTION=${direction}&V_PERCENTAGE=${percantage}`,
+      additionalParams: `V_TEMP=${temp}`,
+    });
+    sendAPIRequest({
+      ...route.params,
+      action: 'set',
+      additionalParams: `V_DIRECTION=${direction}`,
+    });
+    sendAPIRequest({
+      ...route.params,
+      action: 'set',
+      additionalParams: `V_PERCENTAGE=${percantage}`,
+    });
+  };
+
+  const handleGetFanParams = () => {
+    sendAPIRequest({
+      ...route.params,
+      action: 'status',
+      additionalParams: 'V_TEMP',
+    });
+    sendAPIRequest({
+      ...route.params,
+      action: 'status',
+      additionalParams: 'V_DIRECTION',
+    });
+    sendAPIRequest({
+      ...route.params,
+      action: 'status',
+      additionalParams: 'V_PERCENTAGE',
     });
   };
 
@@ -61,10 +87,17 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
         <Input text={direction} onChange={onDirectionChange} />
         <Typography
           variant="body-medium"
-          text={`Aktualny kierunek głowicy wentylacji: ${fan.values.V_PERCANTAGE}`}
+          text={`Aktualny kierunek głowicy wentylacji: ${fan.values.V_PERCENTAGE}`}
         />
         <Input text={percantage} onChange={onPercentageChange} />
-        <Button text="Zmień kolor" onPress={handleChangeFanParams} />
+        <Button
+          text="Zmień parametry wentylatora"
+          onPress={handleChangeFanParams}
+        />
+        <Button
+          text="Pobierz najnowsze wartości"
+          onPress={handleGetFanParams}
+        />
       </View>
     </View>
   );

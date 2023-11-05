@@ -6,9 +6,13 @@ import { TelegramForm } from './components';
 import {
   ConfirmAuthView,
   DeviceListView,
+  DistanceDetectorView,
   FanView,
+  HumidityDetectorView,
+  LightDetectorView,
   LightView,
   LoginView,
+  MotionDetectorView,
   RgbLightView,
   TempSensorView,
 } from './views';
@@ -41,6 +45,19 @@ export default function App() {
             <Stack.Screen name="RgbLight" component={RgbLightView} />
             <Stack.Screen name="TempSensor" component={TempSensorView} />
             <Stack.Screen name="Fan" component={FanView} />
+            <Stack.Screen
+              name="DistanceDetector"
+              component={DistanceDetectorView}
+            />
+            <Stack.Screen
+              name="HumidityDetector"
+              component={HumidityDetectorView}
+            />
+            <Stack.Screen name="LightDetector" component={LightDetectorView} />
+            <Stack.Screen
+              name="MotionDetector"
+              component={MotionDetectorView}
+            />
             <Stack.Screen name="Telegram" component={TelegramForm} />
           </Stack.Navigator>
           <FlashMessage position="top" />
