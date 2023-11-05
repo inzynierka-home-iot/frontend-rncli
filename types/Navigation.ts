@@ -18,6 +18,8 @@ export type RootStackParamList = {
   Telegram: undefined;
   DeviceList: undefined;
   Light: DeviceViewRouteParams;
+  RgbLight: DeviceViewRouteParams;
+  Fan: DeviceViewRouteParams;
   TempSensor: DeviceViewRouteParams;
 };
 

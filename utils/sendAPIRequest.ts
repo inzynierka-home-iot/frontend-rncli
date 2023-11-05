@@ -21,8 +21,7 @@ export const sendAPIRequest: SendAPIRequestFunction = ({
 }) => {
   if (botId && botHash) {
     return sendIoTMessage(
-      `/${location}/${nodeId}/${deviceId}/${action}/${
-        additionalParams ? `?${additionalParams}` : ''
+      `/${location}/${nodeId}/${deviceId}/${action}/${additionalParams ? `?${additionalParams}` : ''
       }`,
       botHash,
       botId,

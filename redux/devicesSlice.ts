@@ -35,77 +35,31 @@ const mockedData = {
       location: 'home-1',
       id: '2',
       nodeId: '1',
-      type: DeviceType.S_BINARY,
-      name: 'Yellow LED',
+      type: DeviceType.S_RGB_LIGHT,
+      name: 'RGB Light',
       values: {
-        V_STATUS: '1',
-        V_WATT: null,
+        V_RGB: 'ff0ac3',
       },
     },
     {
       location: 'home-1',
       id: '3',
       nodeId: '1',
-      type: DeviceType.S_BINARY,
-      name: 'Red LED',
+      type: DeviceType.S_FAN,
+      name: 'Fan',
       values: {
-        V_STATUS: '0',
-        V_WATT: null,
-      },
-    },
-    {
-      location: 'home-1',
-      id: '4',
-      nodeId: '1',
-      type: DeviceType.S_LOCK,
-      name: 'Button',
-      values: { V_LOCK_STATUS: '0' },
-    },
-    {
-      location: 'home-1',
-      id: '5',
-      nodeId: '1',
-      type: DeviceType.S_LOCK,
-      name: 'Button',
-      values: { V_LOCK_STATUS: '0' },
-    },
-    {
-      location: 'home-1',
-      id: '6',
-      nodeId: '1',
-      type: DeviceType.S_LOCK,
-      name: 'Button',
-      values: { V_LOCK_STATUS: '0' },
-    },
-    {
-      location: 'home-1',
-      id: '7',
-      nodeId: '1',
-      type: DeviceType.S_BINARY,
-      name: 'Red LED',
-      values: {
-        V_STATUS: '1',
-        V_WATT: null,
-      },
-    },
-    {
-      location: 'home-1',
-      id: '8',
-      nodeId: '1',
-      type: DeviceType.S_BINARY,
-      name: 'Red LED',
-      values: {
-        V_STATUS: '0',
-        V_WATT: null,
+        V_TEMP: 24.5,
+        V_PERCANTAGE: 34,
+        V_DIRECTION: 128,
       },
     },
   ] as Device[],
 };
 
 const initialState: DeviceState = {
-  // devices: mockedData.devices,
-  devicesList: [],
-  isLoading: true,
+  devicesList: mockedData.devices,
+  // devicesList: [],
+  isLoading: false,
 };
 
 export const devicesSlice = createSlice({
