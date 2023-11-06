@@ -50,14 +50,14 @@ export const BotNameInput: FC<Props> = ({
       {isUsernameTakenError && (
         <Typography
           variant="body-medium"
-          text="Nazwa jest juz zajęta. Spróbouj ponownie"
+          text="Nazwa jest juz zajęta. Spróbuj ponownie"
           color="text-error"
         />
       )}
       {isUsernameInvalidError && (
         <Typography
           variant="body-medium"
-          text="Nazwa jest nieprawidłowa. Spróbouj ponownie"
+          text="Nazwa jest nieprawidłowa. Spróbuj ponownie"
           color="text-error"
         />
       )}
