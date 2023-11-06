@@ -1,3 +1,4 @@
+export * from './AdminView';
 export * from './ConfirmAuthView';
 export * from './DeviceListView';
 export * from './DistanceDetectorView';
@@ -9,3 +10,4 @@ export * from './LoginView';
 export * from './MotionDetectorView';
 export * from './RgbLightView';
 export * from './TempSensorView';
+export * from './LocationListView';

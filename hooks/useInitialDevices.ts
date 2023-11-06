@@ -1,11 +1,16 @@
 import { useEffect } from 'react';
+import { clearState } from '../redux/devicesSlice';
+import { useAppDispatch } from '../redux/hooks';
 import { sendAPIRequest } from '../utils';
 
 export const useInitialDevices = (
   botId: string | null,
   botAccessHash: string | null,
 ) => {
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
+    dispatch(clearState());
     sendAPIRequest({
       location: '*',
       nodeId: '*',
@@ -14,5 +19,5 @@ export const useInitialDevices = (
       botHash: botAccessHash,
       botId,
     });
-  }, [botId, botAccessHash]);
+  }, [botId, botAccessHash, dispatch]);
 };

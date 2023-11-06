@@ -16,7 +16,12 @@ export type RootStackParamList = {
     phoneNumber: string;
   };
   Telegram: undefined;
-  DeviceList: undefined;
+  LocationList: undefined;
+  Admin: undefined;
+  DeviceList: {
+    botHash: string;
+    botId: string;
+  };
   Light: DeviceViewRouteParams;
   RgbLight: DeviceViewRouteParams;
   Fan: DeviceViewRouteParams;

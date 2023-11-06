@@ -6,11 +6,13 @@ import { TelegramForm } from './components';
 import {
   ConfirmAuthView,
   DeviceListView,
+  AdminView,
   DistanceDetectorView,
   FanView,
   HumidityDetectorView,
   LightDetectorView,
   LightView,
+  LocationListView,
   LoginView,
   MotionDetectorView,
   RgbLightView,
@@ -40,6 +42,8 @@ export default function App() {
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Login" component={LoginView} />
             <Stack.Screen name="ConfirmAuth" component={ConfirmAuthView} />
+            <Stack.Screen name="LocationList" component={LocationListView} />
+            <Stack.Screen name="Admin" component={AdminView} />
             <Stack.Screen name="DeviceList" component={DeviceListView} />
             <Stack.Screen name="Light" component={LightView} />
             <Stack.Screen name="RgbLight" component={RgbLightView} />
