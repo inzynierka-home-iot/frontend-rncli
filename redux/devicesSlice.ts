@@ -49,7 +49,7 @@ const mockedData = {
       name: 'Fan',
       values: {
         V_TEMP: 24.5,
-        V_PERCANTAGE: 34,
+        V_PERCENTAGE: 34,
         V_DIRECTION: 128,
       },
     },

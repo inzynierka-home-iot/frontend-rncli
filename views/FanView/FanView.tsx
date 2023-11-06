@@ -25,7 +25,7 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
 
   const [temp, onTempChange] = useInputValue(fan.values.V_TEMP);
   const [direction, onDirectionChange] = useInputValue(fan.values.V_DIRECTION);
-  const [percantage, onPercentageChange] = useInputValue(
+  const [percentage, onPercentageChange] = useInputValue(
     fan.values.V_PERCENTAGE,
   );
 
@@ -43,7 +43,7 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
     sendAPIRequest({
       ...route.params,
       action: 'set',
-      additionalParams: `V_PERCENTAGE=${percantage}`,
+      additionalParams: `V_PERCENTAGE=${percentage}`,
     });
   };
 
@@ -89,7 +89,7 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
           variant="body-medium"
           text={`Aktualny kierunek głowicy wentylacji: ${fan.values.V_PERCENTAGE}`}
         />
-        <Input text={percantage} onChange={onPercentageChange} />
+        <Input text={percentage} onChange={onPercentageChange} />
         <Button
           text="Zmień parametry wentylatora"
           onPress={handleChangeFanParams}
