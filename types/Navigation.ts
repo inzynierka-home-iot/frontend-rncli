@@ -23,6 +23,12 @@ export type RootStackParamList = {
     botId: string;
   };
   Light: DeviceViewRouteParams;
+  RgbLight: DeviceViewRouteParams;
+  Fan: DeviceViewRouteParams;
+  DistanceDetector: DeviceViewRouteParams;
+  HumidityDetector: DeviceViewRouteParams;
+  LightDetector: DeviceViewRouteParams;
+  MotionDetector: DeviceViewRouteParams;
   TempSensor: DeviceViewRouteParams;
 };
 

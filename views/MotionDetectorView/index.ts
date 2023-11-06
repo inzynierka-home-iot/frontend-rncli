@@ -1,0 +1,1 @@
+export { MotionDetectorView } from './MotionDetectorView';

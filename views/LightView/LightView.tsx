@@ -4,8 +4,7 @@ import React, { View } from 'react-native';
 import { Button, Navbar, Typography } from '../../.storybook/stories';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
-import { RootStackParamList } from '../../types';
-import { Light } from '../../types/Device';
+import { RootStackParamList, Light } from '../../types';
 import { sendAPIRequest } from '../../utils';
 import { styles } from './LightView.styles';
 
@@ -70,9 +69,8 @@ export const LightView = ({ route }: LightViewProps) => {
       <View style={styles.content}>
         <Typography
           variant="body-medium"
-          text={`Aktualny status lampy to: ${
-            status ? 'Włączona' : 'Wyłączona'
-          }`}
+          text={`Aktualny status lampy to: ${status ? 'Włączona' : 'Wyłączona'
+            }`}
         />
         {status ? (
           <Button text="Wyłącz" hasFullWidth onPress={handleLightOff} />
