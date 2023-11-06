@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import { Control, Controller, UseFormHandleSubmit } from 'react-hook-form';
 import { Button, TextInput } from 'react-native';
-import {
-  confirm2FAPassword,
-  ReadStoredValue,
-  resolveBotID,
-  SaveStoredValue,
-} from '../../utils';
+import { confirm2FAPassword, SaveStoredValue } from '../../utils';
 import { useAppNavigation } from '../../hooks';
 import { SignInData } from '../../types';
 
@@ -28,13 +23,6 @@ export const Password2FAForm = ({
     const res = await confirm2FAPassword(password);
     setIsButtonDisabled(false);
     if (res.res._ === 'auth.authorization') {
-      const botAccessHash = await ReadStoredValue(
-        'bot_conversation_access_hash',
-      );
-      const botUserID = await ReadStoredValue('bot_user_id');
-      if (!botAccessHash || !botUserID) {
-        await resolveBotID();
-      }
       SaveStoredValue('SignedIn', 'true');
       navigation.replace('Telegram');
     }
