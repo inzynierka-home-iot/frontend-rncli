@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { FC } from 'react';
-import React, { View } from 'react-native';
+import { FC, useState } from 'react';
+import React, { Keyboard, ScrollView, View } from 'react-native';
 import {
   Button,
   Input,
@@ -13,6 +13,8 @@ import { useAppSelector } from '../../redux/hooks';
 import { RgbLight, RootStackParamList } from '../../types';
 import { sendAPIRequest } from '../../utils';
 import { styles } from './RgbLightView.styles';
+import ColorPicker from 'react-native-wheel-color-picker';
+import { ColorPickerRGB } from '../../.storybook/stories/ColorPickerRGB/ColorPickerRGB';
 
 type RgbLightViewProps = NativeStackScreenProps<RootStackParamList, 'RgbLight'>;
 
@@ -23,7 +25,12 @@ export const RgbLightView: FC<RgbLightViewProps> = ({ route }) => {
     selectDeviceWithId(state, location, nodeId, deviceId),
   ) as RgbLight;
 
-  const [color, onColorChange] = useInputValue(rgbLight.values.V_RGB);
+  const [color, onColorChange] = useState(rgbLight.values.V_RGB);
+
+  const colorPickerColorChange = (rgbColor: string) => {
+    const colorValue = rgbColor.split('#')[1];
+    onColorChange(colorValue);
+  };
 
   const handleChangeColor = () => {
     sendAPIRequest({
@@ -42,14 +49,16 @@ export const RgbLightView: FC<RgbLightViewProps> = ({ route }) => {
   return (
     <View style={styles.container}>
       <Navbar text={`${location} - ${nodeId} - ${rgbLight?.name}`} />
-      <View style={styles.content}>
-        <Typography
-          variant="body-medium"
-          text={`Aktualny kolor lampy to: ${rgbLight.values.V_RGB}`}
-        />
-        <Input text={color} onChange={onColorChange} />
-        <Button text="Zmień kolor" onPress={handleChangeColor} />
-      </View>
+      <ScrollView onScrollBeginDrag={() => Keyboard.dismiss()}>
+        <View style={styles.content}>
+          <Typography
+            variant="body-medium"
+            text={`Aktualny kolor lampy to: ${rgbLight.values.V_RGB}`}
+          />
+          <ColorPickerRGB color={color} onChange={colorPickerColorChange} />
+          <Button text="Zmień kolor" onPress={handleChangeColor} />
+        </View>
+      </ScrollView>
     </View>
   );
 };

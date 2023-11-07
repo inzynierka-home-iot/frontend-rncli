@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FC } from 'react';
-import React, { View } from 'react-native';
+import React, { ScrollView, View } from 'react-native';
 import { Button, Navbar, Typography } from '../../.storybook/stories';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
@@ -37,13 +37,15 @@ export const LightDetectorView: FC<LightDetectorViewProps> = ({ route }) => {
   return (
     <View style={styles.container}>
       <Navbar text={`${location} - ${nodeId} - ${lightDetector?.name}`} />
-      <View style={styles.content}>
-        <Typography
-          variant="body-medium"
-          text={`Aktualny stan natęzenia światła: ${lightDetector.values.V_LIGHT_LEVEL}`}
-        />
-        <Button text="Pobierz aktualny stan" onPress={handleGetLightLevel} />
-      </View>
+      <ScrollView>
+        <View style={styles.content}>
+          <Typography
+            variant="body-medium"
+            text={`Aktualny stan natęzenia światła: ${lightDetector.values.V_LIGHT_LEVEL}`}
+          />
+          <Button text="Pobierz aktualny stan" onPress={handleGetLightLevel} />
+        </View>
+      </ScrollView>
     </View>
   );
 };

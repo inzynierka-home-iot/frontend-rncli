@@ -1,5 +1,10 @@
 import React, { FC, useCallback, useState } from 'react';
-import { StyleSheet, TextInput } from 'react-native';
+import {
+  NativeSyntheticEvent,
+  StyleSheet,
+  TextInput,
+  TextInputEndEditingEventData,
+} from 'react-native';
 import { theme } from '../../theme';
 
 export type InputProps = {
@@ -8,8 +13,11 @@ export type InputProps = {
   placeholder?: string;
   variant?: 'default' | 'error';
   disabled?: boolean;
+  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
   centerText?: boolean;
   onChange: (e: string) => void;
+  onBlur?: (e: string) => void;
+  onFocus?: () => void;
 };
 
 export const Input: FC<InputProps> = ({
@@ -18,12 +26,21 @@ export const Input: FC<InputProps> = ({
   placeholder = 'Placeholder',
   variant = 'default',
   disabled = false,
+  autoCapitalize = 'sentences',
   centerText = false,
   onChange,
+  onBlur,
+  onFocus,
 }) => {
   const [type, setType] = useState<InputProps['variant'] | 'active'>(variant);
-  const onFocus = useCallback(() => setType('active'), []);
-  const onBlur = useCallback(() => setType(variant), [variant]);
+  const onFocusInput = useCallback(() => setType('active'), []);
+  const onBlurInput = useCallback(
+    (e: NativeSyntheticEvent<TextInputEndEditingEventData>) => {
+      setType(variant);
+      onBlur?.(e.nativeEvent.text);
+    },
+    [variant],
+  );
   const styles = useStyles(type, disabled, text, centerText);
 
   return (
@@ -32,9 +49,10 @@ export const Input: FC<InputProps> = ({
       value={text}
       keyboardType={keyboardType}
       onChangeText={onChange}
-      onFocus={onFocus}
-      onBlur={onBlur}
+      onFocus={onFocusInput}
+      onEndEditing={onBlurInput}
       editable={!disabled}
+      autoCapitalize={autoCapitalize}
       style={styles.input}
     />
   );

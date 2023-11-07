@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FC } from 'react';
-import React, { View } from 'react-native';
+import React, { ScrollView, View } from 'react-native';
 import { Button, Navbar, Typography } from '../../.storybook/stories';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
@@ -39,13 +39,15 @@ export const DistanceDetectorView: FC<DistanceDetectorViewProps> = ({
   return (
     <View style={styles.container}>
       <Navbar text={`${location} - ${nodeId} - ${distanceDetector?.name}`} />
-      <View style={styles.content}>
-        <Typography
-          variant="body-medium"
-          text={`Aktualny dystans od czunika: ${distanceDetector.values.V_DISTANCE}cm`}
-        />
-        <Button text="Pobierz aktualny dystans" onPress={handleGetDistance} />
-      </View>
+      <ScrollView>
+        <View style={styles.content}>
+          <Typography
+            variant="body-medium"
+            text={`Aktualny dystans od czunika: ${distanceDetector.values.V_DISTANCE}cm`}
+          />
+          <Button text="Pobierz aktualny dystans" onPress={handleGetDistance} />
+        </View>
+      </ScrollView>
     </View>
   );
 };

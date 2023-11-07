@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React, { View } from 'react-native';
+import React, { ScrollView, View } from 'react-native';
 import { Button, Navbar, Typography } from '../../.storybook/stories';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
@@ -83,46 +83,48 @@ export const TempSensorView = ({ route }: TempSensorViewProps) => {
   return (
     <View style={styles.container}>
       <Navbar text={`${location} - ${nodeId} - ${tempSensor?.name}`} />
-      <View style={styles.content}>
-        <Typography
-          variant="body-medium"
-          text={`Aktualna temperatura: ${tempValue}°C`}
-        />
-        <Button
-          text="Pobierz aktualną temperaturę"
-          hasFullWidth
-          onPress={handleGetTemp}
-        />
-        <Button
-          text="Pobierz historię"
-          hasFullWidth
-          onPress={handleGetTempHistory}
-        />
-        {subscription ? (
-          <Button
-            text="Anuluj subskrypcję"
-            variant="error"
-            hasFullWidth
-            onPress={handleUnsubscribe}
+      <ScrollView>
+        <View style={styles.content}>
+          <Typography
+            variant="body-medium"
+            text={`Aktualna temperatura: ${tempValue}°C`}
           />
-        ) : (
           <Button
-            text="Subskrybuj"
-            variant="success"
+            text="Pobierz aktualną temperaturę"
             hasFullWidth
-            onPress={handleSubscribe}
+            onPress={handleGetTemp}
           />
-        )}
-        {!!currentTempSensorHistory.length && (
-          <View style={styles.tempChart}>
-            <Typography
-              variant="body-medium"
-              text={`Wykres z ostatnich ${currentTempSensorHistory.length} odczytów`}
+          <Button
+            text="Pobierz historię"
+            hasFullWidth
+            onPress={handleGetTempHistory}
+          />
+          {subscription ? (
+            <Button
+              text="Anuluj subskrypcję"
+              variant="error"
+              hasFullWidth
+              onPress={handleUnsubscribe}
             />
-            <DataChart chartData={currentTempSensorHistory} suffix="°C" />
-          </View>
-        )}
-      </View>
+          ) : (
+            <Button
+              text="Subskrybuj"
+              variant="success"
+              hasFullWidth
+              onPress={handleSubscribe}
+            />
+          )}
+          {!!currentTempSensorHistory.length && (
+            <View style={styles.tempChart}>
+              <Typography
+                variant="body-medium"
+                text={`Wykres z ostatnich ${currentTempSensorHistory.length} odczytów`}
+              />
+              <DataChart chartData={currentTempSensorHistory} suffix="°C" />
+            </View>
+          )}
+        </View>
+      </ScrollView>
     </View>
   );
 };

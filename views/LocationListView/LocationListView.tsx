@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import React, { View } from 'react-native';
+import React, { ScrollView, View } from 'react-native';
 import { Button, ListItem, Typography } from '../../.storybook/stories';
 import { NavbarWithLogout } from '../../components';
 import { LoadingWrapper } from '../../components/LoadingWrapper';
@@ -40,25 +40,30 @@ export const LocationListView = () => {
   return (
     <View style={styles.container}>
       <NavbarWithLogout text="Lista lokalizacji" />
-      <View style={styles.content}>
-        <LoadingWrapper isLoading={!locationCredentials}>
-          {locationCredentials?.length ? (
-            locationCredentials.map(({ access_hash, id, first_name }) => (
-              <ListItem
-                text={first_name}
-                key={id}
-                onPress={() => onNavigateToDeviceList(access_hash, id)}
+      <LoadingWrapper isLoading={!locationCredentials}>
+        <ScrollView>
+          <View style={styles.content}>
+            {locationCredentials?.length ? (
+              locationCredentials.map(({ access_hash, id, first_name }) => (
+                <ListItem
+                  text={first_name}
+                  key={id}
+                  onPress={() => onNavigateToDeviceList(access_hash, id)}
+                />
+              ))
+            ) : (
+              <Typography
+                variant="header-medium"
+                text="Nie masz zadnych lokalizacji"
               />
-            ))
-          ) : (
-            <Typography
-              variant="header-medium"
-              text="Nie masz zadnych lokalizacji"
+            )}
+            <Button
+              text="Stwórz nową lokalizację"
+              onPress={onNavigateToAdmin}
             />
-          )}
-        </LoadingWrapper>
-        <Button text="Stwórz nową lokalizację" onPress={onNavigateToAdmin} />
-      </View>
+          </View>
+        </ScrollView>
+      </LoadingWrapper>
     </View>
   );
 };

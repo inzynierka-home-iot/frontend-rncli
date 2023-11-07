@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FC } from 'react';
-import React, { View } from 'react-native';
+import React, { ScrollView, View } from 'react-native';
 import { Button, Navbar, Typography } from '../../.storybook/stories';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
@@ -39,13 +39,15 @@ export const HumidityDetectorView: FC<HumidityDetectorViewProps> = ({
   return (
     <View style={styles.container}>
       <Navbar text={`${location} - ${nodeId} - ${humidityDetector?.name}`} />
-      <View style={styles.content}>
-        <Typography
-          variant="body-medium"
-          text={`Aktualny stan wilgotności: ${humidityDetector.values.V_HUM}`}
-        />
-        <Button text="Pobierz aktualny stan" onPress={handleGetHum} />
-      </View>
+      <ScrollView>
+        <View style={styles.content}>
+          <Typography
+            variant="body-medium"
+            text={`Aktualny stan wilgotności: ${humidityDetector.values.V_HUM}`}
+          />
+          <Button text="Pobierz aktualny stan" onPress={handleGetHum} />
+        </View>
+      </ScrollView>
     </View>
   );
 };
