@@ -16,6 +16,8 @@ import { styles } from './FanView.styles';
 
 type FanViewProps = NativeStackScreenProps<RootStackParamList, 'Fan'>;
 
+const numberRegex = new RegExp('\\.', 'g');
+
 export const FanView: FC<FanViewProps> = ({ route }) => {
   const { deviceId, nodeId, location } = route.params;
 
@@ -24,26 +26,29 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
   ) as Fan;
 
   const [temp, onTempChange] = useInputValue(fan.values.V_TEMP);
-  const [direction, onDirectionChange] = useInputValue(fan.values.V_DIRECTION);
   const [percentage, onPercentageChange] = useInputValue(
     fan.values.V_PERCENTAGE,
   );
+  const [direction, onDirectionChange] = useInputValue(fan.values.V_DIRECTION);
 
   const handleChangeFanParams = () => {
+    const finalTempValue = parseFloat(temp).toString();
+    const finalDirectionValue = parseFloat(direction).toString();
+    const finalPercentageValue = parseFloat(percentage).toString();
     sendAPIRequest({
       ...route.params,
       action: 'set',
-      additionalParams: `V_TEMP=${temp}`,
+      additionalParams: `V_TEMP=${finalTempValue}`,
     });
     sendAPIRequest({
       ...route.params,
       action: 'set',
-      additionalParams: `V_DIRECTION=${direction}`,
+      additionalParams: `V_PERCENTAGE=${finalPercentageValue}`,
     });
     sendAPIRequest({
       ...route.params,
       action: 'set',
-      additionalParams: `V_PERCENTAGE=${percentage}`,
+      additionalParams: `V_DIRECTION=${finalDirectionValue}`,
     });
   };
 
@@ -56,13 +61,58 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
     sendAPIRequest({
       ...route.params,
       action: 'status',
-      additionalParams: 'V_DIRECTION',
+      additionalParams: 'V_PERCENTAGE',
     });
     sendAPIRequest({
       ...route.params,
       action: 'status',
-      additionalParams: 'V_PERCENTAGE',
+      additionalParams: 'V_DIRECTION',
     });
+  };
+
+  const checkInput = (
+    value: string,
+    inputChange: (value: string) => void,
+    min: number,
+    max: number,
+  ) => {
+    if (value == '') {
+      value = min.toString();
+    }
+    const potentialValue = parseFloat(value);
+    if (isNaN(potentialValue)) {
+      return;
+    }
+    const potentialValueString = potentialValue.toString();
+    if (
+      value == potentialValueString + ',' ||
+      value == potentialValueString + '.,'
+    ) {
+      value = potentialValueString + '.';
+    }
+    let numberOfDots = value.match(numberRegex)?.length;
+    if (numberOfDots && numberOfDots > 1) {
+      value = potentialValueString + '.';
+      numberOfDots = value.match(numberRegex)?.length;
+      if (numberOfDots && numberOfDots > 1) {
+        value = potentialValueString;
+      }
+    }
+    const finalValueFloat = parseFloat(value);
+    if (finalValueFloat < min) {
+      inputChange(min.toString());
+    } else if (finalValueFloat > max) {
+      inputChange(max.toString());
+    } else {
+      numberOfDots = value.match(numberRegex)?.length;
+      const finalValueString =
+        value == finalValueFloat.toString()
+          ? finalValueFloat.toString()
+          : numberOfDots && numberOfDots > 0
+          ? finalValueFloat.toString() + '.'
+          : finalValueFloat.toString();
+      inputChange(finalValueString);
+    }
   };
 
   if (!fan) {
@@ -76,21 +126,45 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
       <Navbar text={`${location} - ${nodeId} - ${fan?.name}`} />
       <ScrollView>
         <View style={styles.content}>
-          <Typography
-            variant="body-medium"
-            text={`Aktualny temperatura wentylacji: ${fan.values.V_TEMP}`}
-          />
-          <Input text={temp} onChange={onTempChange} />
-          <Typography
-            variant="body-medium"
-            text={`Aktualny prędkość wentylacji: ${fan.values.V_DIRECTION}`}
-          />
-          <Input text={direction} onChange={onDirectionChange} />
-          <Typography
-            variant="body-medium"
-            text={`Aktualny kierunek głowicy wentylacji: ${fan.values.V_PERCENTAGE}`}
-          />
-          <Input text={percentage} onChange={onPercentageChange} />
+          <View style={styles.section}>
+            <Typography
+              variant="body-medium"
+              text={`Aktualna temperatura wentylacji: ${fan.values.V_TEMP}°C`}
+            />
+            <Input
+              text={temp}
+              onChange={e => {
+                checkInput(e, onTempChange, 0, 50);
+              }}
+              keyboardType="numeric"
+            />
+          </View>
+          <View style={styles.section}>
+            <Typography
+              variant="body-medium"
+              text={`Aktualna prędkość wentylacji: ${fan.values.V_PERCENTAGE}%`}
+            />
+            <Input
+              text={percentage}
+              onChange={e => {
+                checkInput(e, onPercentageChange, 0, 100);
+              }}
+              keyboardType="numeric"
+            />
+          </View>
+          <View style={styles.section}>
+            <Typography
+              variant="body-medium"
+              text={`Aktualny kierunek głowicy wentylacji: ${fan.values.V_DIRECTION}°`}
+            />
+            <Input
+              text={direction}
+              onChange={e => {
+                checkInput(e, onDirectionChange, 0, 255);
+              }}
+              keyboardType="numeric"
+            />
+          </View>
           <Button
             text="Zmień parametry wentylatora"
             onPress={handleChangeFanParams}

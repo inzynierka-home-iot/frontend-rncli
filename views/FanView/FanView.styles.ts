@@ -11,4 +11,7 @@ export const styles = StyleSheet.create({
     gap: theme.spacing(5),
     paddingHorizontal: theme.spacing(7),
   },
+  section: {
+    gap: theme.spacing(2),
+  },
 });
