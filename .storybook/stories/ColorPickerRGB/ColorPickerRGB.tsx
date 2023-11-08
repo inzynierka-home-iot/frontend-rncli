@@ -9,9 +9,9 @@ export type ColorPickerProps = {
   onChange: (color: string) => void;
 };
 
-export const ColorPickerRGB: FC<ColorPickerProps> = ({ color, onChange }) => {
-  const regExp = new RegExp('^(?:[A-Fa-f0-9]{6})$');
+const regExp = new RegExp('^(?:[A-Fa-f0-9]{6})$');
 
+export const ColorPickerRGB: FC<ColorPickerProps> = ({ color, onChange }) => {
   const [input, onInputChange] = useInputValue(color);
 
   useEffect(() => {
