@@ -3,18 +3,15 @@ import { FC, useState } from 'react';
 import React, { Keyboard, ScrollView, View } from 'react-native';
 import {
   Button,
-  Input,
   Navbar,
   Typography,
-  useInputValue,
+  ColorPickerRGB,
 } from '../../.storybook/stories';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
 import { RgbLight, RootStackParamList } from '../../types';
 import { sendAPIRequest } from '../../utils';
 import { styles } from './RgbLightView.styles';
-import ColorPicker from 'react-native-wheel-color-picker';
-import { ColorPickerRGB } from '../../.storybook/stories/ColorPickerRGB/ColorPickerRGB';
 
 type RgbLightViewProps = NativeStackScreenProps<RootStackParamList, 'RgbLight'>;
 

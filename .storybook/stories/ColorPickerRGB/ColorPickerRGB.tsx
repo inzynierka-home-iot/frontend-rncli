@@ -12,15 +12,15 @@ export type ColorPickerProps = {
 export const ColorPickerRGB: FC<ColorPickerProps> = ({ color, onChange }) => {
   const regExp = new RegExp('^(?:[A-Fa-f0-9]{6})$');
 
-  const [inputColor, onInputColorChange] = useInputValue(color);
+  const [input, onInputChange] = useInputValue(color);
 
   useEffect(() => {
-    onInputColorChange(color);
+    onInputChange(color);
   }, [color]);
 
   const inputColorChange = (rgbColor: string) => {
     if (rgbColor.length <= 6) {
-      onInputColorChange(rgbColor);
+      onInputChange(rgbColor);
     }
     if (regExp.test(rgbColor)) {
       onChange('#' + rgbColor);
@@ -37,9 +37,9 @@ export const ColorPickerRGB: FC<ColorPickerProps> = ({ color, onChange }) => {
         gapSize={theme.spacing(3)}
       />
       <Input
-        text={inputColor}
+        text={input}
         autoCapitalize="none"
-        onChange={onInputColorChange}
+        onChange={onInputChange}
         onBlur={inputColorChange}
       />
     </View>
