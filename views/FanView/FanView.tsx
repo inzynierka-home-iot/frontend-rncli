@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FC } from 'react';
-import React, { View } from 'react-native';
+import React from 'react-native';
 import {
   Button,
   Input,
@@ -8,11 +8,11 @@ import {
   Typography,
   useInputValue,
 } from '../../.storybook/stories';
+import { LayoutProvider } from '../../components';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
 import { Fan, RootStackParamList } from '../../types';
 import { sendAPIRequest } from '../../utils';
-import { styles } from './FanView.styles';
 
 type FanViewProps = NativeStackScreenProps<RootStackParamList, 'Fan'>;
 
@@ -72,33 +72,28 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
   }
 
   return (
-    <View style={styles.container}>
-      <Navbar text={`${location} - ${nodeId} - ${fan?.name}`} />
-      <View style={styles.content}>
-        <Typography
-          variant="body-medium"
-          text={`Aktualny temperatura wentylacji: ${fan.values.V_TEMP}`}
-        />
-        <Input text={temp} onChange={onTempChange} />
-        <Typography
-          variant="body-medium"
-          text={`Aktualny prędkość wentylacji: ${fan.values.V_DIRECTION}`}
-        />
-        <Input text={direction} onChange={onDirectionChange} />
-        <Typography
-          variant="body-medium"
-          text={`Aktualny kierunek głowicy wentylacji: ${fan.values.V_PERCENTAGE}`}
-        />
-        <Input text={percentage} onChange={onPercentageChange} />
-        <Button
-          text="Zmień parametry wentylatora"
-          onPress={handleChangeFanParams}
-        />
-        <Button
-          text="Pobierz najnowsze wartości"
-          onPress={handleGetFanParams}
-        />
-      </View>
-    </View>
+    <LayoutProvider
+      navbar={<Navbar text={`${location} - ${nodeId} - ${fan?.name}`} />}>
+      <Typography
+        variant="body-medium"
+        text={`Aktualny temperatura wentylacji: ${fan.values.V_TEMP}`}
+      />
+      <Input text={temp} onChange={onTempChange} />
+      <Typography
+        variant="body-medium"
+        text={`Aktualny prędkość wentylacji: ${fan.values.V_DIRECTION}`}
+      />
+      <Input text={direction} onChange={onDirectionChange} />
+      <Typography
+        variant="body-medium"
+        text={`Aktualny kierunek głowicy wentylacji: ${fan.values.V_PERCENTAGE}`}
+      />
+      <Input text={percentage} onChange={onPercentageChange} />
+      <Button
+        text="Zmień parametry wentylatora"
+        onPress={handleChangeFanParams}
+      />
+      <Button text="Pobierz najnowsze wartości" onPress={handleGetFanParams} />
+    </LayoutProvider>
   );
 };

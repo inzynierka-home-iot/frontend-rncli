@@ -17,7 +17,7 @@ import { Button, ListItem, Typography } from '../../.storybook/stories';
 import { styles } from './DeviceListView.styles';
 import { getDeviceViewName } from './utils';
 import { LoadingWrapper } from '../../components/LoadingWrapper';
-import { NavbarWithLogout } from '../../components';
+import { LayoutProvider, NavbarWithLogout } from '../../components';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 const createDeviceKey = (device: Device) =>
@@ -71,8 +71,8 @@ export const DeviceListView: FC<DeviceListViewProps> = ({ route }) => {
   );
 
   return (
-    <View style={styles.container}>
-      <NavbarWithLogout text="Lista urządzeń" backButton />
+    <LayoutProvider
+      navbar={<NavbarWithLogout text="Lista urządzeń" backButton />}>
       <LoadingWrapper isLoading={loading}>
         {!devices.length ? (
           <View style={styles.reload}>
@@ -81,7 +81,6 @@ export const DeviceListView: FC<DeviceListViewProps> = ({ route }) => {
           </View>
         ) : (
           <FlatList
-            style={styles.content}
             data={devices}
             renderItem={({ item: device }) => createDeviceElement(device)}
             keyExtractor={createDeviceKey}
@@ -89,6 +88,6 @@ export const DeviceListView: FC<DeviceListViewProps> = ({ route }) => {
           />
         )}
       </LoadingWrapper>
-    </View>
+    </LayoutProvider>
   );
 };

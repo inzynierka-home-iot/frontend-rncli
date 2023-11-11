@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FC } from 'react';
-import React, { View } from 'react-native';
+import React from 'react-native';
 import {
   Button,
   Input,
@@ -8,11 +8,11 @@ import {
   Typography,
   useInputValue,
 } from '../../.storybook/stories';
+import { LayoutProvider } from '../../components';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
 import { RgbLight, RootStackParamList } from '../../types';
 import { sendAPIRequest } from '../../utils';
-import { styles } from './RgbLightView.styles';
 
 type RgbLightViewProps = NativeStackScreenProps<RootStackParamList, 'RgbLight'>;
 
@@ -40,16 +40,14 @@ export const RgbLightView: FC<RgbLightViewProps> = ({ route }) => {
   }
 
   return (
-    <View style={styles.container}>
-      <Navbar text={`${location} - ${nodeId} - ${rgbLight?.name}`} />
-      <View style={styles.content}>
-        <Typography
-          variant="body-medium"
-          text={`Aktualny kolor lampy to: ${rgbLight.values.V_RGB}`}
-        />
-        <Input text={color} onChange={onColorChange} />
-        <Button text="Zmień kolor" onPress={handleChangeColor} />
-      </View>
-    </View>
+    <LayoutProvider
+      navbar={<Navbar text={`${location} - ${nodeId} - ${rgbLight?.name}`} />}>
+      <Typography
+        variant="body-medium"
+        text={`Aktualny kolor lampy to: ${rgbLight.values.V_RGB}`}
+      />
+      <Input text={color} onChange={onColorChange} />
+      <Button text="Zmień kolor" onPress={handleChangeColor} />
+    </LayoutProvider>
   );
 };

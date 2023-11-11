@@ -1,12 +1,12 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FC } from 'react';
-import React, { View } from 'react-native';
+import React from 'react-native';
 import { Button, Navbar, Typography } from '../../.storybook/stories';
+import { LayoutProvider } from '../../components';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
 import { DistanceDetector, RootStackParamList } from '../../types';
 import { sendAPIRequest } from '../../utils';
-import { styles } from './DistanceDetectorView.styles';
 
 type DistanceDetectorViewProps = NativeStackScreenProps<
   RootStackParamList,
@@ -37,15 +37,15 @@ export const DistanceDetectorView: FC<DistanceDetectorViewProps> = ({
   }
 
   return (
-    <View style={styles.container}>
-      <Navbar text={`${location} - ${nodeId} - ${distanceDetector?.name}`} />
-      <View style={styles.content}>
-        <Typography
-          variant="body-medium"
-          text={`Aktualny dystans od czunika: ${distanceDetector.values.V_DISTANCE}cm`}
-        />
-        <Button text="Pobierz aktualny dystans" onPress={handleGetDistance} />
-      </View>
-    </View>
+    <LayoutProvider
+      navbar={
+        <Navbar text={`${location} - ${nodeId} - ${distanceDetector?.name}`} />
+      }>
+      <Typography
+        variant="body-medium"
+        text={`Aktualny dystans od czunika: ${distanceDetector.values.V_DISTANCE}cm`}
+      />
+      <Button text="Pobierz aktualny dystans" onPress={handleGetDistance} />
+    </LayoutProvider>
   );
 };
