@@ -36,9 +36,9 @@ export default function App() {
   }
 
   return (
-    <LoadingWrapper isLoading={!isConnected}>
-      <Provider store={store}>
-        <NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <LoadingWrapper isLoading={!isConnected}>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Login" component={LoginView} />
             <Stack.Screen name="ConfirmAuth" component={ConfirmAuthView} />
@@ -64,10 +64,10 @@ export default function App() {
             />
             <Stack.Screen name="Telegram" component={TelegramForm} />
           </Stack.Navigator>
-          <FlashMessage position="top" />
-        </NavigationContainer>
-      </Provider>
-    </LoadingWrapper>
+        </LoadingWrapper>
+        <FlashMessage position="top" />
+      </NavigationContainer>
+    </Provider>
   );
 }
 

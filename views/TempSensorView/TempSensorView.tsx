@@ -11,6 +11,7 @@ import { useMemo } from 'react';
 import { useTempHistory } from '../../hooks/useTempHistory';
 import { DataChart } from '../../.storybook/stories/DataChart';
 import { selectTempSensorSubscription } from '../../redux/currentTempSensorSlice';
+import { LayoutProvider } from '../../components';
 
 type TempSensorViewProps = NativeStackScreenProps<
   RootStackParamList,
@@ -81,48 +82,48 @@ export const TempSensorView = ({ route }: TempSensorViewProps) => {
   }
 
   return (
-    <View style={styles.container}>
-      <Navbar text={`${location} - ${nodeId} - ${tempSensor?.name}`} />
-      <View style={styles.content}>
-        <Typography
-          variant="body-medium"
-          text={`Aktualna temperatura: ${tempValue}°C`}
-        />
+    <LayoutProvider
+      navbar={
+        <Navbar text={`${location} - ${nodeId} - ${tempSensor?.name}`} />
+      }>
+      <Typography
+        variant="body-medium"
+        text={`Aktualna temperatura: ${tempValue}°C`}
+      />
+      <Button
+        text="Pobierz aktualną temperaturę"
+        hasFullWidth
+        onPress={handleGetTemp}
+      />
+      <Button
+        text="Pobierz historię"
+        hasFullWidth
+        onPress={handleGetTempHistory}
+      />
+      {subscription ? (
         <Button
-          text="Pobierz aktualną temperaturę"
+          text="Anuluj subskrypcję"
+          variant="error"
           hasFullWidth
-          onPress={handleGetTemp}
+          onPress={handleUnsubscribe}
         />
+      ) : (
         <Button
-          text="Pobierz historię"
+          text="Subskrybuj"
+          variant="success"
           hasFullWidth
-          onPress={handleGetTempHistory}
+          onPress={handleSubscribe}
         />
-        {subscription ? (
-          <Button
-            text="Anuluj subskrypcję"
-            variant="error"
-            hasFullWidth
-            onPress={handleUnsubscribe}
+      )}
+      {!!currentTempSensorHistory.length && (
+        <View style={styles.tempChart}>
+          <Typography
+            variant="body-medium"
+            text={`Wykres z ostatnich ${currentTempSensorHistory.length} odczytów`}
           />
-        ) : (
-          <Button
-            text="Subskrybuj"
-            variant="success"
-            hasFullWidth
-            onPress={handleSubscribe}
-          />
-        )}
-        {!!currentTempSensorHistory.length && (
-          <View style={styles.tempChart}>
-            <Typography
-              variant="body-medium"
-              text={`Wykres z ostatnich ${currentTempSensorHistory.length} odczytów`}
-            />
-            <DataChart chartData={currentTempSensorHistory} suffix="°C" />
-          </View>
-        )}
-      </View>
-    </View>
+          <DataChart chartData={currentTempSensorHistory} suffix="°C" />
+        </View>
+      )}
+    </LayoutProvider>
   );
 };

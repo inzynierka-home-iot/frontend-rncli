@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-import { ScrollView, View } from 'react-native';
 import { Navbar } from '../../.storybook/stories';
+import { LayoutProvider } from '../../components';
 import { LoadingWrapper } from '../../components/LoadingWrapper';
 import { sendIoTMessage } from '../../utils';
-import { styles } from './AdminView.styles';
 import { LocationInput } from './components';
 import { BotNameInput } from './components/BotNameInput';
 import { BotTokenLabel } from './components/BotTokenLabel';
@@ -20,23 +19,18 @@ export const AdminView = () => {
   }, [botFatherAccessHash, botFatherId]);
 
   return (
-    <View style={styles.container}>
-      <Navbar text="Dodaj nową lokalizację" />
+    <LayoutProvider navbar={<Navbar text="Dodaj nową lokalizację" />}>
       <LoadingWrapper isLoading={!botFatherAccessHash || !botFatherId}>
-        <ScrollView>
-          <View style={styles.content}>
-            <LocationInput
-              botFatherAccessHash={botFatherAccessHash!}
-              botFatherId={botFatherId!}
-            />
-            <BotNameInput
-              botFatherAccessHash={botFatherAccessHash!}
-              botFatherId={botFatherId!}
-            />
-            <BotTokenLabel />
-          </View>
-        </ScrollView>
+        <LocationInput
+          botFatherAccessHash={botFatherAccessHash!}
+          botFatherId={botFatherId!}
+        />
+        <BotNameInput
+          botFatherAccessHash={botFatherAccessHash!}
+          botFatherId={botFatherId!}
+        />
+        <BotTokenLabel />
       </LoadingWrapper>
-    </View>
+    </LayoutProvider>
   );
 };

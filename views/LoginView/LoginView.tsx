@@ -1,14 +1,8 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import {
-  Keyboard,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { Navbar } from '../../.storybook/stories';
-import { theme } from '../../.storybook/theme';
-import { PhoneNumberForm } from '../../components';
+import { LayoutProvider, PhoneNumberForm } from '../../components';
 import { useNavigateAuthUsers } from '../../hooks';
 import { SignInData } from '../../types';
 
@@ -25,18 +19,10 @@ export const LoginView = () => {
   useNavigateAuthUsers();
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View style={styles.container}>
-        <Navbar text="Zaloguj się" backButton={false} />
+    <LayoutProvider navbar={<Navbar text="Zaloguj się" backButton={false} />}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <PhoneNumberForm control={control} handleSubmit={handleSubmit} />
-      </View>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
+    </LayoutProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    gap: theme.spacing(5),
-  },
-});

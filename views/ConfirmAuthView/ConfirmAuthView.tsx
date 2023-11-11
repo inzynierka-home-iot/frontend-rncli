@@ -1,15 +1,13 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import {
-  Keyboard,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { Navbar } from '../../.storybook/stories';
-import { theme } from '../../.storybook/theme';
-import { ConfirmationForm, Password2FAForm } from '../../components';
+import {
+  ConfirmationForm,
+  LayoutProvider,
+  Password2FAForm,
+} from '../../components';
 import { RootStackParamList, SignInData } from '../../types';
 
 type ConfirmAuthViewProps = NativeStackScreenProps<
@@ -33,8 +31,7 @@ export const ConfirmAuthView = ({ route }: ConfirmAuthViewProps) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View style={styles.container}>
-        <Navbar text="Potwierdź logowanie" />
+      <LayoutProvider navbar={<Navbar text="Potwierdź logowanie" />}>
         {is2FANeeded ? (
           <Password2FAForm control={control} handleSubmit={handleSubmit} />
         ) : (
@@ -45,14 +42,7 @@ export const ConfirmAuthView = ({ route }: ConfirmAuthViewProps) => {
             phoneCodeHash={phoneCodeHash}
           />
         )}
-      </View>
+      </LayoutProvider>
     </TouchableWithoutFeedback>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    gap: theme.spacing(5),
-  },
-});
