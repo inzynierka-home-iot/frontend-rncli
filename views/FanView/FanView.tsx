@@ -10,13 +10,20 @@ import {
 } from '../../.storybook/stories';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
-import { Fan, RootStackParamList } from '../../types';
+import { Fan, FanRangeValues, RootStackParamList } from '../../types';
 import { sendAPIRequest } from '../../utils';
 import { styles } from './FanView.styles';
 
 type FanViewProps = NativeStackScreenProps<RootStackParamList, 'Fan'>;
 
-const numberRegex = new RegExp('\\.', 'g');
+const fanRangeValues: FanRangeValues = {
+  minTemp: 0,
+  maxTemp: 50,
+  minPercentage: 0,
+  maxPercentage: 100,
+  minDirection: 0,
+  maxDirection: 255,
+};
 
 export const FanView: FC<FanViewProps> = ({ route }) => {
   const { deviceId, nodeId, location } = route.params;
@@ -76,43 +83,20 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
     min: number,
     max: number,
   ) => {
-    if (value == '') {
+    if (value === '') {
       value = min.toString();
     }
-    const potentialValue = parseFloat(value);
-    if (isNaN(potentialValue)) {
-      return;
-    }
-    const potentialValueString = potentialValue.toString();
-    if (
-      value == potentialValueString + ',' ||
-      value == potentialValueString + '.,'
-    ) {
-      value = potentialValueString + '.';
-    }
-    let numberOfDots = value.match(numberRegex)?.length;
-    if (numberOfDots && numberOfDots > 1) {
-      value = potentialValueString + '.';
-      numberOfDots = value.match(numberRegex)?.length;
-      if (numberOfDots && numberOfDots > 1) {
-        value = potentialValueString;
-      }
-    }
-    const finalValueFloat = parseFloat(value);
-    if (finalValueFloat < min) {
-      inputChange(min.toString());
-    } else if (finalValueFloat > max) {
-      inputChange(max.toString());
-    } else {
-      numberOfDots = value.match(numberRegex)?.length;
-      const finalValueString =
-        value == finalValueFloat.toString()
-          ? finalValueFloat.toString()
-          : numberOfDots && numberOfDots > 0
-          ? finalValueFloat.toString() + '.'
-          : finalValueFloat.toString();
-      inputChange(finalValueString);
-    }
+    const parts = value.replace(',', '.').split('.').slice(0, 2);
+    parts[0] = parseInt(parts[0]).toString();
+    const newValue = parts.join('.');
+    const newValueNumeric = parseFloat(newValue);
+    const finalValue =
+      newValueNumeric < min
+        ? min.toString()
+        : newValueNumeric > max
+        ? max.toString()
+        : newValue;
+    inputChange(finalValue);
   };
 
   if (!fan) {
@@ -131,11 +115,21 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
               variant="body-medium"
               text={`Aktualna temperatura wentylacji: ${fan.values.V_TEMP}°C`}
             />
+            <Typography
+              variant="body-small"
+              text={`Zakres: ${fanRangeValues.minTemp} - ${fanRangeValues.maxTemp}`}
+            />
             <Input
               text={temp}
               onChange={e => {
-                checkInput(e, onTempChange, 0, 50);
+                checkInput(
+                  e,
+                  onTempChange,
+                  fanRangeValues.minTemp,
+                  fanRangeValues.maxTemp,
+                );
               }}
+              placeholder=""
               keyboardType="numeric"
             />
           </View>
@@ -144,24 +138,44 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
               variant="body-medium"
               text={`Aktualna prędkość wentylacji: ${fan.values.V_PERCENTAGE}%`}
             />
+            <Typography
+              variant="body-small"
+              text={`Zakres: ${fanRangeValues.minPercentage} - ${fanRangeValues.maxPercentage}`}
+            />
             <Input
               text={percentage}
               onChange={e => {
-                checkInput(e, onPercentageChange, 0, 100);
+                checkInput(
+                  e,
+                  onPercentageChange,
+                  fanRangeValues.minPercentage,
+                  fanRangeValues.maxPercentage,
+                );
               }}
+              placeholder=""
               keyboardType="numeric"
             />
           </View>
           <View style={styles.section}>
             <Typography
               variant="body-medium"
-              text={`Aktualny kierunek głowicy wentylacji: ${fan.values.V_DIRECTION}°`}
+              text={`Aktualny kierunek głowicy: ${fan.values.V_DIRECTION}°`}
+            />
+            <Typography
+              variant="body-small"
+              text={`Zakres: ${fanRangeValues.minDirection} - ${fanRangeValues.maxDirection}`}
             />
             <Input
               text={direction}
               onChange={e => {
-                checkInput(e, onDirectionChange, 0, 255);
+                checkInput(
+                  e,
+                  onDirectionChange,
+                  fanRangeValues.minDirection,
+                  fanRangeValues.maxDirection,
+                );
               }}
+              placeholder=""
               keyboardType="numeric"
             />
           </View>

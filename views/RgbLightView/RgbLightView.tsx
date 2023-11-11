@@ -24,11 +24,6 @@ export const RgbLightView: FC<RgbLightViewProps> = ({ route }) => {
 
   const [color, onColorChange] = useState(rgbLight.values.V_RGB);
 
-  const colorPickerColorChange = (rgbColor: string) => {
-    const colorValue = rgbColor.split('#')[1];
-    onColorChange(colorValue);
-  };
-
   const handleChangeColor = () => {
     sendAPIRequest({
       ...route.params,
@@ -46,13 +41,13 @@ export const RgbLightView: FC<RgbLightViewProps> = ({ route }) => {
   return (
     <View style={styles.container}>
       <Navbar text={`${location} - ${nodeId} - ${rgbLight?.name}`} />
-      <ScrollView onScrollBeginDrag={() => Keyboard.dismiss()}>
+      <ScrollView onScrollBeginDrag={Keyboard.dismiss}>
         <View style={styles.content}>
           <Typography
             variant="body-medium"
             text={`Aktualny kolor lampy to: ${rgbLight.values.V_RGB}`}
           />
-          <ColorPickerRGB color={color} onChange={colorPickerColorChange} />
+          <ColorPickerRGB color={color} onChange={onColorChange} />
           <Button text="Zmień kolor" onPress={handleChangeColor} />
         </View>
       </ScrollView>

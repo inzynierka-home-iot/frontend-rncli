@@ -4,6 +4,7 @@ import {
   StyleSheet,
   TextInput,
   TextInputEndEditingEventData,
+  TextInputFocusEventData,
 } from 'react-native';
 import { theme } from '../../theme';
 
@@ -15,9 +16,9 @@ export type InputProps = {
   disabled?: boolean;
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
   centerText?: boolean;
-  onChange: (e: string) => void;
-  onBlur?: (e: string) => void;
-  onFocus?: () => void;
+  onChange: (value: string) => void;
+  onBlur?: (value: string) => void;
+  onFocus?: (value: string) => void;
 };
 
 export const Input: FC<InputProps> = ({
@@ -30,14 +31,18 @@ export const Input: FC<InputProps> = ({
   centerText = false,
   onChange,
   onBlur,
-  onFocus,
 }) => {
   const [type, setType] = useState<InputProps['variant'] | 'active'>(variant);
-  const onFocusInput = useCallback(() => setType('active'), []);
+  const onFocusInput = useCallback(
+    (value: NativeSyntheticEvent<TextInputFocusEventData>) => {
+      setType('active');
+    },
+    [],
+  );
   const onBlurInput = useCallback(
-    (e: NativeSyntheticEvent<TextInputEndEditingEventData>) => {
+    (value: NativeSyntheticEvent<TextInputEndEditingEventData>) => {
       setType(variant);
-      onBlur?.(e.nativeEvent.text);
+      onBlur?.(value.nativeEvent.text);
     },
     [variant],
   );
@@ -53,7 +58,7 @@ export const Input: FC<InputProps> = ({
       onEndEditing={onBlurInput}
       editable={!disabled}
       autoCapitalize={autoCapitalize}
-      style={styles.input}
+      style={[styles.input, theme.typography['body-medium']]}
     />
   );
 };
@@ -85,7 +90,6 @@ const useStyles = (
       color: theme.colors[textColor],
       borderColor: theme.colors[borderColor],
       width: '100%',
-      ...theme.typography['body-medium'],
       borderWidth: 1,
       elevation,
       borderRadius: theme.spacing(1),

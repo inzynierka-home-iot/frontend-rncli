@@ -18,20 +18,25 @@ export const ColorPickerRGB: FC<ColorPickerProps> = ({ color, onChange }) => {
     onInputChange(color);
   }, [color]);
 
-  const inputColorChange = (rgbColor: string) => {
+  const inputColorChange = (rgbColor: string): void => {
     if (rgbColor.length <= 6) {
       onInputChange(rgbColor);
     }
     if (regExp.test(rgbColor)) {
-      onChange('#' + rgbColor);
+      onChange(rgbColor);
     }
+  };
+
+  const onColorChange = (rgbColor: string): void => {
+    const colorValue = rgbColor.split('#')[1];
+    onChange(colorValue);
   };
 
   return (
     <View style={styles.container}>
       <ColorPicker
         color={'#' + color}
-        onColorChangeComplete={onChange}
+        onColorChangeComplete={onColorChange}
         thumbSize={theme.spacing(5)}
         sliderSize={theme.spacing(8)}
         gapSize={theme.spacing(3)}
