@@ -18,7 +18,8 @@ export type InputProps = {
   centerText?: boolean;
   onChange: (value: string) => void;
   onBlur?: (value: string) => void;
-  onFocus?: (value: string) => void;
+  min?: number;
+  max?: number;
 };
 
 export const Input: FC<InputProps> = ({
@@ -31,14 +32,23 @@ export const Input: FC<InputProps> = ({
   centerText = false,
   onChange,
   onBlur,
+  min = 0,
+  max = 100,
 }) => {
   const [type, setType] = useState<InputProps['variant'] | 'active'>(variant);
+
+  const onChangeInput = useCallback((value: string) => {
+    const newValue = keyboardType === 'default' ? value : getNumberValue(value);
+    onChange(newValue);
+  }, []);
+
   const onFocusInput = useCallback(
     (value: NativeSyntheticEvent<TextInputFocusEventData>) => {
       setType('active');
     },
     [],
   );
+
   const onBlurInput = useCallback(
     (value: NativeSyntheticEvent<TextInputEndEditingEventData>) => {
       setType(variant);
@@ -46,6 +56,24 @@ export const Input: FC<InputProps> = ({
     },
     [variant],
   );
+
+  const getNumberValue = (value: string): string => {
+    if (value === '') {
+      value = min.toString();
+    }
+    const parts = value.replace(',', '.').split('.').slice(0, 2);
+    parts[0] = parseInt(parts[0]).toString();
+    const newValue = parts.join('.');
+    const newValueNumeric = parseFloat(newValue);
+    const finalValue =
+      newValueNumeric < min
+        ? min.toString()
+        : newValueNumeric > max
+        ? max.toString()
+        : newValue;
+    return finalValue;
+  };
+
   const styles = useStyles(type, disabled, text, centerText);
 
   return (
@@ -53,7 +81,7 @@ export const Input: FC<InputProps> = ({
       placeholder={placeholder}
       value={text}
       keyboardType={keyboardType}
-      onChangeText={onChange}
+      onChangeText={onChangeInput}
       onFocus={onFocusInput}
       onEndEditing={onBlurInput}
       editable={!disabled}

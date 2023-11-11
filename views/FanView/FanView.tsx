@@ -77,28 +77,6 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
     });
   };
 
-  const checkInput = (
-    value: string,
-    inputChange: (value: string) => void,
-    min: number,
-    max: number,
-  ) => {
-    if (value === '') {
-      value = min.toString();
-    }
-    const parts = value.replace(',', '.').split('.').slice(0, 2);
-    parts[0] = parseInt(parts[0]).toString();
-    const newValue = parts.join('.');
-    const newValueNumeric = parseFloat(newValue);
-    const finalValue =
-      newValueNumeric < min
-        ? min.toString()
-        : newValueNumeric > max
-        ? max.toString()
-        : newValue;
-    inputChange(finalValue);
-  };
-
   if (!fan) {
     return (
       <Typography variant="header-large" text="Nie znaleziono urządzenia" />
@@ -121,16 +99,10 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
             />
             <Input
               text={temp}
-              onChange={e => {
-                checkInput(
-                  e,
-                  onTempChange,
-                  fanRangeValues.minTemp,
-                  fanRangeValues.maxTemp,
-                );
-              }}
+              onChange={onTempChange}
               placeholder=""
               keyboardType="numeric"
+              max={fanRangeValues.maxTemp}
             />
           </View>
           <View style={styles.section}>
@@ -144,16 +116,10 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
             />
             <Input
               text={percentage}
-              onChange={e => {
-                checkInput(
-                  e,
-                  onPercentageChange,
-                  fanRangeValues.minPercentage,
-                  fanRangeValues.maxPercentage,
-                );
-              }}
+              onChange={onPercentageChange}
               placeholder=""
               keyboardType="numeric"
+              max={fanRangeValues.maxPercentage}
             />
           </View>
           <View style={styles.section}>
@@ -167,16 +133,10 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
             />
             <Input
               text={direction}
-              onChange={e => {
-                checkInput(
-                  e,
-                  onDirectionChange,
-                  fanRangeValues.minDirection,
-                  fanRangeValues.maxDirection,
-                );
-              }}
+              onChange={onDirectionChange}
               placeholder=""
               keyboardType="numeric"
+              max={fanRangeValues.maxDirection}
             />
           </View>
           <Button
