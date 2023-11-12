@@ -1,12 +1,12 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useMemo } from 'react';
-import React, { ScrollView, View } from 'react-native';
+import React from 'react-native';
 import { Button, Navbar, Typography } from '../../.storybook/stories';
+import { LayoutProvider } from '../../components';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
 import { RootStackParamList, Light } from '../../types';
 import { sendAPIRequest } from '../../utils';
-import { styles } from './LightView.styles';
 
 type LightViewProps = NativeStackScreenProps<RootStackParamList, 'Light'>;
 
@@ -64,35 +64,29 @@ export const LightView = ({ route }: LightViewProps) => {
   }
 
   return (
-    <View style={styles.container}>
-      <Navbar text={`${location} - ${nodeId} - ${light?.name}`} />
-      <ScrollView>
-        <View style={styles.content}>
-          <Typography
-            variant="body-medium"
-            text={`Aktualny status lampy to: ${
-              status ? 'Włączona' : 'Wyłączona'
-            }`}
-          />
-          {status ? (
-            <Button text="Wyłącz" hasFullWidth onPress={handleLightOff} />
-          ) : (
-            <Button text="Włącz" hasFullWidth onPress={handleLightOn} />
-          )}
-          <Button
-            text="Włącz wszystkie w danym nodzie"
-            variant="success"
-            hasFullWidth
-            onPress={handleAllLightsOn}
-          />
-          <Button
-            text="Wyłącz wszystkie w danym nodzie"
-            variant="error"
-            hasFullWidth
-            onPress={handleAllLightsOff}
-          />
-        </View>
-      </ScrollView>
-    </View>
+    <LayoutProvider
+      navbar={<Navbar text={`${location} - ${nodeId} - ${light?.name}`} />}>
+      <Typography
+        variant="body-medium"
+        text={`Aktualny status lampy to: ${status ? 'Włączona' : 'Wyłączona'}`}
+      />
+      {status ? (
+        <Button text="Wyłącz" hasFullWidth onPress={handleLightOff} />
+      ) : (
+        <Button text="Włącz" hasFullWidth onPress={handleLightOn} />
+      )}
+      <Button
+        text="Włącz wszystkie w danym nodzie"
+        variant="success"
+        hasFullWidth
+        onPress={handleAllLightsOn}
+      />
+      <Button
+        text="Wyłącz wszystkie w danym nodzie"
+        variant="error"
+        hasFullWidth
+        onPress={handleAllLightsOff}
+      />
+    </LayoutProvider>
   );
 };

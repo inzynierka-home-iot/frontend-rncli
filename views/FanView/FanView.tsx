@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FC } from 'react';
-import React, { ScrollView, View } from 'react-native';
+import React, { View } from 'react-native';
 import {
   Button,
   Input,
@@ -8,6 +8,7 @@ import {
   Typography,
   useInputValue,
 } from '../../.storybook/stories';
+import { LayoutProvider } from '../../components';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
 import { Fan, FanRangeValues, RootStackParamList } from '../../types';
@@ -84,71 +85,64 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
   }
 
   return (
-    <View style={styles.container}>
-      <Navbar text={`${location} - ${nodeId} - ${fan?.name}`} />
-      <ScrollView>
-        <View style={styles.content}>
-          <View style={styles.section}>
-            <Typography
-              variant="body-medium"
-              text={`Aktualna temperatura wentylacji: ${fan.values.V_TEMP}°C`}
-            />
-            <Typography
-              variant="body-small"
-              text={`Zakres: ${fanRangeValues.minTemp} - ${fanRangeValues.maxTemp}`}
-            />
-            <Input
-              text={temp}
-              onChange={onTempChange}
-              placeholder=""
-              keyboardType="numeric"
-              max={fanRangeValues.maxTemp}
-            />
-          </View>
-          <View style={styles.section}>
-            <Typography
-              variant="body-medium"
-              text={`Aktualna prędkość wentylacji: ${fan.values.V_PERCENTAGE}%`}
-            />
-            <Typography
-              variant="body-small"
-              text={`Zakres: ${fanRangeValues.minPercentage} - ${fanRangeValues.maxPercentage}`}
-            />
-            <Input
-              text={percentage}
-              onChange={onPercentageChange}
-              placeholder=""
-              keyboardType="numeric"
-              max={fanRangeValues.maxPercentage}
-            />
-          </View>
-          <View style={styles.section}>
-            <Typography
-              variant="body-medium"
-              text={`Aktualny kierunek głowicy: ${fan.values.V_DIRECTION}°`}
-            />
-            <Typography
-              variant="body-small"
-              text={`Zakres: ${fanRangeValues.minDirection} - ${fanRangeValues.maxDirection}`}
-            />
-            <Input
-              text={direction}
-              onChange={onDirectionChange}
-              placeholder=""
-              keyboardType="numeric"
-              max={fanRangeValues.maxDirection}
-            />
-          </View>
-          <Button
-            text="Zmień parametry wentylatora"
-            onPress={handleChangeFanParams}
-          />
-          <Button
-            text="Pobierz najnowsze wartości"
-            onPress={handleGetFanParams}
-          />
-        </View>
-      </ScrollView>
-    </View>
+    <LayoutProvider
+      navbar={<Navbar text={`${location} - ${nodeId} - ${fan?.name}`} />}>
+      <View style={styles.section}>
+        <Typography
+          variant="body-medium"
+          text={`Aktualna temperatura wentylacji: ${fan.values.V_TEMP}°C`}
+        />
+        <Typography
+          variant="body-small"
+          text={`Zakres: ${fanRangeValues.minTemp} - ${fanRangeValues.maxTemp}`}
+        />
+        <Input
+          text={temp}
+          onChange={onTempChange}
+          placeholder=""
+          keyboardType="numeric"
+          max={fanRangeValues.maxTemp}
+        />
+      </View>
+      <View style={styles.section}>
+        <Typography
+          variant="body-medium"
+          text={`Aktualna prędkość wentylacji: ${fan.values.V_PERCENTAGE}%`}
+        />
+        <Typography
+          variant="body-small"
+          text={`Zakres: ${fanRangeValues.minPercentage} - ${fanRangeValues.maxPercentage}`}
+        />
+        <Input
+          text={percentage}
+          onChange={onPercentageChange}
+          placeholder=""
+          keyboardType="numeric"
+          max={fanRangeValues.maxPercentage}
+        />
+      </View>
+      <View style={styles.section}>
+        <Typography
+          variant="body-medium"
+          text={`Aktualny kierunek głowicy: ${fan.values.V_DIRECTION}°`}
+        />
+        <Typography
+          variant="body-small"
+          text={`Zakres: ${fanRangeValues.minDirection} - ${fanRangeValues.maxDirection}`}
+        />
+        <Input
+          text={direction}
+          onChange={onDirectionChange}
+          placeholder=""
+          keyboardType="numeric"
+          max={fanRangeValues.maxDirection}
+        />
+      </View>
+      <Button
+        text="Zmień parametry wentylatora"
+        onPress={handleChangeFanParams}
+      />
+      <Button text="Pobierz najnowsze wartości" onPress={handleGetFanParams} />
+    </LayoutProvider>
   );
 };

@@ -1,12 +1,12 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FC } from 'react';
-import React, { ScrollView, View } from 'react-native';
+import React from 'react-native';
 import { Button, Navbar, Typography } from '../../.storybook/stories';
+import { LayoutProvider } from '../../components';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
 import { HumidityDetector, RootStackParamList } from '../../types';
 import { sendAPIRequest } from '../../utils';
-import { styles } from './HumidityDetectorView.styles';
 
 type HumidityDetectorViewProps = NativeStackScreenProps<
   RootStackParamList,
@@ -37,17 +37,15 @@ export const HumidityDetectorView: FC<HumidityDetectorViewProps> = ({
   }
 
   return (
-    <View style={styles.container}>
-      <Navbar text={`${location} - ${nodeId} - ${humidityDetector?.name}`} />
-      <ScrollView>
-        <View style={styles.content}>
-          <Typography
-            variant="body-medium"
-            text={`Aktualny stan wilgotności: ${humidityDetector.values.V_HUM}`}
-          />
-          <Button text="Pobierz aktualny stan" onPress={handleGetHum} />
-        </View>
-      </ScrollView>
-    </View>
+    <LayoutProvider
+      navbar={
+        <Navbar text={`${location} - ${nodeId} - ${humidityDetector?.name}`} />
+      }>
+      <Typography
+        variant="body-medium"
+        text={`Aktualny stan wilgotności: ${humidityDetector.values.V_HUM}`}
+      />
+      <Button text="Pobierz aktualny stan" onPress={handleGetHum} />
+    </LayoutProvider>
   );
 };
