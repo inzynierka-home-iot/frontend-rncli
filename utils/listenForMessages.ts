@@ -19,41 +19,40 @@ const paramsToObject = (params: string) => {
   return paramObj;
 };
 
-export const listenForMessages = async (
-  user_id: string,
-  dispatch: AppDispatch,
-) => {
-  mtproto.updates.on(
-    'updateShortMessage',
-    (updateInfo: { message: string; user_id: string }) => {
-      if (updateInfo.user_id === user_id) {
-        const message: Message = JSON.parse(updateInfo.message);
-        const [_, location, nodeId, deviceId, command] = message.req.split('/');
-        if (message.req === '/*/*/*/get/') {
-          dispatch(setInitialDevice(message.res));
-        } else if (command === 'set' || command === 'status') {
-          let values = message.res;
-          if (command === 'set') {
-            if (message.res.status) {
-              values = paramsToObject(message.req.split('?')[1]);
-            }
+export const listenForMessages = (user_id: string, dispatch: AppDispatch) => {
+  const onUpdate = (updateInfo: { message: string; user_id: string }) => {
+    if (updateInfo.user_id === user_id) {
+      const message: Message = JSON.parse(updateInfo.message);
+      const [_, location, nodeId, deviceId, command] = message.req.split('/');
+      if (message.req === '/*/*/*/get/') {
+        dispatch(setInitialDevice(message.res));
+      } else if (command === 'set' || command === 'status') {
+        let values = message.res;
+        if (command === 'set') {
+          if (message.res.status) {
+            values = paramsToObject(message.req.split('?')[1]);
           }
-          dispatch(
-            setDeviceValues({
-              location,
-              nodeId,
-              deviceId,
-              values,
-            }),
-          );
-        } else if (command === 'statusAll') {
-          dispatch(setTempHistory(message.res.V_TEMP));
-        } else if (command === 'connected') {
-          dispatch(addDevice(message.res.device));
-        } else if (command === 'disconnected') {
-          dispatch(removeDevice(message.res.device));
         }
+        dispatch(
+          setDeviceValues({
+            location,
+            nodeId,
+            deviceId,
+            values,
+          }),
+        );
+      } else if (command === 'statusAll') {
+        dispatch(setTempHistory(message.res.V_TEMP));
+      } else if (command === 'connected') {
+        dispatch(addDevice(message.res.device));
+      } else if (command === 'disconnected') {
+        dispatch(removeDevice(message.res.device));
       }
-    },
-  );
+    }
+  };
+
+  return {
+    add: () => mtproto.updates.on('updateShortMessage', onUpdate),
+    remove: () => mtproto.updates.off('updateShortMessage', onUpdate),
+  };
 };

@@ -7,7 +7,9 @@ export const useListenForHomeBotMessages = (botId: string | null) => {
 
   useEffect(() => {
     if (botId) {
-      listenForMessages(botId, dispatch);
+      const { add, remove } = listenForMessages(botId, dispatch);
+      add();
+      return () => remove();
     }
   }, [botId, dispatch]);
 };
