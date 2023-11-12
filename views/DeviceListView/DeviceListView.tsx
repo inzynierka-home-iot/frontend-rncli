@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { FlatList, View } from 'react-native';
+import { View } from 'react-native';
 import { getDeviceIcon, sendAPIRequest } from '../../utils';
 import { Device, RootStackParamList } from '../../types';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
@@ -22,8 +22,6 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 const createDeviceKey = (device: Device) =>
   device.location + '/' + device.nodeId + '/' + device.id;
-
-const createSeparatingElement = () => <View style={styles.separatingElement} />;
 
 type DeviceListViewProps = NativeStackScreenProps<
   RootStackParamList,
@@ -56,6 +54,7 @@ export const DeviceListView: FC<DeviceListViewProps> = ({ route }) => {
 
   const createDeviceElement = (device: Device) => (
     <ListItem
+      key={createDeviceKey(device)}
       text={device.name}
       icon={getDeviceIcon(device.type)}
       onPress={() => {
@@ -80,12 +79,11 @@ export const DeviceListView: FC<DeviceListViewProps> = ({ route }) => {
             <Button text="Odśwież listę" size="small" onPress={reloadDevices} />
           </View>
         ) : (
-          <FlatList
-            data={devices}
-            renderItem={({ item: device }) => createDeviceElement(device)}
-            keyExtractor={createDeviceKey}
-            ItemSeparatorComponent={createSeparatingElement}
-          />
+          <View style={styles.devicesList}>
+            {devices.map(device => {
+              return createDeviceElement(device);
+            })}
+          </View>
         )}
       </LoadingWrapper>
     </LayoutProvider>

@@ -10,3 +10,4 @@ export { sendAPIRequest } from './sendAPIRequest';
 export { sendVerificationCode } from './sendVerificationCode';
 export { resolveUserID } from './resolveUserID';
 export { logoutFromTelegram } from './logoutFromTelegram';
+export { getNumericValue } from './getNumericValue';

@@ -2,13 +2,7 @@ import { StyleSheet } from 'react-native';
 import { theme } from '../../.storybook/theme';
 
 export const styles = StyleSheet.create({
-  reload: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  section: {
     gap: theme.spacing(2),
-  },
-  devicesList: {
-    gap: theme.spacing(3),
   },
 });

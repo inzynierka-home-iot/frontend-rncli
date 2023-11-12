@@ -15,10 +15,11 @@ export const Typography: FC<TypographyProps> = ({
   color = 'text-primary',
   selectable = false,
 }) => {
-  const styles = StyleSheet.create({
-    ...theme.typography[variant],
-    color: theme.colors[color],
-  });
-
-  return <Text style={styles} selectable={selectable}>{text}</Text>;
+  return (
+    <Text
+      style={[{ color: theme.colors[color] }, theme.typography[variant]]}
+      selectable={selectable}>
+      {text}
+    </Text>
+  );
 };

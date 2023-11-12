@@ -1,12 +1,11 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import React from 'react-native';
 import {
   Button,
-  Input,
   Navbar,
   Typography,
-  useInputValue,
+  ColorPickerRGB,
 } from '../../.storybook/stories';
 import { LayoutProvider } from '../../components';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
@@ -23,7 +22,7 @@ export const RgbLightView: FC<RgbLightViewProps> = ({ route }) => {
     selectDeviceWithId(state, location, nodeId, deviceId),
   ) as RgbLight;
 
-  const [color, onColorChange] = useInputValue(rgbLight.values.V_RGB);
+  const [color, onColorChange] = useState(rgbLight.values.V_RGB);
 
   const handleChangeColor = () => {
     sendAPIRequest({
@@ -46,7 +45,7 @@ export const RgbLightView: FC<RgbLightViewProps> = ({ route }) => {
         variant="body-medium"
         text={`Aktualny kolor lampy to: ${rgbLight.values.V_RGB}`}
       />
-      <Input text={color} onChange={onColorChange} />
+      <ColorPickerRGB color={color} onChange={onColorChange} />
       <Button text="Zmień kolor" onPress={handleChangeColor} />
     </LayoutProvider>
   );

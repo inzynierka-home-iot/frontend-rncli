@@ -41,8 +41,9 @@ export const MotionDetectorView: FC<MotionDetectorViewProps> = ({ route }) => {
       }>
       <Typography
         variant="body-medium"
-        text={`Aktualny stan: ${motionDetector.values.V_TRIPPED === '1' ? 'ruch' : 'brak ruchu'
-          }`}
+        text={`Aktualny stan: ${
+          motionDetector.values.V_TRIPPED === '1' ? 'ruch' : 'brak ruchu'
+        }`}
       />
       <Button text="Pobierz aktualny stan" onPress={handleGetMotionStatus} />
     </LayoutProvider>
