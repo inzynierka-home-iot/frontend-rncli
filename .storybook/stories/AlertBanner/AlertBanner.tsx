@@ -23,6 +23,7 @@ export const AlertBanner: FC<AlertBannerProps> = ({
   if (!isOpen) {
     return null;
   }
+
   return (
     <View style={styles.container}>
       <View style={styles.message}>
@@ -56,15 +57,15 @@ const useStyles = (variant: AlertBannerProps['variant']) => {
 
   return StyleSheet.create({
     container: {
-      position: 'absolute',
-      top: 0,
+      // position: 'absolute',
+      // top: 0,
+      // zIndex: 1,
       backgroundColor: theme.colors[backgroundColor],
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
       paddingHorizontal: theme.spacing(6),
       paddingVertical: theme.spacing(2),
-      margin: theme.spacing(2),
       borderRadius: theme.spacing(2),
     },
     message: {

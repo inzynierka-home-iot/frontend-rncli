@@ -5,8 +5,9 @@ import {
   removeDevice,
   setDeviceValues,
 } from '../redux/devicesSlice';
+import { addAlert } from '../redux/alertsSlice';
 import { AppDispatch } from '../redux/store';
-import { Message } from '../types';
+import { Alert, Message } from '../types';
 import { mtproto } from './mtprotoClient';
 
 const paramsToObject = (params: string) => {
@@ -31,6 +32,11 @@ export const listenForMessages = async (
         const [_, location, nodeId, deviceId, command] = message.req.split('/');
         if (message.req === '/*/*/*/get/') {
           dispatch(setInitialDevice(message.res));
+          const alertMessage: Alert = {
+            variant: 'success',
+            text: 'Pomyślnie odebrano urządzenia',
+          };
+          dispatch(addAlert(alertMessage));
         } else if (command === 'set' || command === 'status') {
           let values = message.res;
           if (command === 'set') {

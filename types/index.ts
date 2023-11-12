@@ -1,4 +1,5 @@
 export * from './Device';
+export type { Alert } from './Alert';
 export type { ChartData } from './ChartData';
 export { FanRangeValues } from './FanRangeValues';
 export type { Message } from './Message';

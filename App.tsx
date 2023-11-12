@@ -18,7 +18,6 @@ import {
   RgbLightView,
   TempSensorView,
 } from './views';
-import FlashMessage from 'react-native-flash-message';
 import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { store } from './redux/store';
@@ -65,7 +64,6 @@ export default function App() {
             <Stack.Screen name="Telegram" component={TelegramForm} />
           </Stack.Navigator>
         </LoadingWrapper>
-        <FlashMessage position="top" />
       </NavigationContainer>
     </Provider>
   );
