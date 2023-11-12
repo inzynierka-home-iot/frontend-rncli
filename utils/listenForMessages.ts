@@ -51,8 +51,7 @@ export const listenForMessages = (user_id: string, dispatch: AppDispatch) => {
     }
   };
 
-  return {
-    add: () => mtproto.updates.on('updateShortMessage', onUpdate),
-    remove: () => mtproto.updates.off('updateShortMessage', onUpdate),
-  };
+  mtproto.updates.on('updateShortMessage', onUpdate);
+
+  return () => mtproto.updates.off('updateShortMessage', onUpdate);
 };
