@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FC } from 'react';
-import React, { View } from 'react-native';
+import React, { Keyboard, View } from 'react-native';
 import {
   Button,
   Input,
@@ -12,19 +12,10 @@ import { LayoutProvider } from '../../components';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
 import { Fan, FanRangeValues, RootStackParamList } from '../../types';
-import { sendAPIRequest } from '../../utils';
+import { getNumericValue, sendAPIRequest } from '../../utils';
 import { styles } from './FanView.styles';
 
 type FanViewProps = NativeStackScreenProps<RootStackParamList, 'Fan'>;
-
-const fanRangeValues: FanRangeValues = {
-  minTemp: 0,
-  maxTemp: 50,
-  minPercentage: 0,
-  maxPercentage: 100,
-  minDirection: 0,
-  maxDirection: 255,
-};
 
 export const FanView: FC<FanViewProps> = ({ route }) => {
   const { deviceId, nodeId, location } = route.params;
@@ -40,9 +31,9 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
   const [direction, onDirectionChange] = useInputValue(fan.values.V_DIRECTION);
 
   const handleChangeFanParams = () => {
-    const finalTempValue = parseFloat(temp).toString();
-    const finalDirectionValue = parseFloat(direction).toString();
-    const finalPercentageValue = parseFloat(percentage).toString();
+    const finalTempValue = getNumericValue(parseFloat, temp);
+    const finalDirectionValue = getNumericValue(parseFloat, direction);
+    const finalPercentageValue = getNumericValue(parseFloat, percentage);
     sendAPIRequest({
       ...route.params,
       action: 'set',
@@ -94,14 +85,13 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
         />
         <Typography
           variant="body-small"
-          text={`Zakres: ${fanRangeValues.minTemp} - ${fanRangeValues.maxTemp}`}
+          text={`Zakres: ${FanRangeValues.MIN_TEMP} - ${FanRangeValues.MAX_TEMP}`}
         />
         <Input
           text={temp}
           onChange={onTempChange}
-          placeholder=""
           keyboardType="numeric"
-          max={fanRangeValues.maxTemp}
+          max={FanRangeValues.MAX_TEMP}
         />
       </View>
       <View style={styles.section}>
@@ -111,14 +101,13 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
         />
         <Typography
           variant="body-small"
-          text={`Zakres: ${fanRangeValues.minPercentage} - ${fanRangeValues.maxPercentage}`}
+          text={`Zakres: ${FanRangeValues.MIN_PERCENTAGE} - ${FanRangeValues.MAX_PERCENTAGE}`}
         />
         <Input
           text={percentage}
           onChange={onPercentageChange}
-          placeholder=""
           keyboardType="numeric"
-          max={fanRangeValues.maxPercentage}
+          max={FanRangeValues.MAX_PERCENTAGE}
         />
       </View>
       <View style={styles.section}>
@@ -128,14 +117,13 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
         />
         <Typography
           variant="body-small"
-          text={`Zakres: ${fanRangeValues.minDirection} - ${fanRangeValues.maxDirection}`}
+          text={`Zakres: ${FanRangeValues.MIN_DIRECTION} - ${FanRangeValues.MAX_DIRECTION}`}
         />
         <Input
           text={direction}
           onChange={onDirectionChange}
-          placeholder=""
           keyboardType="numeric"
-          max={fanRangeValues.maxDirection}
+          max={FanRangeValues.MAX_DIRECTION}
         />
       </View>
       <Button

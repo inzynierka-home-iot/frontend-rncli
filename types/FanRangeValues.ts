@@ -1,8 +1,8 @@
-export type FanRangeValues = {
-  minTemp: number;
-  maxTemp: number;
-  minPercentage: number;
-  maxPercentage: number;
-  minDirection: number;
-  maxDirection: number;
-};
+export enum FanRangeValues {
+  MIN_TEMP = 0,
+  MAX_TEMP = 50,
+  MIN_PERCENTAGE = 0,
+  MAX_PERCENTAGE = 100,
+  MIN_DIRECTION = 0,
+  MAX_DIRECTION = 255,
+}

@@ -25,7 +25,7 @@ export type InputProps = {
 export const Input: FC<InputProps> = ({
   text,
   keyboardType = 'default',
-  placeholder = 'Placeholder',
+  placeholder = '',
   variant = 'default',
   disabled = false,
   autoCapitalize = 'sentences',
@@ -65,13 +65,12 @@ export const Input: FC<InputProps> = ({
     parts[0] = parseInt(parts[0]).toString();
     const newValue = parts.join('.');
     const newValueNumeric = parseFloat(newValue);
-    const finalValue =
-      newValueNumeric < min
-        ? min.toString()
-        : newValueNumeric > max
-        ? max.toString()
-        : newValue;
-    return finalValue;
+    if (newValueNumeric < min) {
+      return min.toString();
+    } else if (newValueNumeric > max) {
+      return max.toString();
+    }
+    return newValue;
   };
 
   const styles = useStyles(type, disabled, text, centerText);

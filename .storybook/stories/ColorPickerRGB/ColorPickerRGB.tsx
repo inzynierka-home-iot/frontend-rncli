@@ -18,7 +18,7 @@ export const ColorPickerRGB: FC<ColorPickerProps> = ({ color, onChange }) => {
     onInputChange(color);
   }, [color]);
 
-  const inputColorChange = (rgbColor: string): void => {
+  const inputColorChange = (rgbColor: string) => {
     if (rgbColor.length <= 6) {
       onInputChange(rgbColor);
     }
@@ -27,7 +27,7 @@ export const ColorPickerRGB: FC<ColorPickerProps> = ({ color, onChange }) => {
     }
   };
 
-  const onColorChange = (rgbColor: string): void => {
+  const onColorChange = (rgbColor: string) => {
     const colorValue = rgbColor.split('#')[1];
     onChange(colorValue);
   };
@@ -46,6 +46,7 @@ export const ColorPickerRGB: FC<ColorPickerProps> = ({ color, onChange }) => {
         autoCapitalize="none"
         onChange={onInputChange}
         onBlur={inputColorChange}
+        placeholder="Podaj kolor RGB"
       />
     </View>
   );
