@@ -54,8 +54,6 @@ export const ColorPickerRGB: FC<ColorPickerProps> = ({ color, onChange }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: 'column',
     gap: theme.spacing(5),
   },
 });
