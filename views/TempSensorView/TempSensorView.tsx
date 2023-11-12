@@ -5,11 +5,7 @@ import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
 import { RootStackParamList } from '../../types';
 import { TempSensor } from '../../types/Device';
-import {
-  CurrentTempLabel,
-  TempHistoryChart,
-  TempTimeScheduler,
-} from './components';
+import { CurrentTempLabel, TempHistoryChart } from './components';
 import { TempRepeatScheduler } from './components/TempRepeatScheduler';
 import { LayoutProvider } from '../../components';
 

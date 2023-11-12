@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FC } from 'react';
-import React, { Keyboard, View } from 'react-native';
+import React, { View } from 'react-native';
 import {
   Button,
   Input,
@@ -13,6 +13,7 @@ import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
 import { Fan, FanRangeValues, RootStackParamList } from '../../types';
 import { getNumericValue, sendAPIRequest } from '../../utils';
+import { TurnOnFanSelect } from './components';
 import { styles } from './FanView.styles';
 
 type FanViewProps = NativeStackScreenProps<RootStackParamList, 'Fan'>;
@@ -78,6 +79,7 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
   return (
     <LayoutProvider
       navbar={<Navbar text={`${location} - ${nodeId} - ${fan?.name}`} />}>
+      <Button text="Pobierz najnowsze wartości" onPress={handleGetFanParams} />
       <View style={styles.section}>
         <Typography
           variant="body-medium"
@@ -130,7 +132,7 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
         text="Zmień parametry wentylatora"
         onPress={handleChangeFanParams}
       />
-      <Button text="Pobierz najnowsze wartości" onPress={handleGetFanParams} />
+      <TurnOnFanSelect fanBaseParams={route.params} />
     </LayoutProvider>
   );
 };

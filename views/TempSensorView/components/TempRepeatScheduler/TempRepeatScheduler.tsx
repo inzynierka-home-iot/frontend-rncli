@@ -1,9 +1,9 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import React from 'react-native';
 import {
+  Button,
   Checkbox,
   ScheduleDatePicker,
-  ScheduleDateValue,
   useCheckboxValue,
 } from '../../../../.storybook/stories';
 import { sendAPIRequest } from '../../../../utils';
@@ -17,12 +17,16 @@ export const TempRepeatScheduler: FC<TempRepeatSchedulerProps> = ({
   tempSensorParams,
 }) => {
   const [isScheduleRepeat, onToggleScheduleRepeat] = useCheckboxValue();
+  const [schedule, setSchedule] = useState({});
 
-  const handleSetScheduleRepeat = (value: ScheduleDateValue) => {
+  const handleSetScheduleRepeat = () => {
     sendAPIRequest({
       ...tempSensorParams,
-      action: 'scheduleRepeat',
-      additionalParams: value,
+      action: 'setSchedule',
+      additionalParams: {
+        action: 'getTemp',
+        ...schedule,
+      },
     });
   };
 
@@ -34,7 +38,10 @@ export const TempRepeatScheduler: FC<TempRepeatSchedulerProps> = ({
         label="Pobieraj temperaturę o określonej godzinie"
       />
       {isScheduleRepeat && (
-        <ScheduleDatePicker mode="repeat" onChange={handleSetScheduleRepeat} />
+        <>
+          <ScheduleDatePicker mode="repeat" onChange={setSchedule} />
+          <Button text="Ustaw wartość" onPress={handleSetScheduleRepeat} />
+        </>
       )}
     </>
   );

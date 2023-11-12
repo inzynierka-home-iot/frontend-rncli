@@ -8,7 +8,7 @@ import { Typography } from '../Typography';
 export type ScheduleDateValue = {
   hours: number;
   minutes: number;
-  days?: string[];
+  days?: number[];
 }
 
 export type ScheduleDatePickerProps = {
@@ -22,10 +22,10 @@ export const ScheduleDatePicker: FC<ScheduleDatePickerProps> = ({
   mode = 'interval',
   onChange,
 }) => {
-  const [selectedDays, setSelectedDays] = useState<string[]>([]);
+  const [selectedDays, setSelectedDays] = useState<number[]>([]);
   const [date, setDate] = useState(new Date())
 
-  const onSelectDay = (value: string) => {
+  const onSelectDay = (value: number) => {
     setSelectedDays((selectedDays) => {
       if (selectedDays.includes(value)) {
         return selectedDays.filter((day) => day !== value)
@@ -48,13 +48,14 @@ export const ScheduleDatePicker: FC<ScheduleDatePickerProps> = ({
     <View style={styles.container}>
       {mode === 'repeat' && (
         <>
-          <Typography text="Wybierz dzień" variant="header-small" />
+          <Typography text="Wybierz dni" variant="header-small" />
           <View style={styles.daysContainer}>
-            {AVAILABLE_DAYS.map((day) => <DayButton
+            {AVAILABLE_DAYS.map((day, index) => <DayButton
               key={day}
-              value={day}
+              value={index + 1}
+              label={day}
               onDayChange={onSelectDay}
-              isSelected={selectedDays.includes(day)}
+              isSelected={selectedDays.includes(index + 1)}
             />)}
           </View>
         </>

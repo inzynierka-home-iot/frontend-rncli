@@ -4,13 +4,15 @@ import { theme } from '../../theme';
 import { Typography } from '../Typography';
 
 type DayButtonProps = {
-  value: string;
+  value: number;
+  label: string;
   isSelected: boolean;
-  onDayChange: (value: string) => void;
+  onDayChange: (value: number) => void;
 }
 
 export const DayButton: FC<DayButtonProps> = ({
   value,
+  label,
   isSelected,
   onDayChange
 }) => {
@@ -20,7 +22,7 @@ export const DayButton: FC<DayButtonProps> = ({
 
   return (
     <TouchableOpacity style={styles.dayButton} onPress={onPress} activeOpacity={0.6}>
-      <Typography text={value} variant='body-small' color='text-invertedPrimary' />
+      <Typography text={label} variant='body-small' color='text-invertedPrimary' />
     </TouchableOpacity>
   )
 }
