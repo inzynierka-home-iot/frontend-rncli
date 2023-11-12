@@ -1,5 +1,11 @@
 import React, { FC, useCallback, useState } from 'react';
-import { StyleSheet, TextInput } from 'react-native';
+import {
+  NativeSyntheticEvent,
+  StyleSheet,
+  TextInput,
+  TextInputEndEditingEventData,
+  TextInputFocusEventData,
+} from 'react-native';
 import { theme } from '../../theme';
 
 export type InputProps = {
@@ -8,22 +14,65 @@ export type InputProps = {
   placeholder?: string;
   variant?: 'default' | 'error';
   disabled?: boolean;
+  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
   centerText?: boolean;
-  onChange: (e: string) => void;
+  onChange: (value: string) => void;
+  onBlur?: (value: string) => void;
+  min?: number;
+  max?: number;
 };
 
 export const Input: FC<InputProps> = ({
   text,
   keyboardType = 'default',
-  placeholder = 'Placeholder',
+  placeholder = '',
   variant = 'default',
   disabled = false,
+  autoCapitalize = 'sentences',
   centerText = false,
   onChange,
+  onBlur,
+  min = 0,
+  max = 100,
 }) => {
   const [type, setType] = useState<InputProps['variant'] | 'active'>(variant);
-  const onFocus = useCallback(() => setType('active'), []);
-  const onBlur = useCallback(() => setType(variant), [variant]);
+
+  const onChangeInput = useCallback((value: string) => {
+    const newValue = keyboardType === 'default' ? value : getNumberValue(value);
+    onChange(newValue);
+  }, []);
+
+  const onFocusInput = useCallback(
+    (value: NativeSyntheticEvent<TextInputFocusEventData>) => {
+      setType('active');
+    },
+    [],
+  );
+
+  const onBlurInput = useCallback(
+    (value: NativeSyntheticEvent<TextInputEndEditingEventData>) => {
+      setType(variant);
+      onBlur?.(value.nativeEvent.text);
+    },
+    [variant],
+  );
+
+  const getNumberValue = (value: string): string => {
+    if (value === '') {
+      value = min.toString();
+    }
+    const parts = value.replace(',', '.').split('.').slice(0, 2);
+    parts[0] = parseInt(parts[0]).toString();
+    const newValue = parts.join('.');
+    const newValueNumeric = parseFloat(newValue);
+    if (newValueNumeric < min) {
+      return min.toString();
+    } else if (newValueNumeric > max) {
+      return max.toString();
+    }
+    return newValue;
+  };
+
   const styles = useStyles(type, disabled, text, centerText);
 
   return (
@@ -31,11 +80,12 @@ export const Input: FC<InputProps> = ({
       placeholder={placeholder}
       value={text}
       keyboardType={keyboardType}
-      onChangeText={onChange}
-      onFocus={onFocus}
-      onBlur={onBlur}
+      onChangeText={onChangeInput}
+      onFocus={onFocusInput}
+      onEndEditing={onBlurInput}
       editable={!disabled}
-      style={styles.input}
+      autoCapitalize={autoCapitalize}
+      style={[styles.input, theme.typography['body-medium']]}
     />
   );
 };
@@ -67,7 +117,6 @@ const useStyles = (
       color: theme.colors[textColor],
       borderColor: theme.colors[borderColor],
       width: '100%',
-      ...theme.typography['body-medium'],
       borderWidth: 1,
       elevation,
       borderRadius: theme.spacing(1),

@@ -35,77 +35,71 @@ const mockedData = {
       location: 'home-1',
       id: '2',
       nodeId: '1',
-      type: DeviceType.S_BINARY,
-      name: 'Yellow LED',
+      type: DeviceType.S_RGB_LIGHT,
+      name: 'RGB Light',
       values: {
-        V_STATUS: '1',
-        V_WATT: null,
+        V_RGB: '60ffa2',
       },
     },
     {
       location: 'home-1',
       id: '3',
       nodeId: '1',
-      type: DeviceType.S_BINARY,
-      name: 'Red LED',
+      type: DeviceType.S_FAN,
+      name: 'Fan',
       values: {
-        V_STATUS: '0',
-        V_WATT: null,
+        V_TEMP: '24.5',
+        V_PERCENTAGE: '34',
+        V_DIRECTION: '128',
       },
     },
     {
       location: 'home-1',
       id: '4',
       nodeId: '1',
-      type: DeviceType.S_LOCK,
-      name: 'Button',
-      values: { V_LOCK_STATUS: '0' },
+      type: DeviceType.S_DISTANCE,
+      name: 'Czujnik odległości',
+      values: {
+        V_DISTANCE: '50',
+      },
     },
     {
       location: 'home-1',
       id: '5',
       nodeId: '1',
-      type: DeviceType.S_LOCK,
-      name: 'Button',
-      values: { V_LOCK_STATUS: '0' },
+      type: DeviceType.S_HUM,
+      name: 'Czujnik wilgotności',
+      values: {
+        V_HUM: '30',
+      },
     },
     {
       location: 'home-1',
       id: '6',
       nodeId: '1',
-      type: DeviceType.S_LOCK,
-      name: 'Button',
-      values: { V_LOCK_STATUS: '0' },
+      type: DeviceType.S_LIGHT_LEVEL,
+      name: 'Czujnik światła',
+      values: {
+        V_LIGHT_LEVEL: '27',
+      },
     },
     {
       location: 'home-1',
       id: '7',
       nodeId: '1',
-      type: DeviceType.S_BINARY,
-      name: 'Red LED',
+      type: DeviceType.S_MOTION,
+      name: 'Czujnik ruchu',
       values: {
-        V_STATUS: '1',
-        V_WATT: null,
-      },
-    },
-    {
-      location: 'home-1',
-      id: '8',
-      nodeId: '1',
-      type: DeviceType.S_BINARY,
-      name: 'Red LED',
-      values: {
-        V_STATUS: '0',
-        V_WATT: null,
+        V_LIGHT_LEVEL: '0',
       },
     },
   ] as Device[],
 };
 
 const initialState: DeviceState = {
-  // devices: mockedData.devices,
-  devicesList: [],
-  isLoading: true,
+  devicesList: mockedData.devices,
+  // devicesList: [],
+  isLoading: false,
 };
 
 export const devicesSlice = createSlice({
@@ -113,8 +107,8 @@ export const devicesSlice = createSlice({
   initialState,
   reducers: {
     setInitialDevice: (state, action: PayloadAction<Device[]>) => {
-      state.devicesList = action.payload;
-      state.isLoading = false;
+      // state.devicesList = action.payload;
+      // state.isLoading = false;
     },
     setDeviceValues: (
       state,
@@ -152,7 +146,11 @@ export const devicesSlice = createSlice({
       );
     },
     startLoading: state => {
-      state.isLoading = true;
+      // state.isLoading = true;
+    },
+    clearState: state => {
+      // state.devicesList = [];
+      // state.isLoading = true;
     },
   },
 });
@@ -163,6 +161,7 @@ export const {
   addDevice,
   removeDevice,
   startLoading,
+  clearState,
 } = devicesSlice.actions;
 
 export const selectDevices = (state: RootState) => state.devices.devicesList;

@@ -59,6 +59,7 @@ const getStories = () => {
     './.storybook/stories/Select/Select.stories.tsx': require('./stories/Select/Select.stories'),
     './.storybook/stories/Typography/Typography.stories.tsx': require('./stories/Typography/Typography.stories.tsx'),
     './.storybook/stories/Loading/Loading.stories.tsx': require('./stories/Loading/Loading.stories'),
+    './.storybook/stories/ColorPickerRGB/ColorPickerRGB.stories.tsx': require('./stories/ColorPickerRGB/ColorPickerRGB.stories'),
   };
 };
 

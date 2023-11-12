@@ -23,7 +23,7 @@ export const ConfirmationForm = ({
     useConfirmCodeClick(phoneCodeHash, setIs2FANeeded);
 
   return (
-    <View style={styles.container}>
+    <>
       <Typography
         variant="body-small"
         text="Na Twoje konto w serwisie telegram został wysłany kod potwierdzający, podaj go aby kontynuować"
@@ -54,6 +54,6 @@ export const ConfirmationForm = ({
           hasFullWidth
         />
       </View>
-    </View>
+    </>
   );
 };

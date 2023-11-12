@@ -1,10 +1,9 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React, { ScrollView, View } from 'react-native';
+import React from 'react-native';
 import { Navbar, Typography } from '../../.storybook/stories';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
 import { RootStackParamList } from '../../types';
-import { styles } from './TempSensorView.styles';
 import { TempSensor } from '../../types/Device';
 import {
   CurrentTempLabel,
@@ -12,6 +11,7 @@ import {
   TempTimeScheduler,
 } from './components';
 import { TempRepeatScheduler } from './components/TempRepeatScheduler';
+import { LayoutProvider } from '../../components';
 
 export type TempSensorViewProps = NativeStackScreenProps<
   RootStackParamList,
@@ -40,19 +40,16 @@ export const TempSensorView = ({ route }: TempSensorViewProps) => {
   }
 
   return (
-    <View style={styles.container}>
-      <Navbar text={`${location} - ${nodeId} - ${tempSensor.name}`} />
-      <ScrollView>
-        <View style={styles.content}>
-          <CurrentTempLabel
-            tempValueRaw={tempSensor.values.V_TEMP}
-            tempSensorParams={route.params}
-          />
-          <TempHistoryChart tempSensorParams={route.params} />
-          <TempTimeScheduler tempSensorParams={route.params} />
-          <TempRepeatScheduler tempSensorParams={route.params} />
-        </View>
-      </ScrollView>
-    </View>
+    <LayoutProvider
+      navbar={
+        <Navbar text={`${location} - ${nodeId} - ${tempSensor?.name}`} />
+      }>
+      <CurrentTempLabel
+        tempValueRaw={tempSensor.values.V_TEMP}
+        tempSensorParams={route.params}
+      />
+      <TempHistoryChart tempSensorParams={route.params} />
+      <TempRepeatScheduler tempSensorParams={route.params} />
+    </LayoutProvider>
   );
 };

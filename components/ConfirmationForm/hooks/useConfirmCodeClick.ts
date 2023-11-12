@@ -3,12 +3,7 @@ import { Keyboard } from 'react-native';
 import { InputProps } from '../../../.storybook/stories';
 import { useAppNavigation } from '../../../hooks';
 import { SignInData } from '../../../types';
-import {
-  logInCode,
-  ReadStoredValue,
-  SaveStoredValue,
-  resolveBotID,
-} from '../../../utils';
+import { logInCode, SaveStoredValue } from '../../../utils';
 
 export const useConfirmCodeClick = (
   phoneCodeHash: string,
@@ -38,15 +33,8 @@ export const useConfirmCodeClick = (
       setIs2FANeeded(true);
     }
     if (res._ === 'auth.authorization') {
-      const botAccessHash = await ReadStoredValue(
-        'bot_conversation_access_hash',
-      );
-      const botUserID = await ReadStoredValue('bot_user_id');
-      if (!botAccessHash || !botUserID) {
-        await resolveBotID();
-      }
       SaveStoredValue('SignedIn', 'true');
-      navigation.navigate('DeviceList');
+      navigation.navigate('LocationList');
     } else {
       setCodeVariant('error');
     }

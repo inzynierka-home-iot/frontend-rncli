@@ -23,7 +23,7 @@ export const PhoneNumberForm = ({
     useSendVerificationCode();
 
   return (
-    <View style={styles.container}>
+    <>
       <Typography
         variant="body-small"
         text="Uzupełnij dane, za pomocą których logujesz się do serwisu Telegram"
@@ -86,6 +86,6 @@ export const PhoneNumberForm = ({
           hasFullWidth
         />
       </View>
-    </View>
+    </>
   );
 };

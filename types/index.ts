@@ -1,6 +1,6 @@
-export { DeviceType } from './Device';
+export * from './Device';
 export type { ChartData } from './ChartData';
-export type { Device } from './Device';
+export { FanRangeValues } from './FanRangeValues';
 export type { Message } from './Message';
 export type { RootStackParamList, RootNavigationProps } from './Navigation';
 export type { SignInData } from './SignInData';
