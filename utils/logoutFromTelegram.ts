@@ -27,7 +27,7 @@ export const logoutFromTelegram = async (navigation: any) => {
     if (res._ === 'auth.loggedOut') {
       await updateFutureAuthTokens(res.future_auth_token);
       await RemoveStoredValue('SignedIn');
-      navigation.navigate('Login');
+      navigation.replace('Login');
     }
     return res;
   } catch (e) {

@@ -30,11 +30,24 @@ export const TempRepeatScheduler: FC<TempRepeatSchedulerProps> = ({
     });
   };
 
+  const onCheckboxPress = () => {
+    if (isScheduleRepeat) {
+      sendAPIRequest({
+        ...tempSensorParams,
+        action: 'setSchedule',
+        additionalParams: {
+          action: 'remove',
+        },
+      });
+    }
+    onToggleScheduleRepeat();
+  };
+
   return (
     <>
       <Checkbox
         checked={isScheduleRepeat}
-        onPress={onToggleScheduleRepeat}
+        onPress={onCheckboxPress}
         label="Pobieraj temperaturę o określonej godzinie"
       />
       {isScheduleRepeat && (

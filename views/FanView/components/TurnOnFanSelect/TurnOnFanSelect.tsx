@@ -54,11 +54,24 @@ export const TurnOnFanSelect: FC<TurnOnFanSelectProps> = ({
     });
   };
 
+  const onCheckboxPress = () => {
+    if (isFanTurnOnAutomatically) {
+      sendAPIRequest({
+        ...fanBaseParams,
+        action: 'setSchedule',
+        additionalParams: {
+          action: 'remove',
+        },
+      });
+    }
+    onToggle();
+  };
+
   return (
     <>
       <Checkbox
         checked={isFanTurnOnAutomatically}
-        onPress={onToggle}
+        onPress={onCheckboxPress}
         label="Włączaj automatycznie wentylator, jezeli temperatura na określonym czujniku będzie miała wybraną wartość"
       />
       {isFanTurnOnAutomatically && (

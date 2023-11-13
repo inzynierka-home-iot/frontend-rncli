@@ -34,7 +34,7 @@ export const useConfirmCodeClick = (
     }
     if (res._ === 'auth.authorization') {
       SaveStoredValue('SignedIn', 'true');
-      navigation.navigate('LocationList');
+      navigation.replace('LocationList');
     } else {
       setCodeVariant('error');
     }

@@ -55,7 +55,7 @@ export const TelegramForm = () => {
     variant: 'error',
     size: 'small',
     onPress: () => {
-      navigation.navigate('DeviceList');
+      navigation.replace('DeviceList');
     },
   };
 

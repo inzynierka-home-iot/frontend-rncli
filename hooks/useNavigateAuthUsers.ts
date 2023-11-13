@@ -9,7 +9,7 @@ export const useNavigateAuthUsers = () => {
     (async () => {
       const resLogging = await ReadStoredValue('SignedIn');
       if (resLogging) {
-        navigation.navigate('LocationList');
+        navigation.replace('LocationList');
       }
     })();
   }, [navigation]);

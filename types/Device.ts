@@ -43,6 +43,7 @@ type FanValues = {
   V_TEMP: string;
   V_PERCENTAGE: string;
   V_DIRECTION: string;
+  schedule: string;
 };
 
 export type Fan = Device<FanValues, DeviceType.S_FAN>;
