@@ -28,17 +28,27 @@ export const listenForMessages = (user_id: string, dispatch: AppDispatch) => {
       if (message.req === '/*/*/*/get/') {
         dispatch(setInitialDevice(message.res));
         const alertMessage: Alert = {
-          variant: 'success',
-          text: 'Pomyślnie odebrano urządzenia',
+          variant: 'informative',
+          text: 'Pobrano urządzenia',
         };
         dispatch(addAlert(alertMessage));
-      } else if (command === 'set' || command === 'status') {
-        let values = message.res;
-        if (command === 'set') {
-          if (message.res.status) {
-            values = paramsToObject(message.req.split('?')[1]);
-          }
-        }
+      } else if (command === 'set') {
+        const values = paramsToObject(message.req.split('?')[1]);
+        dispatch(
+          setDeviceValues({
+            location,
+            nodeId,
+            deviceId,
+            values,
+          }),
+        );
+        const alertMessage: Alert = {
+          variant: 'success',
+          text: 'Status zaaktualizowany',
+        };
+        dispatch(addAlert(alertMessage));
+      } else if (command === 'status') {
+        const values = message.res;
         dispatch(
           setDeviceValues({
             location,
@@ -51,8 +61,18 @@ export const listenForMessages = (user_id: string, dispatch: AppDispatch) => {
         dispatch(setTempHistory(message.res.V_TEMP));
       } else if (command === 'connected') {
         dispatch(addDevice(message.res.device));
+        const alertMessage: Alert = {
+          variant: 'informative',
+          text: 'Nowe urządzenie',
+        };
+        dispatch(addAlert(alertMessage));
       } else if (command === 'disconnected') {
         dispatch(removeDevice(message.res.device));
+        const alertMessage: Alert = {
+          variant: 'error',
+          text: 'Odłączono urządzenie',
+        };
+        dispatch(addAlert(alertMessage));
       }
     }
   };

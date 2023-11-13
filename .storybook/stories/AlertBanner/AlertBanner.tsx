@@ -1,16 +1,11 @@
 import React, { FC, useEffect } from 'react';
-import {
-  Animated,
-  Easing,
-  EasingFunction,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Animated, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { theme } from '../../theme';
 import { Typography } from '../Typography/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { animation, getEasingFunc } from './utils/Animation';
+import { AlertBannerConsts } from './env/AlertBannerConsts';
 
 export type AlertBannerProps = {
   text: string;
@@ -26,24 +21,26 @@ export const AlertBanner: FC<AlertBannerProps> = ({
   onClose,
 }) => {
   const styles = useStyles(variant);
-  let opacity = new Animated.Value(0);
-
-  const animation = (easing: EasingFunction, from: number, to: number) => {
-    opacity.setValue(from);
-    return Animated.timing(opacity, {
-      toValue: to,
-      duration: 600,
-      easing,
-      useNativeDriver: true,
-    });
-  };
+  let opacity = new Animated.Value(AlertBannerConsts.FROM);
 
   const close = () => {
-    animation(Easing.ease, 1, 0).start(onClose);
+    animation(
+      opacity,
+      getEasingFunc('ease'),
+      AlertBannerConsts.TO,
+      AlertBannerConsts.FROM,
+      AlertBannerConsts.CLOSE_DURATION,
+    ).start(onClose);
   };
 
   useEffect(() => {
-    animation(Easing.ease, 0, 1).start(() => setTimeout(onClose, 10000));
+    animation(
+      opacity,
+      getEasingFunc('ease'),
+      AlertBannerConsts.FROM,
+      AlertBannerConsts.TO,
+      AlertBannerConsts.START_DURATION,
+    ).start(() => setTimeout(close, AlertBannerConsts.CLOSE_ALERT));
   }, []);
 
   if (!isOpen) {

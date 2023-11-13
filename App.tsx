@@ -24,6 +24,7 @@ import { store } from './redux/store';
 import { useTelegramConnection } from './hooks';
 import { RootStackParamList } from './types';
 import { LoadingWrapper } from './components/LoadingWrapper';
+import { Alerts } from './components/Alerts';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -63,6 +64,7 @@ export default function App() {
             />
             <Stack.Screen name="Telegram" component={TelegramForm} />
           </Stack.Navigator>
+          <Alerts />
         </LoadingWrapper>
       </NavigationContainer>
     </Provider>

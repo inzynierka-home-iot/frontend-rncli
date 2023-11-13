@@ -1,6 +1,5 @@
 import React, { FC, PropsWithChildren } from 'react';
 import { Keyboard, ScrollView, View } from 'react-native';
-import { Alerts } from '../Alerts';
 import { styles } from './LayoutProvider.styles';
 
 type LayoutProviderProps = PropsWithChildren<{
@@ -19,7 +18,6 @@ export const LayoutProvider: FC<LayoutProviderProps> = ({
         contentContainerStyle={{ flexGrow: 1 }}>
         <View style={styles.content}>{children}</View>
       </ScrollView>
-      <Alerts />
     </View>
   );
 };
