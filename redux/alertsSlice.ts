@@ -22,6 +22,11 @@ const mockedData = {
     },
     {
       id: alertID++,
+      variant: 'error',
+      text: 'Lamp broke',
+    },
+    {
+      id: alertID++,
       variant: 'success',
       text: 'Lamp turned on',
     },
