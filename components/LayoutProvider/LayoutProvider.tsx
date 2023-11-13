@@ -10,6 +10,7 @@ import {
 } from '../../redux/alertsSlice';
 import { theme } from '../../.storybook/theme';
 import { useDispatch } from 'react-redux';
+import { Alerts } from '../Alerts';
 
 type LayoutProviderProps = PropsWithChildren<{
   navbar?: JSX.Element;
@@ -37,21 +38,23 @@ export const LayoutProvider: FC<LayoutProviderProps> = ({
   return (
     <View style={styles.container}>
       {navbar}
-      {!!alerts.length && (
-        <View
-          style={{
-            width: '100%',
-            zIndex: 1,
-            position: 'absolute',
-            paddingHorizontal: theme.spacing(2),
-            gap: theme.spacing(1),
-          }}>
-          {alerts.map(alert => createAlert(alert))}
-        </View>
-      )}
-      <ScrollView onScrollBeginDrag={Keyboard.dismiss}>
+      <ScrollView
+        onScrollBeginDrag={Keyboard.dismiss}
+        contentContainerStyle={{ flexGrow: 1 }}>
         <View style={styles.content}>{children}</View>
       </ScrollView>
+      <Alerts />
+      {/* <View
+        style={{
+          width: '100%',
+          zIndex: 1,
+          position: 'absolute',
+          bottom: 0,
+          paddingHorizontal: theme.spacing(2),
+          gap: theme.spacing(1),
+        }}>
+        {alerts.map(alert => createAlert(alert))}
+      </View> */}
     </View>
   );
 };

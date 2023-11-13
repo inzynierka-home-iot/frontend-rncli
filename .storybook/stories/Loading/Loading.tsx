@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { ActivityIndicator, StyleSheet } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { theme } from '../../theme';
 
 export type LoadingProps = {
@@ -8,14 +8,23 @@ export type LoadingProps = {
 
 export const Loading: FC<LoadingProps> = ({ size = 'large' }) => {
   return (
-    <ActivityIndicator style={styles.container} size={size} color={theme.colors['action-primary']} />
+    <View style={styles.container}>
+      <ActivityIndicator
+        size={size}
+        color={theme.colors['action-primary']}
+        style={styles.scale}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: 100,
-    transform: [{ scaleX: 2 }, { scaleY: 2 }],
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  scale: {
+    transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }],
   },
 });

@@ -57,9 +57,7 @@ const useStyles = (variant: AlertBannerProps['variant']) => {
 
   return StyleSheet.create({
     container: {
-      // position: 'absolute',
-      // top: 0,
-      // zIndex: 1,
+      flex: 1,
       backgroundColor: theme.colors[backgroundColor],
       flexDirection: 'row',
       alignItems: 'center',

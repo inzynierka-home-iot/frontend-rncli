@@ -53,8 +53,8 @@ export const LocationListView = () => {
             text="Nie masz zadnych lokalizacji"
           />
         )}
+        <Button text="Stwórz nową lokalizację" onPress={onNavigateToAdmin} />
       </LoadingWrapper>
-      <Button text="Stwórz nową lokalizację" onPress={onNavigateToAdmin} />
     </LayoutProvider>
   );
 };
