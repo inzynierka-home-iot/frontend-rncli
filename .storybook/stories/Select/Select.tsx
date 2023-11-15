@@ -31,8 +31,8 @@ export const Select: FC<SelectProps> = ({
     index == -1
       ? 'text-secondary'
       : !disabled
-        ? 'text-primary'
-        : 'background-subtle';
+      ? 'text-primary'
+      : 'background-subtle';
   const expandColor = !disabled ? 'text-secondary' : 'background-subtle';
   const text = index != -1 ? selectData[index].display : defaultText;
 
@@ -44,20 +44,16 @@ export const Select: FC<SelectProps> = ({
       onBlur={onBlur}
       disabled={disabled}
       buttonStyle={styles.container}
-      renderCustomizedButtonChild={() => {
-        return (
-          <Typography variant={'body-large'} text={text} color={textColor} />
-        );
-      }}
-      renderDropdownIcon={() => {
-        return (
-          <FontAwesomeIcon
-            icon={faChevronDown}
-            color={theme.colors[expandColor]}
-            size={theme.spacing(8)}
-          />
-        );
-      }}
+      renderCustomizedButtonChild={() => (
+        <Typography variant={'body-large'} text={text} color={textColor} />
+      )}
+      renderDropdownIcon={() => (
+        <FontAwesomeIcon
+          icon={faChevronDown}
+          color={theme.colors[expandColor]}
+          size={theme.spacing(8)}
+        />
+      )}
     />
   );
 };
@@ -70,10 +66,10 @@ const useStyles = (
     type == 'default'
       ? 'background-subtle'
       : type == 'active'
-        ? 'action-selected'
-        : type == 'error'
-          ? 'text-error'
-          : 'background-subtle';
+      ? 'action-selected'
+      : type == 'error'
+      ? 'text-error'
+      : 'background-subtle';
   const elevation = !disabled ? 2 : 1;
 
   return StyleSheet.create({
