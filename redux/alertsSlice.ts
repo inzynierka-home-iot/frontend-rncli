@@ -1,32 +1,29 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { Alert } from '../types';
 
 export type AlertMessage = {
-  id: number;
+  id: string;
 } & Alert;
 
 interface MessagesState {
-  id: number;
   alertsList: AlertMessage[];
 }
-
-let alertID = 0;
 
 const mockedData = {
   alerts: [
     {
-      id: alertID++,
+      id: nanoid(),
       variant: 'informative',
       text: 'Dzień dobry',
     },
     {
-      id: alertID++,
+      id: nanoid(),
       variant: 'error',
       text: 'Lamp broke',
     },
     {
-      id: alertID++,
+      id: nanoid(),
       variant: 'success',
       text: 'Lamp turned on',
     },
@@ -34,7 +31,6 @@ const mockedData = {
 };
 
 const initialState: MessagesState = {
-  id: alertID,
   alertsList: mockedData.alerts,
 };
 
@@ -43,7 +39,7 @@ export const alertsSlice = createSlice({
   initialState,
   reducers: {
     addAlert: (state, action: PayloadAction<Alert>) => {
-      const id = ++state.id;
+      const id = nanoid();
       const alertMessage = {
         id,
         ...action.payload,

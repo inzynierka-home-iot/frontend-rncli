@@ -1,10 +1,16 @@
-import React, { FC, useEffect } from 'react';
-import { Animated, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { theme } from '../../theme';
-import { Typography } from '../Typography/Typography';
+import React, { FC, useEffect, useRef } from 'react';
+import {
+  Animated,
+  Easing,
+  EasingFunction,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import { animation, getEasingFunc } from './utils/Animation';
+import { theme } from '../../theme';
+import { Typography } from '../Typography/Typography';
 import { AlertBannerConsts } from './env/AlertBannerConsts';
 
 export type AlertBannerProps = {
@@ -21,12 +27,28 @@ export const AlertBanner: FC<AlertBannerProps> = ({
   onClose,
 }) => {
   const styles = useStyles(variant);
-  let opacity = new Animated.Value(AlertBannerConsts.FROM);
+  const opacity = useRef(new Animated.Value(AlertBannerConsts.FROM)).current;
+
+  const animation = (
+    animatedValue: Animated.Value,
+    easing: EasingFunction,
+    from: number,
+    to: number,
+    duration: number,
+  ) => {
+    animatedValue.setValue(from);
+    return Animated.timing(animatedValue, {
+      toValue: to,
+      duration,
+      easing,
+      useNativeDriver: true,
+    });
+  };
 
   const close = () => {
     animation(
       opacity,
-      getEasingFunc('ease'),
+      Easing.ease,
       AlertBannerConsts.TO,
       AlertBannerConsts.FROM,
       AlertBannerConsts.CLOSE_DURATION,
@@ -34,13 +56,21 @@ export const AlertBanner: FC<AlertBannerProps> = ({
   };
 
   useEffect(() => {
-    animation(
+    const animationID = animation(
       opacity,
-      getEasingFunc('ease'),
+      Easing.ease,
       AlertBannerConsts.FROM,
       AlertBannerConsts.TO,
       AlertBannerConsts.START_DURATION,
-    ).start(() => setTimeout(close, AlertBannerConsts.CLOSE_ALERT));
+    );
+
+    animationID.start();
+    const timeout = setTimeout(close, AlertBannerConsts.CLOSE_ALERT);
+
+    return () => {
+      animationID.stop();
+      clearTimeout(timeout);
+    };
   }, []);
 
   if (!isOpen) {

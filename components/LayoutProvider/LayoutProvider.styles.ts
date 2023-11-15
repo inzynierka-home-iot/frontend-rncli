@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     gap: theme.spacing(5),
   },
+  scrollView: { flexGrow: 1 },
   content: {
     flex: 1,
     gap: theme.spacing(5),

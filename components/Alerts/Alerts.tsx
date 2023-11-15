@@ -5,41 +5,28 @@ import {
   selectAlerts,
 } from '../../redux/alertsSlice';
 import { AlertBanner } from '../../.storybook/stories';
-import { StyleSheet, View } from 'react-native';
-import { theme } from '../../.storybook/theme';
-import { useDispatch } from 'react-redux';
-import { useAppSelector } from '../../redux/hooks';
+import { View } from 'react-native';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { styles } from './Alerts.styles';
 
 export const Alerts: FC = ({}) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const alerts = useAppSelector(selectAlerts);
 
-  const createAlert = (alert: AlertMessage) => (
-    <AlertBanner
-      key={`alertBanner${alert.id}`}
-      text={alert.text}
-      variant={alert.variant}
-      isOpen={true}
-      onClose={() => {
-        dispatch(removeAlert(alert));
-      }}
-    />
-  );
+  const handleCloseAlertBanner = (alert: AlertMessage) =>
+    dispatch(removeAlert(alert));
 
   return (
     <View style={styles.container}>
-      {alerts.map(alert => createAlert(alert))}
+      {alerts.map(alert => (
+        <AlertBanner
+          key={`alertBanner#${alert.id}`}
+          text={alert.text}
+          variant={alert.variant}
+          isOpen
+          onClose={() => handleCloseAlertBanner(alert)}
+        />
+      ))}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    zIndex: 1,
-    position: 'absolute',
-    bottom: 0,
-    paddingHorizontal: theme.spacing(2),
-    gap: theme.spacing(1),
-  },
-});

@@ -4,9 +4,10 @@ import {
   addDevice,
   removeDevice,
   setDeviceValues,
+  selectDeviceWithId,
 } from '../redux/devicesSlice';
 import { addAlert } from '../redux/alertsSlice';
-import { AppDispatch } from '../redux/store';
+import { AppDispatch, store } from '../redux/store';
 import { Alert, Message } from '../types';
 import { mtproto } from './mtprotoClient';
 
@@ -18,6 +19,14 @@ const paramsToObject = (params: string) => {
     paramObj[key] = value;
   }
   return paramObj;
+};
+
+const getChangedParams = (req: string) => {
+  const changedParamsWithValues = req.split('?')[1].split('&');
+  const changedParams = changedParamsWithValues.map(
+    paramWithValue => paramWithValue.split('=')[0],
+  );
+  return changedParams;
 };
 
 export const listenForMessages = (user_id: string, dispatch: AppDispatch) => {
@@ -42,9 +51,13 @@ export const listenForMessages = (user_id: string, dispatch: AppDispatch) => {
             values,
           }),
         );
+        const state = store.getState();
+        const device = selectDeviceWithId(state, location, nodeId, deviceId);
+        console.log(device);
+        const changedParams = getChangedParams(message.req);
         const alertMessage: Alert = {
           variant: 'success',
-          text: 'Status zaaktualizowany',
+          text: `Zaaktualizowane parametry: ${changedParams.join(', ')}`,
         };
         dispatch(addAlert(alertMessage));
       } else if (command === 'status') {
@@ -63,14 +76,14 @@ export const listenForMessages = (user_id: string, dispatch: AppDispatch) => {
         dispatch(addDevice(message.res.device));
         const alertMessage: Alert = {
           variant: 'informative',
-          text: 'Nowe urządzenie',
+          text: `Nowe urządzenie: ${message.res.device.name}`,
         };
         dispatch(addAlert(alertMessage));
       } else if (command === 'disconnected') {
         dispatch(removeDevice(message.res.device));
         const alertMessage: Alert = {
           variant: 'error',
-          text: 'Odłączono urządzenie',
+          text: `Odłączono urządzenie: ${message.res.device.name}`,
         };
         dispatch(addAlert(alertMessage));
       }
