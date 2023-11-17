@@ -23,7 +23,6 @@ export const Alerts: FC = ({}) => {
           key={`alertBanner#${alert.id}`}
           text={alert.text}
           variant={alert.variant}
-          isOpen
           onClose={() => handleCloseAlertBanner(alert)}
         />
       ))}

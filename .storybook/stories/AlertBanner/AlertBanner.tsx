@@ -2,86 +2,76 @@ import React, { FC, useEffect, useRef } from 'react';
 import {
   Animated,
   Easing,
-  EasingFunction,
   StyleSheet,
   TouchableOpacity,
   View,
 } from 'react-native';
+import { AlertBannerConsts } from './AlertBannerConsts';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { theme } from '../../theme';
 import { Typography } from '../Typography/Typography';
-import { AlertBannerConsts } from './env/AlertBannerConsts';
 
 export type AlertBannerProps = {
   text: string;
-  isOpen: boolean;
   variant?: 'success' | 'informative' | 'error';
   onClose: () => void;
 };
 
 export const AlertBanner: FC<AlertBannerProps> = ({
   text,
-  isOpen,
   variant = 'informative',
   onClose,
 }) => {
   const styles = useStyles(variant);
   const opacity = useRef(new Animated.Value(AlertBannerConsts.FROM)).current;
-
-  const animation = (
-    animatedValue: Animated.Value,
-    easing: EasingFunction,
-    from: number,
-    to: number,
-    duration: number,
-  ) => {
-    animatedValue.setValue(from);
-    return Animated.timing(animatedValue, {
-      toValue: to,
-      duration,
-      easing,
-      useNativeDriver: true,
-    });
-  };
+  const timer = useRef<NodeJS.Timeout | null>(null);
+  const animation = useRef<Animated.CompositeAnimation | null>(null);
 
   const close = () => {
-    animation(
-      opacity,
-      Easing.ease,
-      AlertBannerConsts.TO,
-      AlertBannerConsts.FROM,
-      AlertBannerConsts.CLOSE_DURATION,
-    ).start(onClose);
+    if (animation.current) {
+      return;
+    }
+    if (timer.current) {
+      clearTimeout(timer.current);
+    }
+    animation.current = Animated.timing(opacity, {
+      toValue: AlertBannerConsts.FROM,
+      duration: AlertBannerConsts.CLOSE_DURATION,
+      easing: Easing.ease,
+      useNativeDriver: true,
+    });
+    animation.current.start(onClose);
   };
 
   useEffect(() => {
-    const animationID = animation(
-      opacity,
-      Easing.ease,
-      AlertBannerConsts.FROM,
-      AlertBannerConsts.TO,
-      AlertBannerConsts.START_DURATION,
-    );
+    animation.current = Animated.timing(opacity, {
+      toValue: AlertBannerConsts.TO,
+      duration: AlertBannerConsts.START_DURATION,
+      easing: Easing.ease,
+      useNativeDriver: true,
+    });
 
-    animationID.start();
-    const timeout = setTimeout(close, AlertBannerConsts.CLOSE_ALERT);
+    animation.current.start(() => {
+      animation.current = null;
+      timer.current = setTimeout(close, AlertBannerConsts.CLOSE_ALERT);
+    });
 
     return () => {
-      animationID.stop();
-      clearTimeout(timeout);
+      if (animation.current) {
+        animation.current.stop();
+      }
+      if (timer.current) {
+        clearTimeout(timer.current);
+      }
     };
   }, []);
-
-  if (!isOpen) {
-    return null;
-  }
 
   return (
     <Animated.View style={[styles.container, { opacity }]}>
       <View style={styles.message}>
         <Typography
-          variant={'body-medium'}
+          variant="body-medium"
           text={text}
           color="text-invertedPrimary"
         />

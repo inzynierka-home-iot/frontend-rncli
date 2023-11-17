@@ -45,7 +45,7 @@ export const Select: FC<SelectProps> = ({
       disabled={disabled}
       buttonStyle={styles.container}
       renderCustomizedButtonChild={() => (
-        <Typography variant={'body-large'} text={text} color={textColor} />
+        <Typography variant="body-large" text={text} color={textColor} />
       )}
       renderDropdownIcon={() => (
         <FontAwesomeIcon

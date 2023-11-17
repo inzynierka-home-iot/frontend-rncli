@@ -29,6 +29,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   scale: {
-    transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }],
+    transform: [{ scaleX: 2 }, { scaleY: 2 }],
   },
 });

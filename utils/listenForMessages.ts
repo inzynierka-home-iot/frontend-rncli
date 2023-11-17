@@ -51,9 +51,6 @@ export const listenForMessages = (user_id: string, dispatch: AppDispatch) => {
             values,
           }),
         );
-        const state = store.getState();
-        const device = selectDeviceWithId(state, location, nodeId, deviceId);
-        console.log(device);
         const changedParams = getChangedParams(message.req);
         const alertMessage: Alert = {
           variant: 'success',
