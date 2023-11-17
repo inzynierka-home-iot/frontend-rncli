@@ -13,7 +13,9 @@ export const LayoutProvider: FC<LayoutProviderProps> = ({
   return (
     <View style={styles.container}>
       {navbar}
-      <ScrollView onScrollBeginDrag={Keyboard.dismiss}>
+      <ScrollView
+        onScrollBeginDrag={Keyboard.dismiss}
+        contentContainerStyle={styles.scrollView}>
         <View style={styles.content}>{children}</View>
       </ScrollView>
     </View>

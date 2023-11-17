@@ -1,21 +1,34 @@
 import React, { FC } from 'react';
-import { ActivityIndicator, StyleSheet } from 'react-native';
-import { theme } from '../../theme';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { ColorKeys, theme } from '../../theme';
 
 export type LoadingProps = {
   size?: 'small' | 'large';
+  color?: ColorKeys;
 };
 
-export const Loading: FC<LoadingProps> = ({ size = 'large' }) => {
+export const Loading: FC<LoadingProps> = ({
+  size = 'large',
+  color = 'action-primary',
+}) => {
   return (
-    <ActivityIndicator style={styles.container} size={size} color={theme.colors['action-primary']} />
+    <View style={styles.container}>
+      <ActivityIndicator
+        size={size}
+        color={theme.colors[color]}
+        style={styles.scale}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  scale: {
     transform: [{ scaleX: 2 }, { scaleY: 2 }],
   },
 });

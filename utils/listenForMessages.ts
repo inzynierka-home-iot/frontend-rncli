@@ -4,9 +4,11 @@ import {
   addDevice,
   removeDevice,
   setDeviceValues,
+  selectDeviceWithId,
 } from '../redux/devicesSlice';
-import { AppDispatch } from '../redux/store';
-import { Message } from '../types';
+import { addAlert } from '../redux/alertsSlice';
+import { AppDispatch, store } from '../redux/store';
+import { Alert, Message } from '../types';
 import { mtproto } from './mtprotoClient';
 
 const paramsToObject = (params: string) => {
@@ -19,6 +21,14 @@ const paramsToObject = (params: string) => {
   return paramObj;
 };
 
+const getChangedParams = (req: string) => {
+  const changedParamsWithValues = req.split('?')[1].split('&');
+  const changedParams = changedParamsWithValues.map(
+    paramWithValue => paramWithValue.split('=')[0],
+  );
+  return changedParams;
+};
+
 export const listenForMessages = (user_id: string, dispatch: AppDispatch) => {
   const onUpdate = (updateInfo: { message: string; user_id: string }) => {
     if (updateInfo.user_id === user_id) {
@@ -26,13 +36,29 @@ export const listenForMessages = (user_id: string, dispatch: AppDispatch) => {
       const [_, location, nodeId, deviceId, command] = message.req.split('/');
       if (message.req === '/*/*/*/get/') {
         dispatch(setInitialDevice(message.res));
-      } else if (command === 'set' || command === 'status') {
-        let values = message.res;
-        if (command === 'set') {
-          if (message.res.status) {
-            values = paramsToObject(message.req.split('?')[1]);
-          }
-        }
+        const alertMessage: Alert = {
+          variant: 'informative',
+          text: 'Pobrano urządzenia',
+        };
+        dispatch(addAlert(alertMessage));
+      } else if (command === 'set') {
+        const values = paramsToObject(message.req.split('?')[1]);
+        dispatch(
+          setDeviceValues({
+            location,
+            nodeId,
+            deviceId,
+            values,
+          }),
+        );
+        const changedParams = getChangedParams(message.req);
+        const alertMessage: Alert = {
+          variant: 'success',
+          text: `Zaaktualizowane parametry: ${changedParams.join(', ')}`,
+        };
+        dispatch(addAlert(alertMessage));
+      } else if (command === 'status') {
+        const values = message.res;
         dispatch(
           setDeviceValues({
             location,
@@ -45,8 +71,18 @@ export const listenForMessages = (user_id: string, dispatch: AppDispatch) => {
         dispatch(setTempHistory(message.res.V_TEMP));
       } else if (command === 'connected') {
         dispatch(addDevice(message.res.device));
+        const alertMessage: Alert = {
+          variant: 'informative',
+          text: `Nowe urządzenie: ${message.res.device.name}`,
+        };
+        dispatch(addAlert(alertMessage));
       } else if (command === 'disconnected') {
         dispatch(removeDevice(message.res.device));
+        const alertMessage: Alert = {
+          variant: 'error',
+          text: `Odłączono urządzenie: ${message.res.device.name}`,
+        };
+        dispatch(addAlert(alertMessage));
       }
     }
   };
