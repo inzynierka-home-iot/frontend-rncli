@@ -4,6 +4,7 @@ import { Button, TextInput } from 'react-native';
 import { confirm2FAPassword, SaveStoredValue } from '../../utils';
 import { useAppNavigation } from '../../hooks';
 import { SignInData } from '../../types';
+import { useAppDispatch } from '../../redux/hooks';
 
 type Password2FAFormProps = {
   control: Control<SignInData>;
@@ -14,13 +15,14 @@ export const Password2FAForm = ({
   control,
   handleSubmit,
 }: Password2FAFormProps) => {
+  const dispatch = useAppDispatch();
   const navigation = useAppNavigation();
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const onConfirm = async ({ password }: SignInData) => {
     setIsButtonDisabled(true);
-    const res = await confirm2FAPassword(password);
+    const res = await confirm2FAPassword(password, dispatch);
     setIsButtonDisabled(false);
     if (res.res._ === 'auth.authorization') {
       SaveStoredValue('SignedIn', 'true');

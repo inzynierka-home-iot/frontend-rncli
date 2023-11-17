@@ -4,11 +4,13 @@ import { InputProps } from '../../../.storybook/stories';
 import { useAppNavigation } from '../../../hooks';
 import { SignInData } from '../../../types';
 import { logInCode, SaveStoredValue } from '../../../utils';
+import { useAppDispatch } from '../../../redux/hooks';
 
 export const useConfirmCodeClick = (
   phoneCodeHash: string,
   setIs2FANeeded: Dispatch<SetStateAction<boolean>>,
 ) => {
+  const dispatch = useAppDispatch();
   const navigation = useAppNavigation();
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -26,6 +28,7 @@ export const useConfirmCodeClick = (
       '+' + diallingCode + phoneNumber,
       phoneCodeHash,
       phoneCode,
+      dispatch,
     );
     setIsButtonDisabled(false);
 
