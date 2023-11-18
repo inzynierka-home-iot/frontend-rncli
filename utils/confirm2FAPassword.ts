@@ -1,9 +1,11 @@
+import { AppDispatch } from '../redux/store';
 import { hasErrorMessage } from './hasErrorMessage';
 import { mtproto } from './mtprotoClient';
 import { raiseTelegramError } from './raiseTelegramError';
 
 export const confirm2FAPassword = async (
   password: string,
+  dispatch: AppDispatch,
 ): Promise<{
   success: boolean;
   res: any;
@@ -41,7 +43,7 @@ export const confirm2FAPassword = async (
     }
   } catch (e) {
     if (hasErrorMessage(e)) {
-      raiseTelegramError(e.error_message);
+      raiseTelegramError(e.error_message, dispatch);
     }
     console.log(e);
     return { success: false, res: {} };
