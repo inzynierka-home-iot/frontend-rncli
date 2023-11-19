@@ -58,9 +58,13 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
   };
 
   const handleFanStateToggle = () => {
-    const tempValue = fanTurnedOff ? '23' : '0';
-    const percentageValue = fanTurnedOff ? '40' : '0';
-    const directionValue = fanTurnedOff ? '100' : '0';
+    const tempValue = fanTurnedOff ? FanRangeValues.DEFAULT_TEMP : '0';
+    const percentageValue = fanTurnedOff
+      ? FanRangeValues.DEFAULT_PERCENTAGE
+      : '0';
+    const directionValue = fanTurnedOff
+      ? FanRangeValues.DEFAULT_DIRECTION
+      : '0';
 
     sendAPIRequest({
       ...route.params,
