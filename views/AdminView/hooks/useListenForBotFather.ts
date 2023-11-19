@@ -7,7 +7,8 @@ export const useListenForBotFather = (userId: string | undefined) => {
 
   useEffect(() => {
     if (userId) {
-      listenForBotFatherMessages(userId, dispatch);
+      const removeListener = listenForBotFatherMessages(userId, dispatch);
+      return removeListener;
     }
-  }, [dispatch, userId]);
+  }, [userId, dispatch]);
 };

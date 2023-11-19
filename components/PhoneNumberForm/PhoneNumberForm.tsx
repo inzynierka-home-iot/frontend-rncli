@@ -72,6 +72,7 @@ export const PhoneNumberForm = ({
                   keyboardType="numeric"
                   placeholder="Numer telefonu"
                   onChange={onChange}
+                  max={99999999999999}
                 />
               )}
             />

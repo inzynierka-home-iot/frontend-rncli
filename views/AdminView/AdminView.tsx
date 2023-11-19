@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Navbar } from '../../.storybook/stories';
 import { LayoutProvider } from '../../components';
 import { LoadingWrapper } from '../../components/LoadingWrapper';
@@ -7,8 +7,12 @@ import { LocationInput } from './components';
 import { BotNameInput } from './components/BotNameInput';
 import { BotTokenLabel } from './components/BotTokenLabel';
 import { useBotFatherId, useListenForBotFather } from './hooks';
+import { RootStackParamList } from '../../types';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-export const AdminView = () => {
+type AdminViewProps = NativeStackScreenProps<RootStackParamList, 'Admin'>;
+
+export const AdminView: FC<AdminViewProps> = ({}) => {
   const [botFatherAccessHash, botFatherId] = useBotFatherId();
   useListenForBotFather(botFatherId);
 

@@ -41,6 +41,7 @@ export const ConfirmationForm = ({
                 keyboardType="numeric"
                 placeholder="Kod potwierdzający"
                 onChange={onChange}
+                max={99999}
               />
             )}
           />

@@ -35,13 +35,13 @@ export const BotNameInput: FC<Props> = ({
     <>
       <Typography
         variant="body-medium"
-        text="Podaj username dla bota, którego będziesz uzywał na Raspberry PI. Jego nazwa musi kończyć się na bot, np. HomeBot lub home_bot"
+        text="Podaj username dla bota, którego będziesz używał na Raspberry PI. Jego nazwa musi kończyć się na bot, np. HomeBot lub home_bot"
         color="text-secondary"
       />
       <Input
         text={botUsername}
         onChange={onBotUsernameChange}
-        placeholder="Podaj nazwę lokalizacji..."
+        placeholder="Podaj nazwę bota..."
         variant={
           isUsernameInvalidError || isUsernameTakenError ? 'error' : 'default'
         }
@@ -50,14 +50,14 @@ export const BotNameInput: FC<Props> = ({
       {isUsernameTakenError && (
         <Typography
           variant="body-medium"
-          text="Nazwa jest juz zajęta. Spróbuj ponownie"
+          text="Nazwa jest juz zajęta. Spróbuj ponownie."
           color="text-error"
         />
       )}
       {isUsernameInvalidError && (
         <Typography
           variant="body-medium"
-          text="Nazwa jest nieprawidłowa. Spróbuj ponownie"
+          text="Nazwa jest nieprawidłowa. Spróbuj ponownie."
           color="text-error"
         />
       )}
