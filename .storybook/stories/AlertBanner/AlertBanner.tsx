@@ -71,7 +71,7 @@ export const AlertBanner: FC<AlertBannerProps> = ({
     <Animated.View style={[styles.container, { opacity }]}>
       <View style={styles.message}>
         <Typography
-          variant="body-medium"
+          variant="body-small"
           text={text}
           color="text-invertedPrimary"
         />

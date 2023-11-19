@@ -57,6 +57,7 @@ export const PhoneNumberForm = ({
                   keyboardType="numeric"
                   placeholder="Kod"
                   centerText
+                  checkBoundary={false}
                 />
               )}
             />
@@ -68,10 +69,11 @@ export const PhoneNumberForm = ({
               render={({ field: { onChange, value } }) => (
                 <Input
                   text={value}
+                  onChange={onChange}
                   variant={phoneVariant}
                   keyboardType="numeric"
                   placeholder="Numer telefonu"
-                  onChange={onChange}
+                  checkBoundary={false}
                 />
               )}
             />
