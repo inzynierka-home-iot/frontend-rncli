@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { FC } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 import React, { View } from 'react-native';
 import {
   Button,
@@ -24,10 +24,13 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
     selectDeviceWithId(state, location, nodeId, deviceId),
   ) as Fan;
 
-  const fanTurnedOff =
-    fan.values.V_TEMP === '0' &&
-    fan.values.V_PERCENTAGE === '0' &&
-    fan.values.V_DIRECTION === '0';
+  const fanTurnedOff = useMemo(
+    () =>
+      fan.values.V_TEMP === '0' &&
+      fan.values.V_PERCENTAGE === '0' &&
+      fan.values.V_DIRECTION === '0',
+    [fan.values.V_TEMP, fan.values.V_PERCENTAGE, fan.values.V_DIRECTION],
+  );
 
   const [temp, onTempChange] = useInputValue(fan.values.V_TEMP);
   const [percentage, onPercentageChange] = useInputValue(
@@ -57,14 +60,12 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
     });
   };
 
-  const handleFanStateToggle = () => {
-    const tempValue = fanTurnedOff ? FanRangeValues.DEFAULT_TEMP : '0';
+  const handleFanStateToggle = useCallback(() => {
+    const tempValue = fanTurnedOff ? FanRangeValues.DEFAULT_TEMP : 0;
     const percentageValue = fanTurnedOff
       ? FanRangeValues.DEFAULT_PERCENTAGE
-      : '0';
-    const directionValue = fanTurnedOff
-      ? FanRangeValues.DEFAULT_DIRECTION
-      : '0';
+      : 0;
+    const directionValue = fanTurnedOff ? FanRangeValues.DEFAULT_DIRECTION : 0;
 
     sendAPIRequest({
       ...route.params,
@@ -81,7 +82,7 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
       action: 'set',
       additionalParams: `V_DIRECTION=${directionValue}`,
     });
-  };
+  }, [fanTurnedOff]);
 
   const handleGetFanParams = () => {
     sendAPIRequest({
