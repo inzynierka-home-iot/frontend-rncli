@@ -11,18 +11,20 @@ import {
 } from '../../../../.storybook/stories';
 import { selectDevicesWithType } from '../../../../redux/devicesSlice';
 import { useAppSelector } from '../../../../redux/hooks';
-import { DeviceType } from '../../../../types';
+import { DeviceType, FanSchedule } from '../../../../types';
 import { sendAPIRequest } from '../../../../utils';
 
 type TurnOnFanSelectProps = {
   fanBaseParams: any;
+  fanSchedule?: FanSchedule;
 };
 
 export const TurnOnFanSelect: FC<TurnOnFanSelectProps> = ({
   fanBaseParams,
+  fanSchedule,
 }) => {
-  const [isFanTurnOnAutomatically, onToggle] = useCheckboxValue();
-  const [tempValue, onChangeTempValue] = useInputValue('25');
+  const [isFanTurnOnAutomatically, onToggle] = useCheckboxValue(!!fanSchedule);
+  const [tempValue, onChangeTempValue] = useInputValue(fanSchedule?.V_TEMP);
   const [selectedValue, onSelect] = useSelectValue();
 
   const tempSensors = useAppSelector(state =>

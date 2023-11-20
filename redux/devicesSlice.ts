@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Device, DeviceType } from '../types';
 import { RootState } from './store';
 
@@ -25,7 +25,18 @@ const mockedData = {
       id: '1',
       nodeId: '1',
       type: DeviceType.S_TEMP,
-      name: 'Temp sensor',
+      name: 'Temp sensor 1',
+      values: {
+        V_TEMP: '23.375',
+        V_ID: null,
+      },
+    },
+    {
+      location: 'home-1',
+      id: '8',
+      nodeId: '1',
+      type: DeviceType.S_TEMP,
+      name: 'Temp sensor 2',
       values: {
         V_TEMP: '23.375',
         V_ID: null,
@@ -45,6 +56,25 @@ const mockedData = {
       location: 'home-1',
       id: '3',
       nodeId: '1',
+      type: DeviceType.S_FAN,
+      name: 'Fan',
+      values: {
+        V_TEMP: '24.5',
+        V_PERCENTAGE: '34',
+        V_DIRECTION: '128',
+      },
+      schedule: {
+        action: 'maintain',
+        location: 'home-1',
+        nodeId: '1',
+        id: '1',
+        V_TEMP: '25',
+      },
+    },
+    {
+      location: 'home-1',
+      id: '5',
+      nodeId: '2',
       type: DeviceType.S_FAN,
       name: 'Fan',
       values: {
@@ -97,8 +127,8 @@ const mockedData = {
 };
 
 const initialState: DeviceState = {
-  // devicesList: mockedData.devices,
-  devicesList: [],
+  devicesList: mockedData.devices,
+  // devicesList: [],
   isLoading: false,
 };
 
@@ -169,20 +199,25 @@ export const selectDevices = (state: RootState) => state.devices.devicesList;
 export const selectDevicesLoading = (state: RootState) =>
   state.devices.isLoading;
 
-export const selectDeviceWithId = (
-  state: RootState,
-  location: string,
-  nodeId: string,
-  id: string,
-) =>
-  state.devices.devicesList.find(
-    device =>
-      device.location === location &&
-      device.nodeId === nodeId &&
-      device.id === id,
-  );
+export const selectDeviceWithId = createSelector(
+  [
+    selectDevices,
+    (_, location: string) => location,
+    (_, _arg1, nodeId: string) => nodeId,
+    (_, _arg1, _arg2, id: string) => id,
+  ],
+  (devices, location, nodeId, id) =>
+    devices.find(
+      device =>
+        device.location === location &&
+        device.nodeId === nodeId &&
+        device.id === id,
+    ),
+);
 
-export const selectDevicesWithType = (state: RootState, type: DeviceType) =>
-  state.devices.devicesList.filter(device => device.type === type);
+export const selectDevicesWithType = createSelector(
+  [selectDevices, (_, type: DeviceType) => type],
+  (devices, type) => devices.filter(device => device.type === type),
+);
 
 export default devicesSlice.reducer;

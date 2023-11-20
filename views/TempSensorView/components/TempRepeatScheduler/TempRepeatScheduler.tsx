@@ -6,20 +6,25 @@ import {
   ScheduleDatePicker,
   useCheckboxValue,
 } from '../../../../.storybook/stories';
+import { TempSensorSchedule } from '../../../../types';
 import { sendAPIRequest } from '../../../../utils';
 import { TempSensorBaseParams } from '../../TempSensorView';
 
 type TempRepeatSchedulerProps = {
   tempSensorParams: TempSensorBaseParams;
+  tempSensorSchedule: TempSensorSchedule | undefined;
 };
 
 export const TempRepeatScheduler: FC<TempRepeatSchedulerProps> = ({
   tempSensorParams,
+  tempSensorSchedule,
 }) => {
   const [isScheduleRepeat, onToggleScheduleRepeat] = useCheckboxValue();
-  const [schedule, setSchedule] = useState({});
+  const [schedule, setSchedule] = useState<TempSensorSchedule>(
+    tempSensorSchedule || {},
+  );
 
-  const handleSetScheduleRepeat = () => {
+  const onSetScheduleRepeat = () => {
     sendAPIRequest({
       ...tempSensorParams,
       action: 'setSchedule',
@@ -53,7 +58,7 @@ export const TempRepeatScheduler: FC<TempRepeatSchedulerProps> = ({
       {isScheduleRepeat && (
         <>
           <ScheduleDatePicker mode="repeat" onChange={setSchedule} />
-          <Button text="Ustaw wartość" onPress={handleSetScheduleRepeat} />
+          <Button text="Ustaw wartość" onPress={onSetScheduleRepeat} />
         </>
       )}
     </>

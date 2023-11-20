@@ -5,8 +5,11 @@ import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
 import { RootStackParamList } from '../../types';
 import { TempSensor } from '../../types/Device';
-import { CurrentTempLabel, TempHistoryChart } from './components';
-import { TempRepeatScheduler } from './components/TempRepeatScheduler';
+import {
+  CurrentTempLabel,
+  TempHistoryChart,
+  TempRepeatScheduler,
+} from './components';
 import { LayoutProvider } from '../../components';
 
 export type TempSensorViewProps = NativeStackScreenProps<
@@ -45,7 +48,7 @@ export const TempSensorView = ({ route }: TempSensorViewProps) => {
         tempSensorParams={route.params}
       />
       <TempHistoryChart tempSensorParams={route.params} />
-      <TempRepeatScheduler tempSensorParams={route.params} />
+      <TempRepeatScheduler tempSensorParams={route.params} tempSensorSchedule={tempSensor.schedule}/>
     </LayoutProvider>
   );
 };

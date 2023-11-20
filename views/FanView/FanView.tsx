@@ -132,7 +132,10 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
         text="Zmień parametry wentylatora"
         onPress={handleChangeFanParams}
       />
-      <TurnOnFanSelect fanBaseParams={route.params} />
+      <TurnOnFanSelect
+        fanBaseParams={route.params}
+        fanSchedule={fan.schedule}
+      />
     </LayoutProvider>
   );
 };
