@@ -4,18 +4,15 @@ import { useFocusEffect } from '@react-navigation/native';
 import { Button, ListItem, Typography } from '../../.storybook/stories';
 import { LayoutProvider, NavbarWithLogout } from '../../components';
 import { LoadingWrapper } from '../../components/LoadingWrapper';
-import { useAppNavigation, useBotsNames } from '../../hooks';
-import { sendIoTMessage } from '../../utils';
-import { useAppDispatch } from '../../redux/hooks';
+import { useAppNavigation, useBotsNames, useSendIotMessage } from '../../hooks';
 import { useBotFatherId, useListenForBotFather } from '../AdminView/hooks';
 
 export const LocationListView: FC = () => {
-  const dispatch = useAppDispatch();
-
   const [botFatherAccessHash, botFatherId] = useBotFatherId();
   useListenForBotFather(botFatherId);
   const { isLoading, botsAvailable, locationCredentials, startRetrieving } =
     useBotsNames();
+  const sendTelegramMessage = useSendIotMessage();
   const navigation = useAppNavigation();
 
   const onNavigateToAdmin = () => {
@@ -32,7 +29,7 @@ export const LocationListView: FC = () => {
   const retrieveAvailableLocations = () => {
     if (botFatherAccessHash && botFatherId) {
       startRetrieving();
-      sendIoTMessage('/mybots', botFatherAccessHash, botFatherId, dispatch);
+      sendTelegramMessage('/mybots', botFatherAccessHash, botFatherId);
     }
   };
 

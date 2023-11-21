@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { clearState } from '../redux/devicesSlice';
+import { clearDeviceState } from '../redux/devicesSlice';
 import { useAppDispatch } from '../redux/hooks';
 import { sendAPIRequest } from '../utils';
 
@@ -10,7 +10,7 @@ export const useInitialDevices = (
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(clearState());
+    dispatch(clearDeviceState());
     sendAPIRequest({
       location: '*',
       nodeId: '*',

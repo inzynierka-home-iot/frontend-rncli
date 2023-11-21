@@ -6,17 +6,16 @@ import {
   Typography,
   useInputValue,
 } from '../../../.storybook/stories';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { sendIoTMessage } from '../../../utils';
+import { useAppSelector } from '../../../redux/hooks';
 import { BOT_NAME_LENGTH, BOT_SUFFIX } from '../../../utils/env';
 import { BotFather } from '../../../types';
+import { useSendIotMessage } from '../../../hooks';
 
 export const BotNameInput: FC<BotFather> = ({
   botFatherAccessHash,
   botFatherId,
 }) => {
-  const dispatch = useAppDispatch();
-
+  const sendTelegramMessage = useSendIotMessage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [botUsername, onBotUsernameChange] = useInputValue();
 
@@ -26,12 +25,7 @@ export const BotNameInput: FC<BotFather> = ({
   const onConfirmBotUsername = useCallback(async () => {
     setIsSubmitting(true);
     const botFullName = botUsername + BOT_SUFFIX;
-    await sendIoTMessage(
-      botFullName,
-      botFatherAccessHash,
-      botFatherId,
-      dispatch,
-    );
+    await sendTelegramMessage(botFullName, botFatherAccessHash, botFatherId);
     setIsSubmitting(false);
   }, [botUsername, botFatherAccessHash, botFatherId]);
 

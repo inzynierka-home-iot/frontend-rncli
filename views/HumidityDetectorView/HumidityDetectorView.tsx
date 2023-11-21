@@ -4,9 +4,10 @@ import React from 'react-native';
 import { Button, Navbar, Typography } from '../../.storybook/stories';
 import { LayoutProvider } from '../../components';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { useAppSelector } from '../../redux/hooks';
 import { HumidityDetector, RootStackParamList } from '../../types';
 import { sendAPIRequest } from '../../utils';
+import { useSendAPIRequest } from '../../hooks';
 
 type HumidityDetectorViewProps = NativeStackScreenProps<
   RootStackParamList,
@@ -18,18 +19,17 @@ export const HumidityDetectorView: FC<HumidityDetectorViewProps> = ({
 }) => {
   const { deviceId, nodeId, location } = route.params;
 
-  const dispatch = useAppDispatch();
+  const sendIoTAPIRequest = useSendAPIRequest();
 
   const humidityDetector = useAppSelector(state =>
     selectDeviceWithId(state, location, nodeId, deviceId),
   ) as HumidityDetector;
 
   const handleGetHum = () => {
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...route.params,
       action: 'status',
       additionalParams: 'V_HUM',
-      dispatch,
     });
   };
 

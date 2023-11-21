@@ -4,9 +4,9 @@ import React from 'react-native';
 import { Button, Navbar, Typography } from '../../.storybook/stories';
 import { LayoutProvider } from '../../components';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { useAppSelector } from '../../redux/hooks';
+import { useSendAPIRequest } from '../../hooks';
 import { DistanceDetector, RootStackParamList } from '../../types';
-import { sendAPIRequest } from '../../utils';
 
 type DistanceDetectorViewProps = NativeStackScreenProps<
   RootStackParamList,
@@ -18,18 +18,17 @@ export const DistanceDetectorView: FC<DistanceDetectorViewProps> = ({
 }) => {
   const { deviceId, nodeId, location } = route.params;
 
-  const dispatch = useAppDispatch();
+  const sendIoTAPIRequest = useSendAPIRequest();
 
   const distanceDetector = useAppSelector(state =>
     selectDeviceWithId(state, location, nodeId, deviceId),
   ) as DistanceDetector;
 
   const handleGetDistance = () => {
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...route.params,
       action: 'status',
       additionalParams: 'V_DISTANCE',
-      dispatch,
     });
   };
 

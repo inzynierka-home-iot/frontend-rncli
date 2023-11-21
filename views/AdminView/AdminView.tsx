@@ -2,22 +2,20 @@ import React, { FC, useEffect } from 'react';
 import { Navbar } from '../../.storybook/stories';
 import { LayoutProvider } from '../../components';
 import { LoadingWrapper } from '../../components/LoadingWrapper';
-import { sendIoTMessage } from '../../utils';
 import { LocationInput } from './components';
 import { BotNameInput } from './components/BotNameInput';
 import { BotTokenLabel } from './components/BotTokenLabel';
 import { useBotFatherId, useListenForBotFather } from './hooks';
-import { useAppDispatch } from '../../redux/hooks';
+import { useSendIotMessage } from '../../hooks';
 
 export const AdminView: FC = () => {
-  const dispatch = useAppDispatch();
-
+  const sendTelegramMessage = useSendIotMessage();
   const [botFatherAccessHash, botFatherId] = useBotFatherId();
   useListenForBotFather(botFatherId);
 
   useEffect(() => {
     if (botFatherAccessHash && botFatherId) {
-      sendIoTMessage('/newbot', botFatherAccessHash, botFatherId, dispatch);
+      sendTelegramMessage('/newbot', botFatherAccessHash, botFatherId);
     }
   }, [botFatherAccessHash, botFatherId]);
 

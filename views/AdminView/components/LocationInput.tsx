@@ -6,16 +6,15 @@ import {
   Typography,
   useInputValue,
 } from '../../../.storybook/stories';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { sendIoTMessage } from '../../../utils';
+import { useAppSelector } from '../../../redux/hooks';
 import { BotFather } from '../../../types';
+import { useSendIotMessage } from '../../../hooks';
 
 export const LocationInput: FC<BotFather> = ({
   botFatherAccessHash,
   botFatherId,
 }) => {
-  const dispatch = useAppDispatch();
-
+  const sendTelegramMessage = useSendIotMessage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [locationName, onLocationNameChange] = useInputValue();
 
@@ -23,12 +22,7 @@ export const LocationInput: FC<BotFather> = ({
 
   const onConfirmLocalisation = useCallback(async () => {
     setIsSubmitting(true);
-    await sendIoTMessage(
-      locationName,
-      botFatherAccessHash,
-      botFatherId,
-      dispatch,
-    );
+    await sendTelegramMessage(locationName, botFatherAccessHash, botFatherId);
     setIsSubmitting(false);
   }, [botFatherAccessHash, botFatherId, locationName]);
 

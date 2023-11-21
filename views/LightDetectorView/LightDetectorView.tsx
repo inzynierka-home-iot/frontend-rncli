@@ -4,9 +4,9 @@ import React from 'react-native';
 import { Button, Navbar, Typography } from '../../.storybook/stories';
 import { LayoutProvider } from '../../components';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { useAppSelector } from '../../redux/hooks';
 import { LightDetector, RootStackParamList } from '../../types';
-import { sendAPIRequest } from '../../utils';
+import { useSendAPIRequest } from '../../hooks';
 
 type LightDetectorViewProps = NativeStackScreenProps<
   RootStackParamList,
@@ -16,18 +16,17 @@ type LightDetectorViewProps = NativeStackScreenProps<
 export const LightDetectorView: FC<LightDetectorViewProps> = ({ route }) => {
   const { deviceId, nodeId, location } = route.params;
 
-  const dispatch = useAppDispatch();
+  const sendIoTAPIRequest = useSendAPIRequest();
 
   const lightDetector = useAppSelector(state =>
     selectDeviceWithId(state, location, nodeId, deviceId),
   ) as LightDetector;
 
   const handleGetLightLevel = () => {
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...route.params,
       action: 'status',
       additionalParams: 'V_LIGHT_LEVEL',
-      dispatch,
     });
   };
 
