@@ -1,3 +1,4 @@
+import { AppDispatch } from '../redux/store';
 import { sendIoTMessage } from './sendIoTMessage';
 
 type SendAPIRequestFunction = (params: {
@@ -8,6 +9,7 @@ type SendAPIRequestFunction = (params: {
   additionalParams?: string;
   botHash: string | null;
   botId: string | null;
+  dispatch: AppDispatch;
 }) => Promise<any>;
 
 export const sendAPIRequest: SendAPIRequestFunction = ({
@@ -18,6 +20,7 @@ export const sendAPIRequest: SendAPIRequestFunction = ({
   additionalParams = '',
   botHash,
   botId,
+  dispatch,
 }) => {
   if (botId && botHash) {
     return sendIoTMessage(
@@ -26,6 +29,7 @@ export const sendAPIRequest: SendAPIRequestFunction = ({
       }`,
       botHash,
       botId,
+      dispatch,
     );
   }
   return Promise.resolve();

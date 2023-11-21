@@ -61,6 +61,7 @@ export const listenForBotFatherMessages = (
       }
       if (messages.includes(noCurrentBots)) {
         dispatch(setBotsNames(['homeiotinzynierka_bot']));
+        // dispatch(setBotsNames([]));
       }
       if (messages.includes(provideIdResponse)) {
         dispatch(setIsWaitingForName(false));

@@ -4,7 +4,7 @@ import React from 'react-native';
 import { Button, Navbar, Typography } from '../../.storybook/stories';
 import { LayoutProvider } from '../../components';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
-import { useAppSelector } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { MotionDetector, RootStackParamList } from '../../types';
 import { sendAPIRequest } from '../../utils';
 
@@ -16,6 +16,8 @@ type MotionDetectorViewProps = NativeStackScreenProps<
 export const MotionDetectorView: FC<MotionDetectorViewProps> = ({ route }) => {
   const { deviceId, nodeId, location } = route.params;
 
+  const dispatch = useAppDispatch();
+
   const motionDetector = useAppSelector(state =>
     selectDeviceWithId(state, location, nodeId, deviceId),
   ) as MotionDetector;
@@ -25,6 +27,7 @@ export const MotionDetectorView: FC<MotionDetectorViewProps> = ({ route }) => {
       ...route.params,
       action: 'status',
       additionalParams: 'V_TRIPPED',
+      dispatch,
     });
   };
 

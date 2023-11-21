@@ -9,7 +9,7 @@ import {
 } from '../../.storybook/stories';
 import { LayoutProvider } from '../../components';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
-import { useAppSelector } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RgbLight, RootStackParamList } from '../../types';
 import { sendAPIRequest } from '../../utils';
 
@@ -17,6 +17,8 @@ type RgbLightViewProps = NativeStackScreenProps<RootStackParamList, 'RgbLight'>;
 
 export const RgbLightView: FC<RgbLightViewProps> = ({ route }) => {
   const { deviceId, nodeId, location } = route.params;
+
+  const dispatch = useAppDispatch();
 
   const rgbLight = useAppSelector(state =>
     selectDeviceWithId(state, location, nodeId, deviceId),
@@ -29,6 +31,7 @@ export const RgbLightView: FC<RgbLightViewProps> = ({ route }) => {
       ...route.params,
       action: 'set',
       additionalParams: `V_RGB=${color}`,
+      dispatch,
     });
   };
 

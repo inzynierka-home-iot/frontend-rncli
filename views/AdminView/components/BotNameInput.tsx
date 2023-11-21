@@ -6,17 +6,18 @@ import {
   Typography,
   useInputValue,
 } from '../../../.storybook/stories';
-import { useAppSelector } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { sendIoTMessage } from '../../../utils';
-import { BOT_SUFFIX } from '../../../utils/env';
+import { BOT_NAME_LENGTH, BOT_SUFFIX } from '../../../utils/env';
 import { BotFather } from '../../../types';
 
 export const BotNameInput: FC<BotFather> = ({
   botFatherAccessHash,
   botFatherId,
 }) => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const dispatch = useAppDispatch();
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [botUsername, onBotUsernameChange] = useInputValue();
 
   const { isWaitingForUsername, isUsernameInvalidError, isUsernameTakenError } =
@@ -25,7 +26,12 @@ export const BotNameInput: FC<BotFather> = ({
   const onConfirmBotUsername = useCallback(async () => {
     setIsSubmitting(true);
     const botFullName = botUsername + BOT_SUFFIX;
-    await sendIoTMessage(botFullName, botFatherAccessHash, botFatherId);
+    await sendIoTMessage(
+      botFullName,
+      botFatherAccessHash,
+      botFatherId,
+      dispatch,
+    );
     setIsSubmitting(false);
   }, [botUsername, botFatherAccessHash, botFatherId]);
 
@@ -44,7 +50,7 @@ export const BotNameInput: FC<BotFather> = ({
           isUsernameInvalidError || isUsernameTakenError ? 'error' : 'default'
         }
         disabled={!isWaitingForUsername || isSubmitting}
-        max={22}
+        max={BOT_NAME_LENGTH - BOT_SUFFIX.length}
       />
       {isUsernameTakenError && (
         <Typography

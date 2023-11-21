@@ -18,6 +18,7 @@ export const useInitialDevices = (
       action: 'get',
       botHash: botAccessHash,
       botId,
+      dispatch,
     });
   }, [botId, botAccessHash, dispatch]);
 };

@@ -4,7 +4,7 @@ import React from 'react-native';
 import { Button, Navbar, Typography } from '../../.storybook/stories';
 import { LayoutProvider } from '../../components';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
-import { useAppSelector } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { HumidityDetector, RootStackParamList } from '../../types';
 import { sendAPIRequest } from '../../utils';
 
@@ -18,6 +18,8 @@ export const HumidityDetectorView: FC<HumidityDetectorViewProps> = ({
 }) => {
   const { deviceId, nodeId, location } = route.params;
 
+  const dispatch = useAppDispatch();
+
   const humidityDetector = useAppSelector(state =>
     selectDeviceWithId(state, location, nodeId, deviceId),
   ) as HumidityDetector;
@@ -27,6 +29,7 @@ export const HumidityDetectorView: FC<HumidityDetectorViewProps> = ({
       ...route.params,
       action: 'status',
       additionalParams: 'V_HUM',
+      dispatch,
     });
   };
 

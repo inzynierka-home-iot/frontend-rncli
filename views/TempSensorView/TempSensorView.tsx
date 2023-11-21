@@ -2,7 +2,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { View } from 'react-native';
 import { Button, Navbar, Typography } from '../../.storybook/stories';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
-import { useAppSelector } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootStackParamList } from '../../types';
 import { sendAPIRequest } from '../../utils';
 import { styles } from './TempSensorView.styles';
@@ -20,6 +20,8 @@ type TempSensorViewProps = NativeStackScreenProps<
 
 export const TempSensorView = ({ route }: TempSensorViewProps) => {
   const { location, nodeId, deviceId, botId, botHash } = route.params;
+
+  const dispatch = useAppDispatch();
 
   const currentTempSensorHistory = useTempHistory({
     location,
@@ -48,18 +50,21 @@ export const TempSensorView = ({ route }: TempSensorViewProps) => {
   const handleGetTemp = () =>
     sendAPIRequest({
       ...tempSensorActionBaseParams,
+      dispatch,
     });
 
   const handleGetTempHistory = () =>
     sendAPIRequest({
       ...tempSensorActionBaseParams,
       action: 'statusAll',
+      dispatch,
     });
 
   const handleSubscribe = () => {
     sendAPIRequest({
       ...tempSensorActionBaseParams,
       action: 'subscribe',
+      dispatch,
     });
   };
 
@@ -67,6 +72,7 @@ export const TempSensorView = ({ route }: TempSensorViewProps) => {
     sendAPIRequest({
       ...tempSensorActionBaseParams,
       action: 'unsubscribe',
+      dispatch,
     });
   };
 

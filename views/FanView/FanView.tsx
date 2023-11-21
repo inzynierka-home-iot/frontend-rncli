@@ -10,7 +10,7 @@ import {
 } from '../../.storybook/stories';
 import { LayoutProvider } from '../../components';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
-import { useAppSelector } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { Fan, FanRangeValues, RootStackParamList } from '../../types';
 import { getNumericValue, sendAPIRequest } from '../../utils';
 import { styles } from './FanView.styles';
@@ -19,6 +19,8 @@ type FanViewProps = NativeStackScreenProps<RootStackParamList, 'Fan'>;
 
 export const FanView: FC<FanViewProps> = ({ route }) => {
   const { deviceId, nodeId, location } = route.params;
+
+  const dispatch = useAppDispatch();
 
   const fan = useAppSelector(state =>
     selectDeviceWithId(state, location, nodeId, deviceId),
@@ -47,16 +49,19 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
       ...route.params,
       action: 'set',
       additionalParams: `V_TEMP=${finalTempValue}`,
+      dispatch,
     });
     sendAPIRequest({
       ...route.params,
       action: 'set',
       additionalParams: `V_PERCENTAGE=${finalPercentageValue}`,
+      dispatch,
     });
     sendAPIRequest({
       ...route.params,
       action: 'set',
       additionalParams: `V_DIRECTION=${finalDirectionValue}`,
+      dispatch,
     });
   };
 
@@ -71,16 +76,19 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
       ...route.params,
       action: 'set',
       additionalParams: `V_TEMP=${tempValue}`,
+      dispatch,
     });
     sendAPIRequest({
       ...route.params,
       action: 'set',
       additionalParams: `V_PERCENTAGE=${percentageValue}`,
+      dispatch,
     });
     sendAPIRequest({
       ...route.params,
       action: 'set',
       additionalParams: `V_DIRECTION=${directionValue}`,
+      dispatch,
     });
   }, [fanTurnedOff]);
 
@@ -89,16 +97,19 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
       ...route.params,
       action: 'status',
       additionalParams: 'V_TEMP',
+      dispatch,
     });
     sendAPIRequest({
       ...route.params,
       action: 'status',
       additionalParams: 'V_PERCENTAGE',
+      dispatch,
     });
     sendAPIRequest({
       ...route.params,
       action: 'status',
       additionalParams: 'V_DIRECTION',
+      dispatch,
     });
   };
 

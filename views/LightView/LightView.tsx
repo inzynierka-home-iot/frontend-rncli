@@ -4,7 +4,7 @@ import React from 'react-native';
 import { Button, Navbar, Typography } from '../../.storybook/stories';
 import { LayoutProvider } from '../../components';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
-import { useAppSelector } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootStackParamList, Light } from '../../types';
 import { sendAPIRequest } from '../../utils';
 
@@ -12,6 +12,8 @@ type LightViewProps = NativeStackScreenProps<RootStackParamList, 'Light'>;
 
 export const LightView = ({ route }: LightViewProps) => {
   const { deviceId, nodeId, botHash, botId, location } = route.params;
+
+  const dispatch = useAppDispatch();
 
   const light = useAppSelector(state =>
     selectDeviceWithId(state, location, nodeId, deviceId),
@@ -35,12 +37,14 @@ export const LightView = ({ route }: LightViewProps) => {
     sendAPIRequest({
       ...lightActionBaseParams,
       additionalParams: 'V_STATUS=1',
+      dispatch,
     });
 
   const handleLightOff = () =>
     sendAPIRequest({
       ...lightActionBaseParams,
       additionalParams: 'V_STATUS=0',
+      dispatch,
     });
 
   const handleAllLightsOn = () =>
@@ -48,6 +52,7 @@ export const LightView = ({ route }: LightViewProps) => {
       ...lightActionBaseParams,
       deviceId: '*',
       additionalParams: 'V_STATUS=1',
+      dispatch,
     });
 
   const handleAllLightsOff = () =>
@@ -55,6 +60,7 @@ export const LightView = ({ route }: LightViewProps) => {
       ...lightActionBaseParams,
       deviceId: '*',
       additionalParams: 'V_STATUS=0',
+      dispatch,
     });
 
   if (!light) {

@@ -49,6 +49,7 @@ export const DeviceListView: FC<DeviceListViewProps> = ({ route }) => {
       action: 'get',
       botHash,
       botId,
+      dispatch,
     });
   };
 

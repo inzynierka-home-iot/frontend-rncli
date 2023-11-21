@@ -6,7 +6,7 @@ import {
   Typography,
   useInputValue,
 } from '../../../.storybook/stories';
-import { useAppSelector } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { sendIoTMessage } from '../../../utils';
 import { BotFather } from '../../../types';
 
@@ -14,15 +14,21 @@ export const LocationInput: FC<BotFather> = ({
   botFatherAccessHash,
   botFatherId,
 }) => {
+  const dispatch = useAppDispatch();
+
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [locationName, onLocationNameChange] = useInputValue();
 
   const { isWaitingForName } = useAppSelector(state => state.admin);
 
-  const [locationName, onLocationNameChange] = useInputValue();
-
   const onConfirmLocalisation = useCallback(async () => {
     setIsSubmitting(true);
-    await sendIoTMessage(locationName, botFatherAccessHash, botFatherId);
+    await sendIoTMessage(
+      locationName,
+      botFatherAccessHash,
+      botFatherId,
+      dispatch,
+    );
     setIsSubmitting(false);
   }, [botFatherAccessHash, botFatherId, locationName]);
 
