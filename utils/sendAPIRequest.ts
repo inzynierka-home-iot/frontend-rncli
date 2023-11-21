@@ -2,13 +2,13 @@ import { AppDispatch } from '../redux/store';
 import { IoTAPIRequest } from '../types';
 import { sendIoTMessage } from './sendIoTMessage';
 
-type sendAPIRequest = (
+type SendAPIRequest = (
   params: IoTAPIRequest & {
     dispatch: AppDispatch;
   },
 ) => Promise<any>;
 
-export const sendAPIRequest: sendAPIRequest = ({
+export const sendAPIRequest: SendAPIRequest = ({
   location,
   nodeId,
   deviceId,

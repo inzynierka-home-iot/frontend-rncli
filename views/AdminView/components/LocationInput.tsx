@@ -8,13 +8,13 @@ import {
 } from '../../../.storybook/stories';
 import { useAppSelector } from '../../../redux/hooks';
 import { BotFather } from '../../../types';
-import { useSendIotMessage } from '../../../hooks';
+import { useSendTelegramMessage } from '../../../hooks';
 
 export const LocationInput: FC<BotFather> = ({
   botFatherAccessHash,
   botFatherId,
 }) => {
-  const sendTelegramMessage = useSendIotMessage();
+  const sendTelegramMessage = useSendTelegramMessage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [locationName, onLocationNameChange] = useInputValue();
 

@@ -4,5 +4,5 @@ export { useInitialDevices } from './useInitialDevices';
 export { useListenForHomeBotMessages } from './useListenForHomeBotMessages';
 export { useNavigateAuthUsers } from './useNavigateAuthUsers';
 export { useSendAPIRequest } from './useSendAPIRequest';
-export { useSendIotMessage } from './useSendIoTMessage';
+export { useSendTelegramMessage } from './useSendTelegramMessage';
 export { useTelegramConnection } from './useTelegramConnection';

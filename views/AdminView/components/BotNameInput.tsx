@@ -8,14 +8,14 @@ import {
 } from '../../../.storybook/stories';
 import { useAppSelector } from '../../../redux/hooks';
 import { BOT_NAME_LENGTH, BOT_SUFFIX } from '../../../utils/env';
-import { BotFather } from '../../../types';
-import { useSendIotMessage } from '../../../hooks';
+import { BotFather as BotNameInputProps } from '../../../types';
+import { useSendTelegramMessage } from '../../../hooks';
 
-export const BotNameInput: FC<BotFather> = ({
+export const BotNameInput: FC<BotNameInputProps> = ({
   botFatherAccessHash,
   botFatherId,
 }) => {
-  const sendTelegramMessage = useSendIotMessage();
+  const sendTelegramMessage = useSendTelegramMessage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [botUsername, onBotUsernameChange] = useInputValue();
 

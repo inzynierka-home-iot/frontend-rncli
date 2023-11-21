@@ -15,7 +15,7 @@ const newBotResponse =
 
 const getBotsListResponse = 'Choose a bot from the list below:';
 
-const noCurrentBots = 'You have currently no bots';
+const noCurrentBotsResponse = 'You have currently no bots';
 
 const provideIdResponse =
   "Good. Now let's choose a username for your bot. It must end in `bot`. Like this, for example: TetrisBot or tetris_bot.";
@@ -56,12 +56,11 @@ export const listenForBotFatherMessages = (
             ),
           )
           .filter(name => name.includes(BOT_SUFFIX));
-        botsNames.push('homeiotinzynierka_bot');
+        botsNames.push('homeiotinzynierka_bot'); // to delete
         dispatch(setBotsNames(botsNames));
       }
-      if (messages.includes(noCurrentBots)) {
-        dispatch(setBotsNames(['homeiotinzynierka_bot']));
-        // dispatch(setBotsNames([]));
+      if (messages.includes(noCurrentBotsResponse)) {
+        dispatch(setBotsNames([])); // to delete
       }
       if (messages.includes(provideIdResponse)) {
         dispatch(setIsWaitingForName(false));

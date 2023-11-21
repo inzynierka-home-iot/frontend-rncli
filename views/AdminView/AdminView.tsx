@@ -6,10 +6,10 @@ import { LocationInput } from './components';
 import { BotNameInput } from './components/BotNameInput';
 import { BotTokenLabel } from './components/BotTokenLabel';
 import { useBotFatherId, useListenForBotFather } from './hooks';
-import { useSendIotMessage } from '../../hooks';
+import { useSendTelegramMessage } from '../../hooks';
 
 export const AdminView: FC = () => {
-  const sendTelegramMessage = useSendIotMessage();
+  const sendTelegramMessage = useSendTelegramMessage();
   const [botFatherAccessHash, botFatherId] = useBotFatherId();
   useListenForBotFather(botFatherId);
 

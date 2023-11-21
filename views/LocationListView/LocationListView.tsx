@@ -4,7 +4,11 @@ import { useFocusEffect } from '@react-navigation/native';
 import { Button, ListItem, Typography } from '../../.storybook/stories';
 import { LayoutProvider, NavbarWithLogout } from '../../components';
 import { LoadingWrapper } from '../../components/LoadingWrapper';
-import { useAppNavigation, useBotsNames, useSendIotMessage } from '../../hooks';
+import {
+  useAppNavigation,
+  useBotsNames,
+  useSendTelegramMessage,
+} from '../../hooks';
 import { useBotFatherId, useListenForBotFather } from '../AdminView/hooks';
 
 export const LocationListView: FC = () => {
@@ -12,7 +16,7 @@ export const LocationListView: FC = () => {
   useListenForBotFather(botFatherId);
   const { isLoading, botsAvailable, locationCredentials, startRetrieving } =
     useBotsNames();
-  const sendTelegramMessage = useSendIotMessage();
+  const sendTelegramMessage = useSendTelegramMessage();
   const navigation = useAppNavigation();
 
   const onNavigateToAdmin = () => {
@@ -44,7 +48,7 @@ export const LocationListView: FC = () => {
       <LoadingWrapper isLoading={isLoading}>
         {!botsAvailable ? (
           <Typography variant="header-medium" text="Brak podpiętych botów" />
-        ) : locationCredentials?.length ? (
+        ) : locationCredentials.length ? (
           locationCredentials.map(({ access_hash, id, first_name }) => (
             <ListItem
               text={first_name}

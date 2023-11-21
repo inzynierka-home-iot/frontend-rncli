@@ -1,7 +1,7 @@
 import { useAppDispatch } from '../redux/hooks';
 import { sendIoTMessage } from '../utils';
 
-export const useSendIotMessage = () => {
+export const useSendTelegramMessage = () => {
   const dispatch = useAppDispatch();
 
   const sendTelegramMessage = async (
