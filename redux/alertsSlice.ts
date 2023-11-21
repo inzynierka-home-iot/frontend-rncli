@@ -31,8 +31,8 @@ const mockedData = {
 };
 
 const initialState: MessagesState = {
-  alertsList: mockedData.alerts,
-  // alertsList: [],
+  // alertsList: mockedData.alerts,
+  alertsList: [],
 };
 
 export const alertsSlice = createSlice({

@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { FC } from 'react';
-import React, { Keyboard, View } from 'react-native';
+import { FC, useCallback, useMemo } from 'react';
+import React, { View } from 'react-native';
 import {
   Button,
   Input,
@@ -24,6 +24,14 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
     selectDeviceWithId(state, location, nodeId, deviceId),
   ) as Fan;
 
+  const fanTurnedOff = useMemo(
+    () =>
+      fan.values.V_TEMP === '0' &&
+      fan.values.V_PERCENTAGE === '0' &&
+      fan.values.V_DIRECTION === '0',
+    [fan.values.V_TEMP, fan.values.V_PERCENTAGE, fan.values.V_DIRECTION],
+  );
+
   const [temp, onTempChange] = useInputValue(fan.values.V_TEMP);
   const [percentage, onPercentageChange] = useInputValue(
     fan.values.V_PERCENTAGE,
@@ -32,8 +40,9 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
 
   const handleChangeFanParams = () => {
     const finalTempValue = getNumericValue(parseFloat, temp);
-    const finalDirectionValue = getNumericValue(parseFloat, direction);
     const finalPercentageValue = getNumericValue(parseFloat, percentage);
+    const finalDirectionValue = getNumericValue(parseFloat, direction);
+
     sendAPIRequest({
       ...route.params,
       action: 'set',
@@ -50,6 +59,30 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
       additionalParams: `V_DIRECTION=${finalDirectionValue}`,
     });
   };
+
+  const handleFanStateToggle = useCallback(() => {
+    const tempValue = fanTurnedOff ? FanRangeValues.DEFAULT_TEMP : 0;
+    const percentageValue = fanTurnedOff
+      ? FanRangeValues.DEFAULT_PERCENTAGE
+      : 0;
+    const directionValue = fanTurnedOff ? FanRangeValues.DEFAULT_DIRECTION : 0;
+
+    sendAPIRequest({
+      ...route.params,
+      action: 'set',
+      additionalParams: `V_TEMP=${tempValue}`,
+    });
+    sendAPIRequest({
+      ...route.params,
+      action: 'set',
+      additionalParams: `V_PERCENTAGE=${percentageValue}`,
+    });
+    sendAPIRequest({
+      ...route.params,
+      action: 'set',
+      additionalParams: `V_DIRECTION=${directionValue}`,
+    });
+  }, [fanTurnedOff]);
 
   const handleGetFanParams = () => {
     sendAPIRequest({
@@ -129,6 +162,11 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
       <Button
         text="Zmień parametry wentylatora"
         onPress={handleChangeFanParams}
+      />
+      <Button
+        text={fanTurnedOff ? 'Włącz wentylator' : 'Wyłącz wentylator'}
+        variant={fanTurnedOff ? 'success' : 'error'}
+        onPress={handleFanStateToggle}
       />
       <Button text="Pobierz najnowsze wartości" onPress={handleGetFanParams} />
     </LayoutProvider>

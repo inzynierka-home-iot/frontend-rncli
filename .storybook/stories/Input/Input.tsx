@@ -18,6 +18,7 @@ export type InputProps = {
   centerText?: boolean;
   onChange: (value: string) => void;
   onBlur?: (value: string) => void;
+  checkBoundary?: boolean;
   min?: number;
   max?: number;
 };
@@ -32,13 +33,17 @@ export const Input: FC<InputProps> = ({
   centerText = false,
   onChange,
   onBlur,
+  checkBoundary = true,
   min = 0,
   max = 100,
 }) => {
   const [type, setType] = useState<InputProps['variant'] | 'active'>(variant);
 
   const onChangeInput = useCallback((value: string) => {
-    const newValue = keyboardType === 'default' ? value : getNumberValue(value);
+    const newValue =
+      keyboardType === 'default'
+        ? getStringValue(value)
+        : getNumberValue(value);
     onChange(newValue);
   }, []);
 
@@ -59,18 +64,34 @@ export const Input: FC<InputProps> = ({
 
   const getNumberValue = (value: string): string => {
     if (value === '') {
+      if (!checkBoundary) {
+        return '';
+      }
       value = min.toString();
     }
     const parts = value.replace(',', '.').split('.').slice(0, 2);
     parts[0] = parseInt(parts[0]).toString();
     const newValue = parts.join('.');
     const newValueNumeric = parseFloat(newValue);
-    if (newValueNumeric < min) {
+    if (isNaN(newValueNumeric)) {
+      return '';
+    }
+    if (checkBoundary && newValueNumeric < min) {
       return min.toString();
-    } else if (newValueNumeric > max) {
+    } else if (checkBoundary && newValueNumeric > max) {
       return max.toString();
     }
     return newValue;
+  };
+
+  const getStringValue = (value: string): string => {
+    if (!checkBoundary) {
+      return value;
+    }
+    if (value.length <= max) {
+      return value;
+    }
+    return value.slice(0, max);
   };
 
   const styles = useStyles(type, disabled, text, centerText);

@@ -8,13 +8,9 @@ import {
 } from '../../../.storybook/stories';
 import { useAppSelector } from '../../../redux/hooks';
 import { sendIoTMessage } from '../../../utils';
+import { BotFather } from '../../../types';
 
-type Props = {
-  botFatherAccessHash: string;
-  botFatherId: string;
-};
-
-export const LocationInput: FC<Props> = ({
+export const LocationInput: FC<BotFather> = ({
   botFatherAccessHash,
   botFatherId,
 }) => {
@@ -33,7 +29,7 @@ export const LocationInput: FC<Props> = ({
   return (
     <>
       <Typography
-        variant="body-medium"
+        variant="body-small"
         text="Jak będzie nazywała się Twoja lokalizacja"
         color="text-secondary"
       />

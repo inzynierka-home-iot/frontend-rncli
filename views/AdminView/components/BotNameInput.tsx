@@ -8,13 +8,10 @@ import {
 } from '../../../.storybook/stories';
 import { useAppSelector } from '../../../redux/hooks';
 import { sendIoTMessage } from '../../../utils';
+import { BOT_SUFFIX } from '../../../utils/env';
+import { BotFather } from '../../../types';
 
-type Props = {
-  botFatherAccessHash: string;
-  botFatherId: string;
-};
-
-export const BotNameInput: FC<Props> = ({
+export const BotNameInput: FC<BotFather> = ({
   botFatherAccessHash,
   botFatherId,
 }) => {
@@ -27,15 +24,16 @@ export const BotNameInput: FC<Props> = ({
 
   const onConfirmBotUsername = useCallback(async () => {
     setIsSubmitting(true);
-    await sendIoTMessage(botUsername, botFatherAccessHash, botFatherId);
+    const botFullName = botUsername + BOT_SUFFIX;
+    await sendIoTMessage(botFullName, botFatherAccessHash, botFatherId);
     setIsSubmitting(false);
   }, [botUsername, botFatherAccessHash, botFatherId]);
 
   return (
     <>
       <Typography
-        variant="body-medium"
-        text="Podaj username dla bota, którego będziesz używał na Raspberry PI. Jego nazwa musi kończyć się na bot, np. HomeBot lub home_bot"
+        variant="body-small"
+        text={`Podaj username dla bota, którego będziesz używał na Raspberry PI. Na końcu wpisanej nazwy zostanie dodana końcówka '${BOT_SUFFIX}'.`}
         color="text-secondary"
       />
       <Input
@@ -46,6 +44,7 @@ export const BotNameInput: FC<Props> = ({
           isUsernameInvalidError || isUsernameTakenError ? 'error' : 'default'
         }
         disabled={!isWaitingForUsername || isSubmitting}
+        max={22}
       />
       {isUsernameTakenError && (
         <Typography

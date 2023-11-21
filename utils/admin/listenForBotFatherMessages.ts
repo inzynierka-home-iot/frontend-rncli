@@ -4,12 +4,18 @@ import {
   setIsWaitingForName,
   setIsUsernameTakenError,
   setIsUsernameInvalidError,
+  setBotsNames,
 } from '../../redux/adminSlice';
 import { AppDispatch } from '../../redux/store';
+import { BOT_SUFFIX } from '../env';
 import { mtproto } from '../mtprotoClient';
 
 const newBotResponse =
   'Alright, a new bot. How are we going to call it? Please choose a name for your bot.';
+
+const getBotsListResponse = 'Choose a bot from the list below:';
+
+const noCurrentBots = 'You have currently no bots';
 
 const provideIdResponse =
   "Good. Now let's choose a username for your bot. It must end in `bot`. Like this, for example: TetrisBot or tetris_bot.";
@@ -39,6 +45,22 @@ export const listenForBotFatherMessages = (
       const messages = updateInfo.updates.map(({ message }) => message.message);
       if (messages.includes(newBotResponse)) {
         dispatch(setIsWaitingForName(true));
+      }
+      if (messages.includes(getBotsListResponse)) {
+        const botsNames: string[] = updateInfo.updates
+          .flatMap(({ message }) =>
+            message.reply_markup.rows.flatMap((row: { buttons: any }) =>
+              row.buttons.map(
+                (button: { text: string }) => button.text.split('@')[1],
+              ),
+            ),
+          )
+          .filter(name => name.includes(BOT_SUFFIX));
+        botsNames.push('homeiotinzynierka_bot');
+        dispatch(setBotsNames(botsNames));
+      }
+      if (messages.includes(noCurrentBots)) {
+        dispatch(setBotsNames(['homeiotinzynierka_bot']));
       }
       if (messages.includes(provideIdResponse)) {
         dispatch(setIsWaitingForName(false));

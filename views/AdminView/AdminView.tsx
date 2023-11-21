@@ -7,12 +7,8 @@ import { LocationInput } from './components';
 import { BotNameInput } from './components/BotNameInput';
 import { BotTokenLabel } from './components/BotTokenLabel';
 import { useBotFatherId, useListenForBotFather } from './hooks';
-import { RootStackParamList } from '../../types';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-type AdminViewProps = NativeStackScreenProps<RootStackParamList, 'Admin'>;
-
-export const AdminView: FC<AdminViewProps> = ({}) => {
+export const AdminView: FC = () => {
   const [botFatherAccessHash, botFatherId] = useBotFatherId();
   useListenForBotFather(botFatherId);
 

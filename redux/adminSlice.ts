@@ -6,6 +6,7 @@ interface AdminState {
   isUsernameTakenError: boolean;
   isUsernameInvalidError: boolean;
   newBotToken: string;
+  botsNames: string[] | undefined;
 }
 
 const initialState: AdminState = {
@@ -14,6 +15,7 @@ const initialState: AdminState = {
   isUsernameTakenError: false,
   isUsernameInvalidError: false,
   newBotToken: '',
+  botsNames: undefined,
 };
 
 export const adminSlice = createSlice({
@@ -35,6 +37,9 @@ export const adminSlice = createSlice({
     setNewBotToken: (state, action: PayloadAction<string>) => {
       state.newBotToken = action.payload;
     },
+    setBotsNames: (state, action: PayloadAction<string[]>) => {
+      state.botsNames = action.payload;
+    },
   },
 });
 
@@ -44,6 +49,7 @@ export const {
   setIsUsernameTakenError,
   setIsUsernameInvalidError,
   setNewBotToken,
+  setBotsNames,
 } = adminSlice.actions;
 
 export default adminSlice.reducer;
