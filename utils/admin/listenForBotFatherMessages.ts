@@ -60,7 +60,8 @@ export const listenForBotFatherMessages = (
         dispatch(setBotsNames(botsNames));
       }
       if (messages.includes(noCurrentBotsResponse)) {
-        dispatch(setBotsNames([])); // to delete
+        dispatch(setBotsNames(['homeiotinzynierka_bot'])); // to delete
+        // dispatch(setBotsNames([]));
       }
       if (messages.includes(provideIdResponse)) {
         dispatch(setIsWaitingForName(false));

@@ -4,18 +4,15 @@ import { useFocusEffect } from '@react-navigation/native';
 import { Button, ListItem, Typography } from '../../.storybook/stories';
 import { LayoutProvider, NavbarWithLogout } from '../../components';
 import { LoadingWrapper } from '../../components/LoadingWrapper';
-import {
-  useAppNavigation,
-  useBotsNames,
-  useSendTelegramMessage,
-} from '../../hooks';
+import { useAppNavigation, useSendTelegramMessage } from '../../hooks';
 import { useBotFatherId, useListenForBotFather } from '../AdminView/hooks';
+import { useLocationNames } from './hooks';
 
 export const LocationListView: FC = () => {
   const [botFatherAccessHash, botFatherId] = useBotFatherId();
   useListenForBotFather(botFatherId);
-  const { isLoading, botsAvailable, locationCredentials, startRetrieving } =
-    useBotsNames();
+  const { isLoading, locationCredentials, showRefresh, startRetrieving } =
+    useLocationNames();
   const sendTelegramMessage = useSendTelegramMessage();
   const navigation = useAppNavigation();
 
@@ -29,7 +26,6 @@ export const LocationListView: FC = () => {
       botId,
     });
   };
-
   const retrieveAvailableLocations = () => {
     if (botFatherAccessHash && botFatherId) {
       startRetrieving();
@@ -46,9 +42,7 @@ export const LocationListView: FC = () => {
   return (
     <LayoutProvider navbar={<NavbarWithLogout text="Lista lokalizacji" />}>
       <LoadingWrapper isLoading={isLoading}>
-        {!botsAvailable ? (
-          <Typography variant="header-medium" text="Brak podpiętych botów" />
-        ) : locationCredentials.length ? (
+        {locationCredentials.length ? (
           locationCredentials.map(({ access_hash, id, first_name }) => (
             <ListItem
               text={first_name}
@@ -60,7 +54,7 @@ export const LocationListView: FC = () => {
           <Typography variant="header-medium" text="Brak zapisanych lokacji" />
         )}
         <Button text="Stwórz nową lokalizację" onPress={onNavigateToAdmin} />
-        {botsAvailable && (
+        {showRefresh && (
           <Button
             text="Załaduj dostępne lokacje"
             onPress={retrieveAvailableLocations}
