@@ -15,7 +15,7 @@ export const AdminView: FC = () => {
 
   useEffect(() => {
     if (botFatherAccessHash && botFatherId) {
-      // sendTelegramMessage('/newbot', botFatherAccessHash, botFatherId);
+      sendTelegramMessage('/newbot', botFatherAccessHash, botFatherId);
     }
   }, [botFatherAccessHash, botFatherId]);
 
