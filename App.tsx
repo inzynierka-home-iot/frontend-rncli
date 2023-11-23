@@ -38,7 +38,9 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <LoadingWrapper isLoading={!isConnected}>
+        <LoadingWrapper
+          isLoading={!isConnected}
+          text="Nawiązywanie połączenia z Telegramem">
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Login" component={LoginView} />
             <Stack.Screen name="ConfirmAuth" component={ConfirmAuthView} />
