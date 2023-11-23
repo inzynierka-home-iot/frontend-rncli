@@ -6,7 +6,6 @@ import { LayoutProvider } from '../../components';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
 import { HumidityDetector, RootStackParamList } from '../../types';
-import { sendAPIRequest } from '../../utils';
 import { useSendAPIRequest } from '../../hooks';
 
 type HumidityDetectorViewProps = NativeStackScreenProps<
