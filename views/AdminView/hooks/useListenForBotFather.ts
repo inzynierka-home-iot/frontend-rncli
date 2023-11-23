@@ -1,13 +1,17 @@
-import { useEffect } from 'react';
+import { useCallback } from 'react';
 import { useAppDispatch } from '../../../redux/hooks';
 import { listenForBotFatherMessages } from '../../../utils';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const useListenForBotFather = (userId: string | undefined) => {
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    if (userId) {
-      listenForBotFatherMessages(userId, dispatch);
-    }
-  }, [dispatch, userId]);
+  useFocusEffect(
+    useCallback(() => {
+      if (userId) {
+        const removeListener = listenForBotFatherMessages(userId, dispatch);
+        return removeListener;
+      }
+    }, [userId]),
+  );
 };

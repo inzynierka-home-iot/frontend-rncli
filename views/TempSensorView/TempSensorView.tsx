@@ -4,11 +4,11 @@ import { Button, Navbar, Typography } from '../../.storybook/stories';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
 import { RootStackParamList } from '../../types';
-import { sendAPIRequest } from '../../utils';
 import { styles } from './TempSensorView.styles';
 import { TempSensor } from '../../types/Device';
 import { useMemo } from 'react';
 import { useTempHistory } from '../../hooks/useTempHistory';
+import { useSendAPIRequest } from '../../hooks';
 import { DataChart } from '../../.storybook/stories/DataChart';
 import { selectTempSensorSubscription } from '../../redux/currentTempSensorSlice';
 import { LayoutProvider } from '../../components';
@@ -20,6 +20,8 @@ type TempSensorViewProps = NativeStackScreenProps<
 
 export const TempSensorView = ({ route }: TempSensorViewProps) => {
   const { location, nodeId, deviceId, botId, botHash } = route.params;
+
+  const sendIoTAPIRequest = useSendAPIRequest();
 
   const currentTempSensorHistory = useTempHistory({
     location,
@@ -46,25 +48,25 @@ export const TempSensorView = ({ route }: TempSensorViewProps) => {
   };
 
   const handleGetTemp = () =>
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...tempSensorActionBaseParams,
     });
 
   const handleGetTempHistory = () =>
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...tempSensorActionBaseParams,
       action: 'statusAll',
     });
 
   const handleSubscribe = () => {
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...tempSensorActionBaseParams,
       action: 'subscribe',
     });
   };
 
   const handleUnsubscribe = () => {
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...tempSensorActionBaseParams,
       action: 'unsubscribe',
     });

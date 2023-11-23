@@ -7,19 +7,16 @@ import {
   useInputValue,
 } from '../../../.storybook/stories';
 import { useAppSelector } from '../../../redux/hooks';
-import { sendIoTMessage } from '../../../utils';
+import { BOT_NAME_LENGTH, BOT_SUFFIX } from '../../../utils/env';
+import { BotFather as BotNameInputProps } from '../../../types';
+import { useSendTelegramMessage } from '../../../hooks';
 
-type Props = {
-  botFatherAccessHash: string;
-  botFatherId: string;
-};
-
-export const BotNameInput: FC<Props> = ({
+export const BotNameInput: FC<BotNameInputProps> = ({
   botFatherAccessHash,
   botFatherId,
 }) => {
+  const sendTelegramMessage = useSendTelegramMessage();
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const [botUsername, onBotUsernameChange] = useInputValue();
 
   const { isWaitingForUsername, isUsernameInvalidError, isUsernameTakenError } =
@@ -27,37 +24,39 @@ export const BotNameInput: FC<Props> = ({
 
   const onConfirmBotUsername = useCallback(async () => {
     setIsSubmitting(true);
-    await sendIoTMessage(botUsername, botFatherAccessHash, botFatherId);
+    const botFullName = botUsername + BOT_SUFFIX;
+    await sendTelegramMessage(botFullName, botFatherAccessHash, botFatherId);
     setIsSubmitting(false);
   }, [botUsername, botFatherAccessHash, botFatherId]);
 
   return (
     <>
       <Typography
-        variant="body-medium"
-        text="Podaj username dla bota, którego będziesz uzywał na Raspberry PI. Jego nazwa musi kończyć się na bot, np. HomeBot lub home_bot"
+        variant="body-small"
+        text={`Podaj username dla bota, którego będziesz używał na Raspberry PI. Na końcu wpisanej nazwy zostanie dodana końcówka '${BOT_SUFFIX}'.`}
         color="text-secondary"
       />
       <Input
         text={botUsername}
         onChange={onBotUsernameChange}
-        placeholder="Podaj nazwę lokalizacji..."
+        placeholder="Podaj nazwę bota..."
         variant={
           isUsernameInvalidError || isUsernameTakenError ? 'error' : 'default'
         }
         disabled={!isWaitingForUsername || isSubmitting}
+        max={BOT_NAME_LENGTH - BOT_SUFFIX.length}
       />
       {isUsernameTakenError && (
         <Typography
           variant="body-medium"
-          text="Nazwa jest juz zajęta. Spróbuj ponownie"
+          text="Nazwa jest juz zajęta. Spróbuj ponownie."
           color="text-error"
         />
       )}
       {isUsernameInvalidError && (
         <Typography
           variant="body-medium"
-          text="Nazwa jest nieprawidłowa. Spróbuj ponownie"
+          text="Nazwa jest nieprawidłowa. Spróbuj ponownie."
           color="text-error"
         />
       )}

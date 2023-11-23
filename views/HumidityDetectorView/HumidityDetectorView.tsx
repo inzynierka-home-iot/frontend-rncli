@@ -7,6 +7,7 @@ import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
 import { HumidityDetector, RootStackParamList } from '../../types';
 import { sendAPIRequest } from '../../utils';
+import { useSendAPIRequest } from '../../hooks';
 
 type HumidityDetectorViewProps = NativeStackScreenProps<
   RootStackParamList,
@@ -18,12 +19,14 @@ export const HumidityDetectorView: FC<HumidityDetectorViewProps> = ({
 }) => {
   const { deviceId, nodeId, location } = route.params;
 
+  const sendIoTAPIRequest = useSendAPIRequest();
+
   const humidityDetector = useAppSelector(state =>
     selectDeviceWithId(state, location, nodeId, deviceId),
   ) as HumidityDetector;
 
   const handleGetHum = () => {
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...route.params,
       action: 'status',
       additionalParams: 'V_HUM',

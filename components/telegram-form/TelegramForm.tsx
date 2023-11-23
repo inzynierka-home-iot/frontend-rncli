@@ -29,7 +29,7 @@ export const TelegramForm = () => {
 
   const onSubmit = async ({ telegramMessage }: any) => {
     setIsButtonDisabled(true);
-    await sendIoTMessage(telegramMessage, botAccessHash, botUserID);
+    await sendIoTMessage(telegramMessage, botAccessHash, botUserID, dispatch);
     setIsButtonDisabled(false);
   };
 

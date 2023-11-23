@@ -40,7 +40,10 @@ export const Input: FC<InputProps> = ({
   const [type, setType] = useState<InputProps['variant'] | 'active'>(variant);
 
   const onChangeInput = useCallback((value: string) => {
-    const newValue = keyboardType === 'default' ? value : getNumberValue(value);
+    const newValue =
+      keyboardType === 'default'
+        ? getStringValue(value)
+        : getNumberValue(value);
     onChange(newValue);
   }, []);
 
@@ -79,6 +82,16 @@ export const Input: FC<InputProps> = ({
       return max.toString();
     }
     return newValue;
+  };
+
+  const getStringValue = (value: string): string => {
+    if (!checkBoundary) {
+      return value;
+    }
+    if (value.length <= max) {
+      return value;
+    }
+    return value.slice(0, max);
   };
 
   const styles = useStyles(type, disabled, text, centerText);

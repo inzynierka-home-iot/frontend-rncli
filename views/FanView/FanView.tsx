@@ -11,14 +11,17 @@ import {
 import { LayoutProvider } from '../../components';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
+import { useSendAPIRequest } from '../../hooks';
 import { Fan, FanRangeValues, RootStackParamList } from '../../types';
-import { getNumericValue, sendAPIRequest } from '../../utils';
+import { getNumericValue } from '../../utils';
 import { styles } from './FanView.styles';
 
 type FanViewProps = NativeStackScreenProps<RootStackParamList, 'Fan'>;
 
 export const FanView: FC<FanViewProps> = ({ route }) => {
   const { deviceId, nodeId, location } = route.params;
+
+  const sendIoTAPIRequest = useSendAPIRequest();
 
   const fan = useAppSelector(state =>
     selectDeviceWithId(state, location, nodeId, deviceId),
@@ -43,17 +46,17 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
     const finalPercentageValue = getNumericValue(parseFloat, percentage);
     const finalDirectionValue = getNumericValue(parseFloat, direction);
 
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...route.params,
       action: 'set',
       additionalParams: `V_TEMP=${finalTempValue}`,
     });
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...route.params,
       action: 'set',
       additionalParams: `V_PERCENTAGE=${finalPercentageValue}`,
     });
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...route.params,
       action: 'set',
       additionalParams: `V_DIRECTION=${finalDirectionValue}`,
@@ -67,17 +70,17 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
       : 0;
     const directionValue = fanTurnedOff ? FanRangeValues.DEFAULT_DIRECTION : 0;
 
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...route.params,
       action: 'set',
       additionalParams: `V_TEMP=${tempValue}`,
     });
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...route.params,
       action: 'set',
       additionalParams: `V_PERCENTAGE=${percentageValue}`,
     });
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...route.params,
       action: 'set',
       additionalParams: `V_DIRECTION=${directionValue}`,
@@ -85,17 +88,17 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
   }, [fanTurnedOff]);
 
   const handleGetFanParams = () => {
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...route.params,
       action: 'status',
       additionalParams: 'V_TEMP',
     });
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...route.params,
       action: 'status',
       additionalParams: 'V_PERCENTAGE',
     });
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...route.params,
       action: 'status',
       additionalParams: 'V_DIRECTION',

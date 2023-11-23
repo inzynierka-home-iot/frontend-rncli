@@ -23,12 +23,7 @@ export const Navbar: FC<NavbarProps> = ({
   return (
     <View style={styles.container}>
       {backButton && (
-        <IconButton
-          icon={faChevronLeft}
-          onPress={() => {
-            navigation.goBack();
-          }}
-        />
+        <IconButton icon={faChevronLeft} onPress={navigation.goBack} />
       )}
       <Typography variant="header-small" text={text} />
       {button && <Button {...button} />}

@@ -145,10 +145,10 @@ export const devicesSlice = createSlice({
           device.id !== id,
       );
     },
-    startLoading: state => {
+    startLoadingDevices: state => {
       // state.isLoading = true;
     },
-    clearState: state => {
+    clearDeviceState: state => {
       // state.devicesList = [];
       // state.isLoading = true;
     },
@@ -160,8 +160,8 @@ export const {
   setDeviceValues,
   addDevice,
   removeDevice,
-  startLoading,
-  clearState,
+  startLoadingDevices,
+  clearDeviceState,
 } = devicesSlice.actions;
 
 export const selectDevices = (state: RootState) => state.devices.devicesList;

@@ -6,12 +6,14 @@ import { LayoutProvider } from '../../components';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
 import { RootStackParamList, Light } from '../../types';
-import { sendAPIRequest } from '../../utils';
+import { useSendAPIRequest } from '../../hooks';
 
 type LightViewProps = NativeStackScreenProps<RootStackParamList, 'Light'>;
 
 export const LightView = ({ route }: LightViewProps) => {
   const { deviceId, nodeId, botHash, botId, location } = route.params;
+
+  const sendIoTAPIRequest = useSendAPIRequest();
 
   const light = useAppSelector(state =>
     selectDeviceWithId(state, location, nodeId, deviceId),
@@ -32,26 +34,26 @@ export const LightView = ({ route }: LightViewProps) => {
   );
 
   const handleLightOn = () =>
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...lightActionBaseParams,
       additionalParams: 'V_STATUS=1',
     });
 
   const handleLightOff = () =>
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...lightActionBaseParams,
       additionalParams: 'V_STATUS=0',
     });
 
   const handleAllLightsOn = () =>
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...lightActionBaseParams,
       deviceId: '*',
       additionalParams: 'V_STATUS=1',
     });
 
   const handleAllLightsOff = () =>
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...lightActionBaseParams,
       deviceId: '*',
       additionalParams: 'V_STATUS=0',

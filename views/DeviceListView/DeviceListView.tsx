@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
   selectDevices,
   selectDevicesLoading,
-  startLoading,
+  startLoadingDevices,
 } from '../../redux/devicesSlice';
 import {
   useAppNavigation,
@@ -41,7 +41,7 @@ export const DeviceListView: FC<DeviceListViewProps> = ({ route }) => {
   useListenForHomeBotMessages(botId);
 
   const reloadDevices = () => {
-    dispatch(startLoading());
+    dispatch(startLoadingDevices());
     sendAPIRequest({
       location: '*',
       nodeId: '*',
@@ -49,6 +49,7 @@ export const DeviceListView: FC<DeviceListViewProps> = ({ route }) => {
       action: 'get',
       botHash,
       botId,
+      dispatch,
     });
   };
 
