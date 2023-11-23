@@ -8,7 +8,7 @@ import { BotTokenLabel } from './components/BotTokenLabel';
 import { useBotFatherId, useListenForBotFather } from './hooks';
 import { useSendTelegramMessage } from '../../hooks';
 
-export const AdminView: FC = () => {
+export const AdminView = () => {
   const sendTelegramMessage = useSendTelegramMessage();
   const [botFatherAccessHash, botFatherId] = useBotFatherId();
   useListenForBotFather(botFatherId);

@@ -56,12 +56,13 @@ export const listenForBotFatherMessages = (
             ),
           )
           .filter(name => name.includes(BOT_SUFFIX));
+        // TODO
         botsNames.push('homeiotinzynierka_bot'); // to delete
         dispatch(setBotsNames(botsNames));
       }
       if (messages.includes(noCurrentBotsResponse)) {
+        // TODO
         dispatch(setBotsNames(['homeiotinzynierka_bot'])); // to delete
-        // dispatch(setBotsNames([]));
       }
       if (messages.includes(provideIdResponse)) {
         dispatch(setIsWaitingForName(false));

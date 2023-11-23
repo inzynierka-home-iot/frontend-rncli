@@ -5,9 +5,7 @@ import { sendAPIRequest } from '../utils';
 export const useSendAPIRequest = () => {
   const dispatch = useAppDispatch();
 
-  const sendIoTAPIRequest: (
-    params: IoTAPIRequest,
-  ) => Promise<any> = async params =>
+  const sendIoTAPIRequest = async (params: IoTAPIRequest) =>
     sendAPIRequest({
       ...params,
       dispatch,

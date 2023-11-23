@@ -8,7 +8,7 @@ import { useAppNavigation, useSendTelegramMessage } from '../../hooks';
 import { useBotFatherId, useListenForBotFather } from '../AdminView/hooks';
 import { useLocationNames } from './hooks';
 
-export const LocationListView: FC = () => {
+export const LocationListView = () => {
   const [botFatherAccessHash, botFatherId] = useBotFatherId();
   useListenForBotFather(botFatherId);
   const { isLoading, locationCredentials, showRefresh, startRetrieving } =
