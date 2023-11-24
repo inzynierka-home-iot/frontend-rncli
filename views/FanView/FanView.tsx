@@ -49,17 +49,7 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
     sendIoTAPIRequest({
       ...route.params,
       action: 'set',
-      additionalParams: `V_TEMP=${finalTempValue}`,
-    });
-    sendIoTAPIRequest({
-      ...route.params,
-      action: 'set',
-      additionalParams: `V_PERCENTAGE=${finalPercentageValue}`,
-    });
-    sendIoTAPIRequest({
-      ...route.params,
-      action: 'set',
-      additionalParams: `V_DIRECTION=${finalDirectionValue}`,
+      additionalParams: `V_TEMP=${finalTempValue}&V_PERCENTAGE=${finalPercentageValue}&V_DIRECTION=${finalDirectionValue}`,
     });
   };
 
@@ -73,17 +63,7 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
     sendIoTAPIRequest({
       ...route.params,
       action: 'set',
-      additionalParams: `V_TEMP=${tempValue}`,
-    });
-    sendIoTAPIRequest({
-      ...route.params,
-      action: 'set',
-      additionalParams: `V_PERCENTAGE=${percentageValue}`,
-    });
-    sendIoTAPIRequest({
-      ...route.params,
-      action: 'set',
-      additionalParams: `V_DIRECTION=${directionValue}`,
+      additionalParams: `V_TEMP=${tempValue}&V_PERCENTAGE=${percentageValue}&V_DIRECTION=${directionValue}`,
     });
   }, [fanTurnedOff]);
 
@@ -91,17 +71,6 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
     sendIoTAPIRequest({
       ...route.params,
       action: 'status',
-      additionalParams: 'V_TEMP',
-    });
-    sendIoTAPIRequest({
-      ...route.params,
-      action: 'status',
-      additionalParams: 'V_PERCENTAGE',
-    });
-    sendIoTAPIRequest({
-      ...route.params,
-      action: 'status',
-      additionalParams: 'V_DIRECTION',
     });
   };
 

@@ -38,12 +38,8 @@ export const TempSensorView = ({ route }: TempSensorViewProps) => {
   ) as TempSensor;
 
   const tempSensorActionBaseParams = {
-    location,
-    nodeId,
-    deviceId,
+    ...route.params,
     action: 'status',
-    botHash,
-    botId,
     additionalParams: 'V_TEMP',
   };
 

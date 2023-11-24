@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Navbar } from '../../.storybook/stories';
 import { LayoutProvider } from '../../components';
 import { LoadingWrapper } from '../../components/LoadingWrapper';
