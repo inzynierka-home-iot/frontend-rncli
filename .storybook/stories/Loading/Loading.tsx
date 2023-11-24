@@ -12,7 +12,7 @@ export type LoadingProps = {
 export const Loading: FC<LoadingProps> = ({
   size = 'large',
   color = 'action-primary',
-  text = '',
+  text,
 }) => {
   return (
     <View style={styles.container}>
@@ -21,7 +21,7 @@ export const Loading: FC<LoadingProps> = ({
         color={theme.colors[color]}
         style={styles.scale}
       />
-      {text && <Typography variant={'body-large'} text={text} center />}
+      {text && <Typography variant="header-small" text={text} center />}
     </View>
   );
 };
