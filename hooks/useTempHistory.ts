@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { sendAPIRequest } from '../utils';
 import { useAppSelector } from '../redux/hooks';
 import { RootStackParamList } from '../types/Navigation';
 import { selectTempSensorHistory } from '../redux/currentTempSensorSlice';
+import { useSendAPIRequest } from './useSendAPIRequest';
 
 export const useTempHistory = ({
   location,
@@ -11,9 +11,11 @@ export const useTempHistory = ({
   botId,
   botHash,
 }: RootStackParamList['TempSensor']) => {
+  const sendIoTAPIRequest = useSendAPIRequest();
+
   useEffect(() => {
     if (botId && botHash) {
-      sendAPIRequest({
+      sendIoTAPIRequest({
         location,
         nodeId,
         deviceId,

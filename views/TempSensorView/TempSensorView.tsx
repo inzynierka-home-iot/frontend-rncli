@@ -48,7 +48,10 @@ export const TempSensorView = ({ route }: TempSensorViewProps) => {
         tempSensorParams={route.params}
       />
       <TempHistoryChart tempSensorParams={route.params} />
-      <TempRepeatScheduler tempSensorParams={route.params} tempSensorSchedule={tempSensor.schedule}/>
+      <TempRepeatScheduler
+        tempSensorParams={route.params}
+        tempSensorSchedule={tempSensor.schedule}
+      />
     </LayoutProvider>
   );
 };

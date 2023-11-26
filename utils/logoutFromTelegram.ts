@@ -6,6 +6,7 @@ import {
 } from './EncryptedStorage';
 import { hasErrorMessage } from './hasErrorMessage';
 import { raiseTelegramError } from './raiseTelegramError';
+import { AppDispatch } from '../redux/store';
 
 const updateFutureAuthTokens = async (token: number[]) => {
   let tokensPromise = await ReadStoredValue('FutureAuthTokens');
@@ -21,7 +22,10 @@ const updateFutureAuthTokens = async (token: number[]) => {
   }
 };
 
-export const logoutFromTelegram = async (navigation: any) => {
+export const logoutFromTelegram = async (
+  navigation: any,
+  dispatch: AppDispatch,
+) => {
   try {
     const res = await mtproto.call('auth.logOut');
     if (res._ === 'auth.loggedOut') {
@@ -32,7 +36,7 @@ export const logoutFromTelegram = async (navigation: any) => {
     return res;
   } catch (e) {
     if (hasErrorMessage(e)) {
-      raiseTelegramError(e.error_message);
+      raiseTelegramError(e.error_message, dispatch);
     }
     return false;
   }

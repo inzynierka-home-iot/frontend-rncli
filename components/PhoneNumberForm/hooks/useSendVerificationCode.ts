@@ -4,8 +4,11 @@ import { InputProps } from '../../../.storybook/stories';
 import { SignInData } from '../../../types';
 import { sendVerificationCode } from '../../../utils';
 import { useAppNavigation } from '../../../hooks/useAppNavigation';
+import { useAppDispatch } from '../../../redux/hooks';
 
 export const useSendVerificationCode = () => {
+  const dispatch = useAppDispatch();
+
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
   const [phoneVariant, setPhoneVariant] =
     useState<InputProps['variant']>('default');
@@ -16,7 +19,10 @@ export const useSendVerificationCode = () => {
     async ({ diallingCode, phoneNumber }: SignInData) => {
       setPhoneVariant('default');
       setIsButtonDisabled(true);
-      const res = await sendVerificationCode('+' + diallingCode + phoneNumber);
+      const res = await sendVerificationCode(
+        '+' + diallingCode + phoneNumber,
+        dispatch,
+      );
       setIsButtonDisabled(false);
       if (res.success && res.res.phone_code_hash) {
         navigation.navigate('ConfirmAuth', {

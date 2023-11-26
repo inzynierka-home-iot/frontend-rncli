@@ -1,9 +1,9 @@
 import { FC, useMemo } from 'react';
 import React from 'react-native';
 import { Button, Typography } from '../../../../.storybook/stories';
+import { useSendAPIRequest } from '../../../../hooks';
 import { selectTempSensorSubscription } from '../../../../redux/currentTempSensorSlice';
 import { useAppSelector } from '../../../../redux/hooks';
-import { sendAPIRequest } from '../../../../utils';
 import { TempSensorBaseParams } from '../../TempSensorView';
 
 type CurrentTempLabelProps = {
@@ -15,34 +15,35 @@ export const CurrentTempLabel: FC<CurrentTempLabelProps> = ({
   tempValueRaw,
   tempSensorParams,
 }) => {
-  const tempValue = useMemo(
-    () => Math.round(tempValueRaw * 100) / 100,
-    [tempValueRaw],
-  );
-
   const subscription = useAppSelector(selectTempSensorSubscription);
 
+  const sendIoTAPIRequest = useSendAPIRequest();
+
   const handleGetTemp = () => {
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...tempSensorParams,
       action: 'status',
-      additionalParams: 'V_TEMP',
     });
   };
 
   const handleSubscribe = () => {
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...tempSensorParams,
       action: 'subscribe',
     });
   };
 
   const handleUnsubscribe = () => {
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...tempSensorParams,
       action: 'unsubscribe',
     });
   };
+
+  const tempValue = useMemo(
+    () => Math.round(tempValueRaw * 100) / 100,
+    [tempValueRaw],
+  );
 
   return (
     <>

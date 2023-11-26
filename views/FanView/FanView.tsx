@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { FC } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 import React, { View } from 'react-native';
 import {
   Button,
@@ -11,8 +11,9 @@ import {
 import { LayoutProvider } from '../../components';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
+import { useSendAPIRequest } from '../../hooks';
 import { Fan, FanRangeValues, RootStackParamList } from '../../types';
-import { getNumericValue, sendAPIRequest } from '../../utils';
+import { getNumericValue } from '../../utils';
 import { TurnOnFanSelect } from './components';
 import { styles } from './FanView.styles';
 
@@ -21,9 +22,19 @@ type FanViewProps = NativeStackScreenProps<RootStackParamList, 'Fan'>;
 export const FanView: FC<FanViewProps> = ({ route }) => {
   const { deviceId, nodeId, location } = route.params;
 
+  const sendIoTAPIRequest = useSendAPIRequest();
+
   const fan = useAppSelector(state =>
     selectDeviceWithId(state, location, nodeId, deviceId),
   ) as Fan;
+
+  const fanTurnedOff = useMemo(
+    () =>
+      fan.values.V_TEMP === '0' &&
+      fan.values.V_PERCENTAGE === '0' &&
+      fan.values.V_DIRECTION === '0',
+    [fan.values.V_TEMP, fan.values.V_PERCENTAGE, fan.values.V_DIRECTION],
+  );
 
   const [temp, onTempChange] = useInputValue(fan.values.V_TEMP);
   const [percentage, onPercentageChange] = useInputValue(
@@ -33,40 +44,34 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
 
   const handleChangeFanParams = () => {
     const finalTempValue = getNumericValue(parseFloat, temp);
-    const finalDirectionValue = getNumericValue(parseFloat, direction);
     const finalPercentageValue = getNumericValue(parseFloat, percentage);
-    sendAPIRequest({
+    const finalDirectionValue = getNumericValue(parseFloat, direction);
+
+    sendIoTAPIRequest({
       ...route.params,
       action: 'set',
-      additionalParams: `V_TEMP=${finalTempValue}`,
-    });
-    sendAPIRequest({
-      ...route.params,
-      action: 'set',
-      additionalParams: `V_PERCENTAGE=${finalPercentageValue}`,
-    });
-    sendAPIRequest({
-      ...route.params,
-      action: 'set',
-      additionalParams: `V_DIRECTION=${finalDirectionValue}`,
+      additionalParams: `V_TEMP=${finalTempValue}&V_PERCENTAGE=${finalPercentageValue}&V_DIRECTION=${finalDirectionValue}`,
     });
   };
 
+  const handleFanStateToggle = useCallback(() => {
+    const tempValue = fanTurnedOff ? FanRangeValues.DEFAULT_TEMP : 0;
+    const percentageValue = fanTurnedOff
+      ? FanRangeValues.DEFAULT_PERCENTAGE
+      : 0;
+    const directionValue = fanTurnedOff ? FanRangeValues.DEFAULT_DIRECTION : 0;
+
+    sendIoTAPIRequest({
+      ...route.params,
+      action: 'set',
+      additionalParams: `V_TEMP=${tempValue}&V_PERCENTAGE=${percentageValue}&V_DIRECTION=${directionValue}`,
+    });
+  }, [fanTurnedOff, route.params, sendIoTAPIRequest]);
+
   const handleGetFanParams = () => {
-    sendAPIRequest({
+    sendIoTAPIRequest({
       ...route.params,
       action: 'status',
-      additionalParams: 'V_TEMP',
-    });
-    sendAPIRequest({
-      ...route.params,
-      action: 'status',
-      additionalParams: 'V_PERCENTAGE',
-    });
-    sendAPIRequest({
-      ...route.params,
-      action: 'status',
-      additionalParams: 'V_DIRECTION',
     });
   };
 
@@ -136,6 +141,12 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
         fanBaseParams={route.params}
         fanSchedule={fan.schedule}
       />
+      <Button
+        text={fanTurnedOff ? 'Włącz wentylator' : 'Wyłącz wentylator'}
+        variant={fanTurnedOff ? 'success' : 'error'}
+        onPress={handleFanStateToggle}
+      />
+      <Button text="Pobierz najnowsze wartości" onPress={handleGetFanParams} />
     </LayoutProvider>
   );
 };

@@ -1,14 +1,12 @@
+import { AppDispatch } from '../redux/store';
+import { IoTAPIRequest } from '../types';
 import { sendIoTMessage } from './sendIoTMessage';
 
-type SendAPIRequestFunction = (params: {
-  location: string;
-  nodeId: string;
-  deviceId: string;
-  action: string;
-  additionalParams?: Object | string;
-  botHash: string | null;
-  botId: string | null;
-}) => Promise<any>;
+type SendAPIRequestFunction = (
+  params: IoTAPIRequest & {
+    dispatch: AppDispatch;
+  },
+) => Promise<any>;
 
 export const sendAPIRequest: SendAPIRequestFunction = ({
   location,
@@ -18,6 +16,7 @@ export const sendAPIRequest: SendAPIRequestFunction = ({
   additionalParams = {},
   botHash,
   botId,
+  dispatch,
 }) => {
   const isParamsString = typeof additionalParams === 'string';
   const params = isParamsString
@@ -32,6 +31,7 @@ export const sendAPIRequest: SendAPIRequestFunction = ({
       }`,
       botHash,
       botId,
+      dispatch,
     );
   }
   return Promise.resolve();

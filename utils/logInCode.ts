@@ -1,3 +1,4 @@
+import { AppDispatch } from '../redux/store';
 import { hasErrorMessage } from './hasErrorMessage';
 import { mtproto } from './mtprotoClient';
 import { raiseTelegramError } from './raiseTelegramError';
@@ -6,6 +7,7 @@ export const logInCode = async (
   phone_number: string,
   phone_code_hash: string,
   phone_code: string,
+  dispatch: AppDispatch,
 ) => {
   try {
     const res = await mtproto.call(
@@ -25,7 +27,7 @@ export const logInCode = async (
       if (e.error_message === 'SESSION_PASSWORD_NEEDED') {
         return '2fa';
       } else {
-        raiseTelegramError(e.error_message);
+        raiseTelegramError(e.error_message, dispatch);
       }
     }
     return false;

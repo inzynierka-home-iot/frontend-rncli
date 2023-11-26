@@ -1,3 +1,4 @@
+import { AppDispatch } from '../redux/store';
 import { ReadStoredValue } from './EncryptedStorage';
 import { hasErrorMessage } from './hasErrorMessage';
 import { mtproto } from './mtprotoClient';
@@ -5,6 +6,7 @@ import { raiseTelegramError } from './raiseTelegramError';
 
 export const sendVerificationCode = async (
   phone_number: string,
+  dispatch: AppDispatch,
 ): Promise<{ success: boolean; res: any }> => {
   try {
     const storedTokens = await ReadStoredValue('FutureAuthTokens');
@@ -24,7 +26,7 @@ export const sendVerificationCode = async (
     return { success: true, res };
   } catch (e) {
     if (hasErrorMessage(e)) {
-      raiseTelegramError(e.error_message);
+      raiseTelegramError(e.error_message, dispatch);
     }
 
     return { success: false, res: {} };

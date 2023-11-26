@@ -1,21 +1,19 @@
-import { useEffect, useState } from 'react';
+import { FC, useCallback } from 'react';
 import React from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { Button, ListItem, Typography } from '../../.storybook/stories';
 import { LayoutProvider, NavbarWithLogout } from '../../components';
 import { LoadingWrapper } from '../../components/LoadingWrapper';
-import { useAppNavigation } from '../../hooks';
-import { resolveUserID } from '../../utils';
-import { BOT_NAMES } from '../../utils/env';
-
-type LocationCredential = {
-  access_hash: string;
-  id: string;
-  first_name: string;
-};
+import { useAppNavigation, useSendTelegramMessage } from '../../hooks';
+import { useBotFatherId, useListenForBotFather } from '../AdminView/hooks';
+import { useLocationNames } from './hooks';
 
 export const LocationListView = () => {
-  const [locationCredentials, setLocationCredentials] =
-    useState<LocationCredential[]>();
+  const [botFatherAccessHash, botFatherId] = useBotFatherId();
+  useListenForBotFather(botFatherId);
+  const { isLoading, locationCredentials, showRefresh, startRetrieving } =
+    useLocationNames();
+  const sendTelegramMessage = useSendTelegramMessage();
   const navigation = useAppNavigation();
 
   const onNavigateToAdmin = () => {
@@ -28,18 +26,23 @@ export const LocationListView = () => {
       botId,
     });
   };
+  const retrieveAvailableLocations = () => {
+    if (botFatherAccessHash && botFatherId) {
+      startRetrieving();
+      sendTelegramMessage('/mybots', botFatherAccessHash, botFatherId);
+    }
+  };
 
-  useEffect(() => {
-    const locations = BOT_NAMES.map(name => resolveUserID(name));
-    Promise.all(locations).then(credentials =>
-      setLocationCredentials(credentials),
-    );
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      retrieveAvailableLocations();
+    }, [botFatherAccessHash, botFatherId]),
+  );
 
   return (
     <LayoutProvider navbar={<NavbarWithLogout text="Lista lokalizacji" />}>
-      <LoadingWrapper isLoading={!locationCredentials}>
-        {locationCredentials?.length ? (
+      <LoadingWrapper isLoading={isLoading}>
+        {locationCredentials.length ? (
           locationCredentials.map(({ access_hash, id, first_name }) => (
             <ListItem
               text={first_name}
@@ -48,13 +51,16 @@ export const LocationListView = () => {
             />
           ))
         ) : (
-          <Typography
-            variant="header-medium"
-            text="Nie masz zadnych lokalizacji"
+          <Typography variant="header-medium" text="Brak zapisanych lokacji" />
+        )}
+        <Button text="Stwórz nową lokalizację" onPress={onNavigateToAdmin} />
+        {showRefresh && (
+          <Button
+            text="Załaduj dostępne lokacje"
+            onPress={retrieveAvailableLocations}
           />
         )}
       </LoadingWrapper>
-      <Button text="Stwórz nową lokalizację" onPress={onNavigateToAdmin} />
     </LayoutProvider>
   );
 };

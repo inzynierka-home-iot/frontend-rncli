@@ -2,6 +2,7 @@ import React, { FC, useCallback } from 'react';
 import { ButtonProps, Navbar } from '../../.storybook/stories';
 import { useAppNavigation } from '../../hooks';
 import { logoutFromTelegram } from '../../utils';
+import { useAppDispatch } from '../../redux/hooks';
 
 type Props = {
   text: string;
@@ -9,10 +10,11 @@ type Props = {
 };
 
 export const NavbarWithLogout: FC<Props> = ({ text, backButton = false }) => {
+  const dispatch = useAppDispatch();
   const navigation = useAppNavigation();
 
   const handleLogout = useCallback(() => {
-    logoutFromTelegram(navigation);
+    logoutFromTelegram(navigation, dispatch);
   }, [navigation]);
 
   const logoutButtonProps: ButtonProps = {

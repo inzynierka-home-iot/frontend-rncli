@@ -1,0 +1,1 @@
+export { useLocationNames } from './useLocationNames';

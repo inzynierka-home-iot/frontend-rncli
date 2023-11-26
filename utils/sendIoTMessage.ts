@@ -1,9 +1,13 @@
+import { AppDispatch } from '../redux/store';
+import { hasErrorMessage } from './hasErrorMessage';
 import { mtproto } from './mtprotoClient';
+import { raiseTelegramError } from './raiseTelegramError';
 
 export const sendIoTMessage = async (
   message: string,
   access_hash: string,
   user_id: string,
+  dispatch: AppDispatch,
 ) => {
   try {
     return await mtproto.call('messages.sendMessage', {
@@ -19,6 +23,8 @@ export const sendIoTMessage = async (
         Math.ceil(Math.random() * 0xffffff),
     });
   } catch (e) {
-    console.log(e);
+    if (hasErrorMessage(e)) {
+      raiseTelegramError(e.error_message, dispatch);
+    }
   }
 };

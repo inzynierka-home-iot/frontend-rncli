@@ -37,10 +37,11 @@ export const ConfirmationForm = ({
             render={({ field: { onChange, value } }) => (
               <Input
                 text={value}
+                onChange={onChange}
                 variant={codeVariant}
                 keyboardType="numeric"
                 placeholder="Kod potwierdzający"
-                onChange={onChange}
+                checkBoundary={false}
               />
             )}
           />
