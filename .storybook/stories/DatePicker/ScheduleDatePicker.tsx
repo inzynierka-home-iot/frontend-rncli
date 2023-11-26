@@ -20,33 +20,33 @@ export type ScheduleDatePickerProps = {
 const AVAILABLE_DAYS = ['mon', 'tue', 'wed', 'thu', 'fr', 'sat', 'sun'];
 
 export const ScheduleDatePicker: FC<ScheduleDatePickerProps> = ({
-  schedule,
+  schedule: { hours, minutes, days },
   onChange,
   mode = 'interval',
 }) => {
-  const { hours, minutes, days } = schedule;
-
   const onSelectDay = useCallback((value: number) => {
     if (days.includes(value)) {
       onChange({
-        ...schedule,
+        hours,
+        minutes,
         days: days.filter((day) => day !== value),
       });
     } else {
       onChange({
-        ...schedule,
+        hours,
+        minutes,
         days: [...days, value],
       });
     }
-  }, [schedule, onChange])
+  }, [hours, minutes, days, onChange])
 
   const onTimeChange = useCallback((newDate: Date) => {
     onChange({
-      ...schedule,
       hours: newDate.getHours(),
       minutes: newDate.getMinutes(),
+      days
     })
-  }, [schedule, onChange])
+  }, [hours, minutes, days, onChange])
 
   return (
     <View style={styles.container}>

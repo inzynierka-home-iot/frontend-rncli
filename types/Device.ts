@@ -51,7 +51,7 @@ export type TempSensor = Device<
   TempSensorSchedule
 >;
 
-type FanValues = {
+export type FanValues = {
   V_TEMP: string;
   V_PERCENTAGE: string;
   V_DIRECTION: string;

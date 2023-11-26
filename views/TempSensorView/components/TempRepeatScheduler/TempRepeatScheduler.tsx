@@ -4,7 +4,6 @@ import {
   Button,
   Checkbox,
   ScheduleDatePicker,
-  ScheduleDateValue,
   useCheckboxValue,
 } from '../../../../.storybook/stories';
 import { useSendAPIRequest } from '../../../../hooks';
@@ -43,8 +42,8 @@ export const TempRepeatScheduler: FC<TempRepeatSchedulerProps> = ({
       ...tempSensorParams,
       action: 'setSchedule',
       additionalParams: {
-        ...schedule,
         action: 'getTemp',
+        ...schedule,
       },
     });
   };

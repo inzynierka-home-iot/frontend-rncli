@@ -21,6 +21,7 @@ export const TempHistoryChart: FC<TempHistoryChartProps> = ({
     sendAPIRequest({
       ...tempSensorParams,
       action: 'statusAll',
+      additionalParams: 'V_TEMP',
     });
   };
 
