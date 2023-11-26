@@ -30,7 +30,7 @@ export const TempHistoryChart: FC<TempHistoryChartProps> = ({
         <View style={styles.tempChart}>
           <Typography
             variant="body-medium"
-            text="Wykres z ostatnich ${currentTempSensorHistory.length} odczytów"
+            text={`Wykres z ostatnich ${currentTempSensorHistory.length} odczytów`}
           />
           <DataChart chartData={currentTempSensorHistory} suffix="°C" />
         </View>

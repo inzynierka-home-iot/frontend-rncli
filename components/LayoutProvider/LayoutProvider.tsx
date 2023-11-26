@@ -1,5 +1,5 @@
 import React, { FC, PropsWithChildren } from 'react';
-import { Keyboard, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { styles } from './LayoutProvider.styles';
 
 type LayoutProviderProps = PropsWithChildren<{
@@ -14,9 +14,8 @@ export const LayoutProvider: FC<LayoutProviderProps> = ({
     <View style={styles.container}>
       {navbar}
       <ScrollView
-        // onScrollBeginDrag={Keyboard.dismiss}
         contentContainerStyle={styles.scrollView}
-        keyboardShouldPersistTaps={'handled'}>
+        keyboardShouldPersistTaps="handled">
         <View style={styles.content}>{children}</View>
       </ScrollView>
     </View>

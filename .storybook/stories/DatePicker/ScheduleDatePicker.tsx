@@ -1,6 +1,6 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { DayButton } from './DayButton'
+import { DayButton } from './DayButton';
 import DatePicker from 'react-native-date-picker';
 import { theme } from '../../theme';
 import { Typography } from '../Typography';
@@ -8,41 +8,45 @@ import { Typography } from '../Typography';
 export type ScheduleDateValue = {
   hours: number;
   minutes: number;
-  days?: number[];
-}
+  days: number[];
+};
 
 export type ScheduleDatePickerProps = {
+  schedule: ScheduleDateValue;
   onChange: (params: ScheduleDateValue) => void;
   mode?: 'interval' | 'repeat';
 };
 
-const AVAILABLE_DAYS = ['mon', 'tue', 'wed', 'thu', 'fr', 'sat', 'sun']
+const AVAILABLE_DAYS = ['mon', 'tue', 'wed', 'thu', 'fr', 'sat', 'sun'];
 
 export const ScheduleDatePicker: FC<ScheduleDatePickerProps> = ({
-  mode = 'interval',
+  schedule,
   onChange,
+  mode = 'interval',
 }) => {
-  const [selectedDays, setSelectedDays] = useState<number[]>([]);
-  const [date, setDate] = useState(new Date())
+  const { hours, minutes, days } = schedule;
 
-  const onSelectDay = (value: number) => {
-    setSelectedDays((selectedDays) => {
-      if (selectedDays.includes(value)) {
-        return selectedDays.filter((day) => day !== value)
-      }
-      return [...selectedDays, value]
-    })
-  }
+  const onSelectDay = useCallback((value: number) => {
+    if (days.includes(value)) {
+      onChange({
+        ...schedule,
+        days: days.filter((day) => day !== value),
+      });
+    } else {
+      onChange({
+        ...schedule,
+        days: [...days, value],
+      });
+    }
+  }, [schedule, onChange])
 
-  const onTimeChange = (newDate: Date) => setDate(newDate)
-
-  useEffect(() => {
+  const onTimeChange = useCallback((newDate: Date) => {
     onChange({
-      hours: date.getHours(),
-      minutes: date.getMinutes(),
-      days: selectedDays,
+      ...schedule,
+      hours: newDate.getHours(),
+      minutes: newDate.getMinutes(),
     })
-  }, [date, selectedDays])
+  }, [schedule, onChange])
 
   return (
     <View style={styles.container}>
@@ -55,14 +59,14 @@ export const ScheduleDatePicker: FC<ScheduleDatePickerProps> = ({
               value={index + 1}
               label={day}
               onDayChange={onSelectDay}
-              isSelected={selectedDays.includes(index + 1)}
+              isSelected={days.includes(index + 1)}
             />)}
           </View>
         </>
       )}
       <Typography text="Wybierz godzinę" variant="header-small" />
       <DatePicker
-        date={date}
+        date={new Date(2023, 1, 1, hours, minutes)}
         mode='time'
         onDateChange={onTimeChange}
       />
@@ -83,5 +87,5 @@ const styles = StyleSheet.create({
     gap: theme.spacing(1),
     flexDirection: 'row',
     justifyContent: 'space-between',
-  }
-})
+  },
+});

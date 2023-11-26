@@ -30,6 +30,12 @@ const mockedData = {
         V_TEMP: '23.375',
         V_ID: null,
       },
+      schedule: {
+        action: 'getTemp',
+        hours: '22',
+        minutes: '32',
+        days: '4,5',
+      },
     },
     {
       location: 'home-1',

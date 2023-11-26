@@ -3,7 +3,7 @@ export type IoTAPIRequest = {
   nodeId: string;
   deviceId: string;
   action: string;
-  additionalParams?: string;
+  additionalParams?: string | object;
   botHash: string | null;
   botId: string | null;
 };
