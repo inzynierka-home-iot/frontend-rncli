@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ReadStoredValue } from '../utils';
 import { useAppNavigation } from './useAppNavigation';
-import { useFocusEffect } from '@react-navigation/native';
 
 export const useNavigateAuthUsers = () => {
   const navigation = useAppNavigation();
