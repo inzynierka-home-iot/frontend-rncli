@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/native';
-// TODO repair import
-import { RootNavigationProps } from '../App';
+import { RootNavigationProps } from '../types';
 
 export const useAppNavigation = () => useNavigation<RootNavigationProps>();
