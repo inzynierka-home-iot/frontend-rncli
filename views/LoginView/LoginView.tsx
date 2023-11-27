@@ -5,6 +5,7 @@ import { Navbar } from '../../.storybook/stories';
 import { LayoutProvider, PhoneNumberForm } from '../../components';
 import { useNavigateAuthUsers } from '../../hooks';
 import { SignInData } from '../../types';
+import { LoadingWrapper } from '../../components/LoadingWrapper';
 
 export const LoginView = () => {
   const { control, handleSubmit } = useForm<SignInData>({
@@ -16,13 +17,15 @@ export const LoginView = () => {
     },
   });
 
-  useNavigateAuthUsers();
+  const isLoading = useNavigateAuthUsers();
 
   return (
-    <LayoutProvider navbar={<Navbar text="Zaloguj się" backButton={false} />}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <PhoneNumberForm control={control} handleSubmit={handleSubmit} />
-      </TouchableWithoutFeedback>
-    </LayoutProvider>
+    <LoadingWrapper isLoading={isLoading} text="Ładowanie danych">
+      <LayoutProvider navbar={<Navbar text="Zaloguj się" backButton={false} />}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <PhoneNumberForm control={control} handleSubmit={handleSubmit} />
+        </TouchableWithoutFeedback>
+      </LayoutProvider>
+    </LoadingWrapper>
   );
 };
