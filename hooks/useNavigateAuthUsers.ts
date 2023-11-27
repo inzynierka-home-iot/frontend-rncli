@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ReadStoredValue } from '../utils';
 import { useAppNavigation } from './useAppNavigation';
 import { useFocusEffect } from '@react-navigation/native';
@@ -8,7 +8,7 @@ export const useNavigateAuthUsers = () => {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  useFocusEffect(() => {
+  useEffect(() => {
     setIsLoading(true);
     (async () => {
       const resLogging = await ReadStoredValue('SignedIn');
@@ -17,7 +17,7 @@ export const useNavigateAuthUsers = () => {
       }
       setIsLoading(false);
     })();
-  });
+  }, [navigation]);
 
   return isLoading;
 };
