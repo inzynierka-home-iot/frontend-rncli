@@ -19,9 +19,6 @@ export const ColorPickerRGB: FC<ColorPickerProps> = ({ color, onChange }) => {
   }, [color]);
 
   const inputColorChange = (rgbColor: string) => {
-    if (rgbColor.length <= 6) {
-      onInputChange(rgbColor);
-    }
     if (regExp.test(rgbColor)) {
       onChange(rgbColor);
     }
@@ -54,6 +51,7 @@ export const ColorPickerRGB: FC<ColorPickerProps> = ({ color, onChange }) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     gap: theme.spacing(5),
   },
 });
