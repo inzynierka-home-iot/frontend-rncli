@@ -36,27 +36,27 @@ export const LightView = ({ route }: LightViewProps) => {
   const handleLightOn = () =>
     sendIoTAPIRequest({
       ...lightActionBaseParams,
-      additionalParams: 'V_STATUS=1',
+      additionalParams: { V_STATUS: 1 },
     });
 
   const handleLightOff = () =>
     sendIoTAPIRequest({
       ...lightActionBaseParams,
-      additionalParams: 'V_STATUS=0',
+      additionalParams: { V_STATUS: 0 },
     });
 
   const handleAllLightsOn = () =>
     sendIoTAPIRequest({
       ...lightActionBaseParams,
       deviceId: '*',
-      additionalParams: 'V_STATUS=1',
+      additionalParams: { V_STATUS: 1 },
     });
 
   const handleAllLightsOff = () =>
     sendIoTAPIRequest({
       ...lightActionBaseParams,
       deviceId: '*',
-      additionalParams: 'V_STATUS=0',
+      additionalParams: { V_STATUS: 0 },
     });
 
   if (!light) {

@@ -7,7 +7,7 @@ import { theme } from '../../theme';
 import { Typography } from '../Typography/Typography';
 
 export type SelectProps = {
-  selectData: Array<{ display: string; value: string }>;
+  selectData: Array<{ display: string; value: any }>;
   variant?: 'default' | 'error';
   disabled?: boolean;
   index: number;

@@ -1,0 +1,1 @@
+export { TempHistoryChart } from './TempHistoryChart';

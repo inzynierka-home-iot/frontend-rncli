@@ -11,5 +11,6 @@ export const styles = StyleSheet.create({
     flex: 1,
     gap: theme.spacing(5),
     paddingHorizontal: theme.spacing(7),
+    paddingBottom: theme.spacing(5),
   },
 });

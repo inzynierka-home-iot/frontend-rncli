@@ -36,8 +36,8 @@ export const useConfirmCodeClick = (
       setIs2FANeeded(true);
     }
     if (res._ === 'auth.authorization') {
-      await SaveStoredValue('SignedIn', 'true');
-      navigation.navigate('LocationList');
+      SaveStoredValue('SignedIn', 'true');
+      navigation.replace('LocationList');
     } else {
       setCodeVariant('error');
     }

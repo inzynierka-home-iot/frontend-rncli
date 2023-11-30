@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Device, DeviceType } from '../types';
 import { RootState } from './store';
 
@@ -25,11 +25,29 @@ const mockedData = {
       id: '1',
       nodeId: '1',
       type: DeviceType.S_TEMP,
-      name: 'Temp sensor',
+      name: 'Temp sensor 1',
       values: {
         V_TEMP: '23.375',
         V_ID: null,
       },
+      schedule: {
+        action: 'getTemp',
+        hours: '22',
+        minutes: '32',
+        days: '4,5',
+      },
+    },
+    {
+      location: 'home-1',
+      id: '8',
+      nodeId: '1',
+      type: DeviceType.S_TEMP,
+      name: 'Temp sensor 2',
+      values: {
+        V_TEMP: '23.375',
+        V_ID: null,
+      },
+      schedule: {},
     },
     {
       location: 'home-1',
@@ -52,6 +70,26 @@ const mockedData = {
         V_PERCENTAGE: '34',
         V_DIRECTION: '128',
       },
+      schedule: {
+        action: 'maintain',
+        location: 'home-1',
+        nodeId: '1',
+        id: '1',
+        V_TEMP: '25',
+      },
+    },
+    {
+      location: 'home-1',
+      id: '5',
+      nodeId: '2',
+      type: DeviceType.S_FAN,
+      name: 'Fan',
+      values: {
+        V_TEMP: '24.5',
+        V_PERCENTAGE: '34',
+        V_DIRECTION: '128',
+      },
+      schedule: {},
     },
     {
       location: 'home-1',
@@ -97,9 +135,9 @@ const mockedData = {
 };
 
 const initialState: DeviceState = {
-  devicesList: mockedData.devices,
-  // devicesList: [],
-  isLoading: false,
+  // devicesList: mockedData.devices,
+  devicesList: [],
+  isLoading: true,
 };
 
 export const devicesSlice = createSlice({
@@ -107,8 +145,8 @@ export const devicesSlice = createSlice({
   initialState,
   reducers: {
     setInitialDevice: (state, action: PayloadAction<Device[]>) => {
-      // state.devicesList = action.payload;
-      // state.isLoading = false;
+      state.devicesList = action.payload;
+      state.isLoading = false;
     },
     setDevicesValues: (
       state,
@@ -146,11 +184,11 @@ export const devicesSlice = createSlice({
       );
     },
     startLoadingDevices: state => {
-      // state.isLoading = true;
+      state.isLoading = true;
     },
     clearDeviceState: state => {
-      // state.devicesList = [];
-      // state.isLoading = true;
+      state.devicesList = [];
+      state.isLoading = true;
     },
   },
 });
@@ -169,17 +207,25 @@ export const selectDevices = (state: RootState) => state.devices.devicesList;
 export const selectDevicesLoading = (state: RootState) =>
   state.devices.isLoading;
 
-export const selectDeviceWithId = (
-  state: RootState,
-  location: string,
-  nodeId: string,
-  id: string,
-) =>
-  state.devices.devicesList.find(
-    device =>
-      device.location === location &&
-      device.nodeId === nodeId &&
-      device.id === id,
-  );
+export const selectDeviceWithId = createSelector(
+  [
+    selectDevices,
+    (_, location: string) => location,
+    (_, _arg1, nodeId: string) => nodeId,
+    (_, _arg1, _arg2, id: string) => id,
+  ],
+  (devices, location, nodeId, id) =>
+    devices.find(
+      device =>
+        device.location === location &&
+        device.nodeId === nodeId &&
+        device.id === id,
+    ),
+);
+
+export const selectDevicesWithType = createSelector(
+  [selectDevices, (_, type: DeviceType) => type],
+  (devices, type) => devices.filter(device => device.type === type),
+);
 
 export default devicesSlice.reducer;

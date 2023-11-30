@@ -24,7 +24,8 @@ export const IconButton: FC<IconButtonProps> = ({
       style={styles.container}
       disabled={disabled}
       onPress={onPress}
-      activeOpacity={0.5}>
+      activeOpacity={0.5}
+    >
       <FontAwesomeIcon icon={icon} size={theme.spacing(5)} color="#ffffff" />
     </TouchableOpacity>
   );
@@ -37,10 +38,10 @@ const useStyles = (
   const buttonColor = disabled
     ? 'background-subtle'
     : variant == 'default'
-    ? 'background-neutral'
-    : variant == 'success'
-    ? 'text-success'
-    : 'text-error';
+      ? 'background-neutral'
+      : variant == 'success'
+        ? 'text-success'
+        : 'text-error';
 
   return StyleSheet.create({
     container: {

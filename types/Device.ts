@@ -10,13 +10,14 @@ export enum DeviceType {
   S_LIGHT_LEVEL = 'S_LIGHT_LEVEL',
 }
 
-export type Device<T = any, K = any> = {
+export type Device<T = any, K = any, L = any> = {
   location: string;
   id: string;
   nodeId: string;
   type: K;
   name: string;
   values: T;
+  schedule?: L;
 };
 
 type LightValues = {
@@ -37,15 +38,34 @@ type TempSensorValues = {
   V_ID?: string;
 };
 
-export type TempSensor = Device<TempSensorValues, DeviceType.S_TEMP>;
+export type TempSensorSchedule = {
+  action: string;
+  hours: string;
+  minutes: string;
+  days: string;
+};
 
-type FanValues = {
+export type TempSensor = Device<
+  TempSensorValues,
+  DeviceType.S_TEMP,
+  TempSensorSchedule
+>;
+
+export type FanValues = {
   V_TEMP: string;
   V_PERCENTAGE: string;
   V_DIRECTION: string;
 };
 
-export type Fan = Device<FanValues, DeviceType.S_FAN>;
+export type FanSchedule = {
+  action: string;
+  location: string;
+  nodeId: string;
+  id: string;
+  V_TEMP: string;
+};
+
+export type Fan = Device<FanValues, DeviceType.S_FAN, FanSchedule>;
 
 type MotionDetectorValues = {
   V_TRIPPED: string;

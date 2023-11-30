@@ -17,7 +17,7 @@ export const AdminView = () => {
     if (botFatherAccessHash && botFatherId) {
       sendTelegramMessage('/newbot', botFatherAccessHash, botFatherId);
     }
-  }, [botFatherAccessHash, botFatherId]);
+  }, [botFatherAccessHash, botFatherId, sendTelegramMessage]);
 
   return (
     <LayoutProvider navbar={<Navbar text="Dodaj nową lokalizację" />}>
