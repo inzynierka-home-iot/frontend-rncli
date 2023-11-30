@@ -1,57 +1,33 @@
 import React, { FC } from 'react';
 import { View } from 'react-native';
-import { getDeviceIcon, sendAPIRequest } from '../../utils';
+import { getDeviceIcon } from '../../utils';
 import { Device, RootStackParamList } from '../../types';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import {
-  selectDevices,
-  selectDevicesLoading,
-  startLoadingDevices,
-} from '../../redux/devicesSlice';
-import {
-  useAppNavigation,
-  useInitialDevices,
-  useListenForHomeBotMessages,
-} from '../../hooks';
-import { Button, ListItem, Typography } from '../../.storybook/stories';
-import { styles } from './DeviceListView.styles';
+import { useAppSelector } from '../../redux/hooks';
+import { selectDevicesWithType } from '../../redux/devicesSlice';
+import { useAppNavigation } from '../../hooks';
+import { ListItem } from '../../.storybook/stories';
 import { getDeviceViewName } from './utils';
-import { LoadingWrapper } from '../../components/LoadingWrapper';
 import { LayoutProvider, NavbarWithLogout } from '../../components';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { AdditionalControls } from './components';
+import { styles } from './DeviceListView.styles';
 
 const createDeviceKey = (device: Device) =>
   device.location + '/' + device.nodeId + '/' + device.id;
 
-type DeviceListViewProps = NativeStackScreenProps<
+export type DeviceListViewProps = NativeStackScreenProps<
   RootStackParamList,
   'DeviceList'
 >;
 
 export const DeviceListView: FC<DeviceListViewProps> = ({ route }) => {
-  const { botId, botHash } = route.params;
+  const { botId, botHash, deviceType } = route.params;
 
   const navigation = useAppNavigation();
-  const dispatch = useAppDispatch();
 
-  const devices = useAppSelector(selectDevices);
-  const loading = useAppSelector(selectDevicesLoading);
-
-  useInitialDevices(botId, botHash);
-  useListenForHomeBotMessages(botId);
-
-  const reloadDevices = () => {
-    dispatch(startLoadingDevices());
-    sendAPIRequest({
-      location: '*',
-      nodeId: '*',
-      deviceId: '*',
-      action: 'get',
-      botHash,
-      botId,
-      dispatch,
-    });
-  };
+  const devices = useAppSelector(state =>
+    selectDevicesWithType(state, deviceType),
+  );
 
   const createDeviceElement = (device: Device) => (
     <ListItem
@@ -73,20 +49,14 @@ export const DeviceListView: FC<DeviceListViewProps> = ({ route }) => {
   return (
     <LayoutProvider
       navbar={<NavbarWithLogout text="Lista urządzeń" backButton />}>
-      <LoadingWrapper isLoading={loading}>
-        {!devices.length ? (
-          <View style={styles.reload}>
-            <Typography variant="body-large" text="Brak dostępnych urządzeń" />
-            <Button text="Odśwież listę" size="small" onPress={reloadDevices} />
-          </View>
-        ) : (
-          <View style={styles.devicesList}>
-            {devices.map(device => {
-              return createDeviceElement(device);
-            })}
-          </View>
-        )}
-      </LoadingWrapper>
+      <View style={styles.deviceList}>
+        {devices.map(device => createDeviceElement(device))}
+      </View>
+      <AdditionalControls
+        deviceType={deviceType}
+        botHash={botHash}
+        botId={botId}
+      />
     </LayoutProvider>
   );
 };

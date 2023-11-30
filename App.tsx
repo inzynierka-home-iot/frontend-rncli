@@ -5,8 +5,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TelegramForm } from './components';
 import {
   ConfirmAuthView,
-  DeviceListView,
   AdminView,
+  DeviceTypesView,
+  DeviceListView,
   DistanceDetectorView,
   FanView,
   HumidityDetectorView,
@@ -46,6 +47,7 @@ export default function App() {
             <Stack.Screen name="ConfirmAuth" component={ConfirmAuthView} />
             <Stack.Screen name="LocationList" component={LocationListView} />
             <Stack.Screen name="Admin" component={AdminView} />
+            <Stack.Screen name="DeviceTypes" component={DeviceTypesView} />
             <Stack.Screen name="DeviceList" component={DeviceListView} />
             <Stack.Screen name="Light" component={LightView} />
             <Stack.Screen name="RgbLight" component={RgbLightView} />

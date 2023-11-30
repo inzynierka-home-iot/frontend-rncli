@@ -10,7 +10,7 @@ import { CurrentParamsLabel, TurnOnFanSelect } from './components';
 type FanViewProps = NativeStackScreenProps<RootStackParamList, 'Fan'>;
 
 export const FanView: FC<FanViewProps> = ({ route }) => {
-  const { deviceId, nodeId, location } = route.params;
+  const { location, nodeId, deviceId } = route.params;
 
   const fan = useAppSelector(state =>
     selectDeviceWithId(state, location, nodeId, deviceId),

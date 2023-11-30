@@ -11,7 +11,7 @@ import { useSendAPIRequest } from '../../hooks';
 type LightViewProps = NativeStackScreenProps<RootStackParamList, 'Light'>;
 
 export const LightView = ({ route }: LightViewProps) => {
-  const { deviceId, nodeId, botHash, botId, location } = route.params;
+  const { location, nodeId, deviceId, botHash, botId } = route.params;
 
   const sendIoTAPIRequest = useSendAPIRequest();
 
@@ -45,20 +45,6 @@ export const LightView = ({ route }: LightViewProps) => {
       additionalParams: { V_STATUS: 0 },
     });
 
-  const handleAllLightsOn = () =>
-    sendIoTAPIRequest({
-      ...lightActionBaseParams,
-      deviceId: '*',
-      additionalParams: { V_STATUS: 1 },
-    });
-
-  const handleAllLightsOff = () =>
-    sendIoTAPIRequest({
-      ...lightActionBaseParams,
-      deviceId: '*',
-      additionalParams: { V_STATUS: 0 },
-    });
-
   if (!light) {
     return (
       <Typography variant="header-large" text="Nie znaleziono urządzenia" />
@@ -77,18 +63,6 @@ export const LightView = ({ route }: LightViewProps) => {
       ) : (
         <Button text="Włącz" hasFullWidth onPress={handleLightOn} />
       )}
-      <Button
-        text="Włącz wszystkie w danym nodzie"
-        variant="success"
-        hasFullWidth
-        onPress={handleAllLightsOn}
-      />
-      <Button
-        text="Wyłącz wszystkie w danym nodzie"
-        variant="error"
-        hasFullWidth
-        onPress={handleAllLightsOff}
-      />
     </LayoutProvider>
   );
 };

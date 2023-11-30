@@ -14,7 +14,7 @@ type MotionDetectorViewProps = NativeStackScreenProps<
 >;
 
 export const MotionDetectorView: FC<MotionDetectorViewProps> = ({ route }) => {
-  const { deviceId, nodeId, location } = route.params;
+  const { location, nodeId, deviceId } = route.params;
 
   const sendIoTAPIRequest = useSendAPIRequest();
 

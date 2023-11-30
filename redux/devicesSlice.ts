@@ -135,9 +135,9 @@ const mockedData = {
 };
 
 const initialState: DeviceState = {
-  // devicesList: mockedData.devices,
-  devicesList: [],
-  isLoading: true,
+  devicesList: mockedData.devices,
+  // devicesList: [],
+  isLoading: false,
 };
 
 export const devicesSlice = createSlice({
@@ -145,8 +145,8 @@ export const devicesSlice = createSlice({
   initialState,
   reducers: {
     setInitialDevice: (state, action: PayloadAction<Device[]>) => {
-      state.devicesList = action.payload;
-      state.isLoading = false;
+      // state.devicesList = action.payload;
+      // state.isLoading = false;
     },
     setDevicesValues: (
       state,
@@ -183,12 +183,9 @@ export const devicesSlice = createSlice({
           device.id !== id,
       );
     },
-    startLoadingDevices: state => {
-      state.isLoading = true;
-    },
     clearDeviceState: state => {
-      state.devicesList = [];
-      state.isLoading = true;
+      // state.devicesList = [];
+      // state.isLoading = true;
     },
   },
 });
@@ -198,7 +195,6 @@ export const {
   setDevicesValues,
   addDevice,
   removeDevice,
-  startLoadingDevices,
   clearDeviceState,
 } = devicesSlice.actions;
 
@@ -206,6 +202,13 @@ export const selectDevices = (state: RootState) => state.devices.devicesList;
 
 export const selectDevicesLoading = (state: RootState) =>
   state.devices.isLoading;
+
+export const selectDeviceTypes = createSelector([selectDevices], devices => {
+  const uniqueTypes: DeviceType[] = [
+    ...new Set(devices.map(device => device.type)),
+  ];
+  return uniqueTypes;
+});
 
 export const selectDeviceWithId = createSelector(
   [

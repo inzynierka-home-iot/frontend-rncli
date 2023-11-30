@@ -1,5 +1,6 @@
 export * from './AdminView';
 export * from './ConfirmAuthView';
+export * from './DeviceTypesView';
 export * from './DeviceListView';
 export * from './DistanceDetectorView';
 export * from './FanView';

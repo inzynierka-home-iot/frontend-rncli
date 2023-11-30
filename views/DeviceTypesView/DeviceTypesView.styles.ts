@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     gap: theme.spacing(2),
   },
-  deviceList: {
+  typesList: {
     gap: theme.spacing(3),
   },
 });

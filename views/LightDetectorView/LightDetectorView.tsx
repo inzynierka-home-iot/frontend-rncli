@@ -14,7 +14,7 @@ type LightDetectorViewProps = NativeStackScreenProps<
 >;
 
 export const LightDetectorView: FC<LightDetectorViewProps> = ({ route }) => {
-  const { deviceId, nodeId, location } = route.params;
+  const { location, nodeId, deviceId } = route.params;
 
   const sendIoTAPIRequest = useSendAPIRequest();
 
