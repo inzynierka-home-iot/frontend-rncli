@@ -7,11 +7,10 @@ import {
   useCheckboxValue,
 } from '../../../../.storybook/stories';
 import { useSendAPIRequest } from '../../../../hooks';
-import { TempSensorSchedule } from '../../../../types';
-import { TempSensorBaseParams } from '../../TempSensorView';
+import { DeviceViewRouteParams, TempSensorSchedule } from '../../../../types';
 
 type TempRepeatSchedulerProps = {
-  tempSensorParams: TempSensorBaseParams;
+  tempSensorParams: DeviceViewRouteParams;
   tempSensorSchedule: TempSensorSchedule | undefined;
 };
 
@@ -31,7 +30,7 @@ export const TempRepeatScheduler: FC<TempRepeatSchedulerProps> = ({
   );
 
   const [isScheduleRepeat, onToggleScheduleRepeat] = useCheckboxValue(
-    !!tempSensorSchedule,
+    Object.keys(tempSensorSchedule || []).length !== 0,
   );
   const [schedule, setSchedule] = useState(initialSchedule);
 

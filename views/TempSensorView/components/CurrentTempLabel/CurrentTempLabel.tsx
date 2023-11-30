@@ -4,11 +4,11 @@ import { Button, Typography } from '../../../../.storybook/stories';
 import { useSendAPIRequest } from '../../../../hooks';
 import { selectTempSensorSubscription } from '../../../../redux/currentTempSensorSlice';
 import { useAppSelector } from '../../../../redux/hooks';
-import { TempSensorBaseParams } from '../../TempSensorView';
+import { DeviceViewRouteParams } from '../../../../types';
 
 type CurrentTempLabelProps = {
   tempValueRaw: number;
-  tempSensorParams: TempSensorBaseParams;
+  tempSensorParams: DeviceViewRouteParams;
 };
 
 export const CurrentTempLabel: FC<CurrentTempLabelProps> = ({

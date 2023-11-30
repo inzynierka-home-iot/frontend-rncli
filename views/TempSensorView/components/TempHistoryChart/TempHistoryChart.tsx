@@ -4,10 +4,10 @@ import { Button, DataChart, Typography } from '../../../../.storybook/stories';
 import { theme } from '../../../../.storybook/theme';
 import { useSendAPIRequest } from '../../../../hooks';
 import { useTempHistory } from '../../../../hooks/useTempHistory';
-import { TempSensorBaseParams } from '../../TempSensorView';
+import { DeviceViewRouteParams } from '../../../../types';
 
 type TempHistoryChartProps = {
-  tempSensorParams: TempSensorBaseParams;
+  tempSensorParams: DeviceViewRouteParams;
 };
 
 export const TempHistoryChart: FC<TempHistoryChartProps> = ({

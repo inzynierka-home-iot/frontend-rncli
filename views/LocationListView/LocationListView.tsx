@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import { useCallback } from 'react';
 import React from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { Button, ListItem, Typography } from '../../.storybook/stories';
@@ -26,17 +26,17 @@ export const LocationListView = () => {
       botId,
     });
   };
-  const retrieveAvailableLocations = () => {
+  const retrieveAvailableLocations = useCallback(() => {
     if (botFatherAccessHash && botFatherId) {
       startRetrieving();
       sendTelegramMessage('/mybots', botFatherAccessHash, botFatherId);
     }
-  };
+  }, [botFatherAccessHash, botFatherId, sendTelegramMessage, startRetrieving]);
 
   useFocusEffect(
     useCallback(() => {
       retrieveAvailableLocations();
-    }, [botFatherAccessHash, botFatherId]),
+    }, [retrieveAvailableLocations]),
   );
 
   return (

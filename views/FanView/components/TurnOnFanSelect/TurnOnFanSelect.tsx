@@ -23,7 +23,9 @@ export const TurnOnFanSelect: FC<TurnOnFanSelectProps> = ({
   fanBaseParams,
   fanSchedule,
 }) => {
-  const [isFanTurnOnAutomatically, onToggle] = useCheckboxValue(!!fanSchedule);
+  const [isFanTurnOnAutomatically, onToggle] = useCheckboxValue(
+    Object.keys(fanSchedule || []).length !== 0,
+  );
   const [tempValue, onChangeTempValue] = useInputValue(fanSchedule?.V_TEMP);
   const [selectedValue, onSelect] = useSelectValue();
 

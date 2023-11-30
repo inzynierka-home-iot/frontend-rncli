@@ -17,14 +17,6 @@ export type TempSensorViewProps = NativeStackScreenProps<
   'TempSensor'
 >;
 
-export type TempSensorBaseParams = {
-  location: string;
-  nodeId: string;
-  deviceId: string;
-  botHash: string;
-  botId: string;
-};
-
 export const TempSensorView = ({ route }: TempSensorViewProps) => {
   const { location, nodeId, deviceId } = route.params;
 

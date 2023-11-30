@@ -47,6 +47,7 @@ const mockedData = {
         V_TEMP: '23.375',
         V_ID: null,
       },
+      schedule: {},
     },
     {
       location: 'home-1',
@@ -88,6 +89,7 @@ const mockedData = {
         V_PERCENTAGE: '34',
         V_DIRECTION: '128',
       },
+      schedule: {},
     },
     {
       location: 'home-1',
@@ -133,9 +135,9 @@ const mockedData = {
 };
 
 const initialState: DeviceState = {
-  // devicesList: mockedData.devices,
-  devicesList: [],
-  isLoading: true,
+  devicesList: mockedData.devices,
+  // devicesList: [],
+  isLoading: false,
 };
 
 export const devicesSlice = createSlice({

@@ -7,12 +7,16 @@ import {
   useInputValue,
 } from '../../../../.storybook/stories';
 import { useSendAPIRequest } from '../../../../hooks';
-import { FanRangeValues, FanValues } from '../../../../types';
+import {
+  DeviceViewRouteParams,
+  FanRangeValues,
+  FanValues,
+} from '../../../../types';
 import { getNumericValue } from '../../../../utils';
 import { styles } from './CurrentParamsLabel.styles';
 
 type CurrentParamsLabelProps = {
-  fanBaseParams: any;
+  fanBaseParams: DeviceViewRouteParams;
   fanValues: FanValues;
 };
 

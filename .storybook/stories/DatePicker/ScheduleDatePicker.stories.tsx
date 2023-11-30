@@ -21,15 +21,28 @@ const MyScheduleDatePickerMeta = {
 
 export default MyScheduleDatePickerMeta;
 
-export const Interval = {
-  args: {
-    onChange: (value: any) => { console.log(value) }
-  }
-};
 
-export const Repeat = {
-  args: {
-    mode: 'repeat',
-    onChange: (value: any) => { console.log(value) }
-  }
+export const Interval = () => {
+  const initialSchedule = {
+    hours: 12,
+    minutes: 0,
+    days: [3],
+  };
+  const [schedule, setSchedule] = useState(initialSchedule);
+  return <ScheduleDatePicker schedule={schedule} onChange={setSchedule} />;
+};
+export const Repeat = () => {
+  const initialSchedule = {
+    hours: 12,
+    minutes: 0,
+    days: [3],
+  };
+  const [schedule, setSchedule] = useState(initialSchedule);
+  return (
+    <ScheduleDatePicker
+      schedule={schedule}
+      onChange={setSchedule}
+      mode="repeat"
+    />
+  );
 };

@@ -4,10 +4,9 @@ import {
   addDevice,
   removeDevice,
   setDeviceValues,
-  selectDeviceWithId,
 } from '../redux/devicesSlice';
 import { addAlert } from '../redux/alertsSlice';
-import { AppDispatch, store } from '../redux/store';
+import { AppDispatch } from '../redux/store';
 import { Alert, Message } from '../types';
 import { mtproto } from './mtprotoClient';
 

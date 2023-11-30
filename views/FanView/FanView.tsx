@@ -16,8 +16,6 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
     selectDeviceWithId(state, location, nodeId, deviceId),
   ) as Fan;
 
-  console.log(fan);
-
   if (!fan) {
     return (
       <Typography variant="header-large" text="Nie znaleziono urządzenia" />

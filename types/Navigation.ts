@@ -1,6 +1,6 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 
-type DeviceViewRouteParams = {
+export type DeviceViewRouteParams = {
   location: string;
   nodeId: string;
   deviceId: string;
