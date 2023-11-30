@@ -3,11 +3,10 @@ import {
   setInitialDevice,
   addDevice,
   removeDevice,
-  setDeviceValues,
-  selectDeviceWithId,
+  setDevicesValues,
 } from '../redux/devicesSlice';
 import { addAlert } from '../redux/alertsSlice';
-import { AppDispatch, store } from '../redux/store';
+import { AppDispatch } from '../redux/store';
 import { Alert, Message } from '../types';
 import { mtproto } from './mtprotoClient';
 
@@ -44,7 +43,7 @@ export const listenForMessages = (user_id: string, dispatch: AppDispatch) => {
       } else if (command === 'set') {
         const values = paramsToObject(message.req.split('?')[1]);
         dispatch(
-          setDeviceValues({
+          setDevicesValues({
             location,
             nodeId,
             deviceId,
@@ -60,7 +59,7 @@ export const listenForMessages = (user_id: string, dispatch: AppDispatch) => {
       } else if (command === 'status') {
         const values = message.res;
         dispatch(
-          setDeviceValues({
+          setDevicesValues({
             location,
             nodeId,
             deviceId,

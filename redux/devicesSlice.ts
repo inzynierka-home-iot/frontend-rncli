@@ -110,7 +110,7 @@ export const devicesSlice = createSlice({
       // state.devicesList = action.payload;
       // state.isLoading = false;
     },
-    setDeviceValues: (
+    setDevicesValues: (
       state,
       action: PayloadAction<{
         location: string;
@@ -120,15 +120,15 @@ export const devicesSlice = createSlice({
       }>,
     ) => {
       const { location, nodeId, deviceId, values } = action.payload;
-      const searchedDevice = state.devicesList.find(
+      const searchedDevices = state.devicesList.filter(
         device =>
-          device.location === location &&
-          device.nodeId === nodeId &&
-          device.id === deviceId,
+          (device.location === location || location === '*') &&
+          (device.nodeId === nodeId || nodeId === '*') &&
+          (device.id === deviceId || deviceId === '*'),
       );
-      if (searchedDevice) {
-        searchedDevice.values = {
-          ...searchedDevice.values,
+      for (const device of searchedDevices) {
+        device.values = {
+          ...device.values,
           ...values,
         };
       }
@@ -157,7 +157,7 @@ export const devicesSlice = createSlice({
 
 export const {
   setInitialDevice,
-  setDeviceValues,
+  setDevicesValues,
   addDevice,
   removeDevice,
   startLoadingDevices,
