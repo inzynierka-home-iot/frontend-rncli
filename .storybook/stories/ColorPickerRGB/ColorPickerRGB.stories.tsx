@@ -24,10 +24,5 @@ export default MyColorPickerRGBMeta;
 export const Basic = () => {
   const [color, onColorChange] = useState('60ffa2');
 
-  const colorPickerColorChange = (rgbColor: string) => {
-    const colorValue = rgbColor.split('#')[1];
-    onColorChange(colorValue);
-  };
-
-  return <ColorPickerRGB color={color} onChange={colorPickerColorChange} />;
+  return <ColorPickerRGB color={color} onChange={onColorChange} />;
 };
