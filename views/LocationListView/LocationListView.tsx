@@ -36,7 +36,7 @@ export const LocationListView = () => {
   useFocusEffect(
     useCallback(() => {
       retrieveAvailableLocations();
-    }, [retrieveAvailableLocations]),
+    }, [botFatherAccessHash, botFatherId]),
   );
 
   return (
