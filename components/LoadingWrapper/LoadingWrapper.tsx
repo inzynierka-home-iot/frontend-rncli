@@ -8,7 +8,7 @@ type LoadingWrapperProps = {
 
 export const LoadingWrapper: FC<PropsWithChildren<LoadingWrapperProps>> = ({
   isLoading,
-  text = '',
+  text,
   children,
 }) => {
   if (isLoading) {
