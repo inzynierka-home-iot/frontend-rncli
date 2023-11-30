@@ -135,9 +135,9 @@ const mockedData = {
 };
 
 const initialState: DeviceState = {
-  devicesList: mockedData.devices,
-  // devicesList: [],
-  isLoading: false,
+  // devicesList: mockedData.devices,
+  devicesList: [],
+  isLoading: true,
 };
 
 export const devicesSlice = createSlice({

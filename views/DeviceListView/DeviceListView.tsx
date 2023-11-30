@@ -37,7 +37,7 @@ export const DeviceListView: FC<DeviceListViewProps> = ({ route }) => {
   const devices = useAppSelector(selectDevices);
   const loading = useAppSelector(selectDevicesLoading);
 
-  // useInitialDevices(botId, botHash);
+  useInitialDevices(botId, botHash);
   useListenForHomeBotMessages(botId);
 
   const reloadDevices = () => {
