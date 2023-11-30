@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { Text } from 'react-native';
 import { ColorKeys, theme, TypographyKeys } from '../../theme';
 
 export type TypographyProps = {
@@ -7,6 +7,7 @@ export type TypographyProps = {
   text: string;
   color?: ColorKeys;
   selectable?: boolean;
+  center?: boolean;
 };
 
 export const Typography: FC<TypographyProps> = ({
@@ -14,10 +15,15 @@ export const Typography: FC<TypographyProps> = ({
   text,
   color = 'text-primary',
   selectable = false,
+  center = false,
 }) => {
   return (
     <Text
-      style={[{ color: theme.colors[color] }, theme.typography[variant]]}
+      style={[
+        center && { textAlign: 'center' },
+        { color: theme.colors[color] },
+        theme.typography[variant],
+      ]}
       selectable={selectable}>
       {text}
     </Text>
