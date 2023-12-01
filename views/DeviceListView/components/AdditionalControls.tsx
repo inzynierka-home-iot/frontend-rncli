@@ -21,6 +21,7 @@ export const AdditionalControls: FC<AdditionalControlsProps> = ({
     nodeId: '*',
     deviceId: '*',
     action: 'set',
+    deviceType,
     botHash,
     botId,
   };
