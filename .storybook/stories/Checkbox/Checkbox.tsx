@@ -24,9 +24,7 @@ export const Checkbox: FC<CheckboxProps> = ({
         onClick={onPress}
         checkBoxColor={useCheckboxColor(variant)}
       />
-      {label && (
-        <Typography text={label} variant='body-medium' />
-      )}
+      {label && <Typography text={label} variant="body-medium" />}
     </View>
   );
 };
@@ -36,14 +34,13 @@ const useCheckboxColor = (variant: CheckboxProps['variant']) => {
     variant == 'default'
       ? 'text-informative'
       : variant == 'success'
-        ? 'text-success'
-        : 'text-error';
+      ? 'text-success'
+      : 'text-error';
   return theme.colors[checkboxColor];
 };
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
     flexDirection: 'row',
     gap: theme.spacing(2),
   },
