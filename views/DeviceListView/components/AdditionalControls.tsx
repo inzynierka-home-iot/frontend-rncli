@@ -1,9 +1,17 @@
 import React, { FC } from 'react';
-import { useSendAPIRequest } from '../../../hooks';
 import { DeviceType } from '../../../types';
-import { Button } from '../../../.storybook/stories';
+import {
+  DistanceDetectorControls,
+  FanControls,
+  HumidityDetectorControls,
+  LightControls,
+  LightDetectorControls,
+  MotionDetectorControls,
+  RgbLightControls,
+  TempSensorControls,
+} from './controls';
 
-type AdditionalControlsProps = {
+export type AdditionalControlsProps = {
   deviceType: DeviceType;
   botHash: string;
   botId: string;
@@ -14,48 +22,41 @@ export const AdditionalControls: FC<AdditionalControlsProps> = ({
   botHash,
   botId,
 }) => {
-  const sendIoTAPIRequest = useSendAPIRequest();
-
-  const lightActionBaseParams = {
-    location: '*',
-    nodeId: '*',
-    deviceId: '*',
-    action: 'set',
-    deviceType,
-    botHash,
-    botId,
-  };
-
-  const handleAllLightsOn = () =>
-    sendIoTAPIRequest({
-      ...lightActionBaseParams,
-      additionalParams: { V_STATUS: 1 },
-    });
-
-  const handleAllLightsOff = () =>
-    sendIoTAPIRequest({
-      ...lightActionBaseParams,
-      additionalParams: { V_STATUS: 0 },
-    });
-
-  if (deviceType == DeviceType.S_BINARY) {
-    return (
-      <>
-        <Button
-          text="Włącz wszystkie w całym domu"
-          variant="success"
-          hasFullWidth
-          onPress={handleAllLightsOn}
-        />
-        <Button
-          text="Wyłącz wszystkie w całym domu"
-          variant="error"
-          hasFullWidth
-          onPress={handleAllLightsOff}
-        />
-        {/* TODO add node selection and turn on/off for selected node */}
-      </>
-    );
-  }
-  return null;
+  return deviceType == DeviceType.S_BINARY ? (
+    <LightControls deviceType={deviceType} botHash={botHash} botId={botId} />
+  ) : deviceType == DeviceType.S_DISTANCE ? (
+    <DistanceDetectorControls
+      deviceType={deviceType}
+      botHash={botHash}
+      botId={botId}
+    />
+  ) : deviceType == DeviceType.S_FAN ? (
+    <FanControls deviceType={deviceType} botHash={botHash} botId={botId} />
+  ) : deviceType == DeviceType.S_HUM ? (
+    <HumidityDetectorControls
+      deviceType={deviceType}
+      botHash={botHash}
+      botId={botId}
+    />
+  ) : deviceType == DeviceType.S_LIGHT_LEVEL ? (
+    <LightDetectorControls
+      deviceType={deviceType}
+      botHash={botHash}
+      botId={botId}
+    />
+  ) : deviceType == DeviceType.S_MOTION ? (
+    <MotionDetectorControls
+      deviceType={deviceType}
+      botHash={botHash}
+      botId={botId}
+    />
+  ) : deviceType == DeviceType.S_RGB_LIGHT ? (
+    <RgbLightControls deviceType={deviceType} botHash={botHash} botId={botId} />
+  ) : deviceType == DeviceType.S_TEMP ? (
+    <TempSensorControls
+      deviceType={deviceType}
+      botHash={botHash}
+      botId={botId}
+    />
+  ) : null;
 };
