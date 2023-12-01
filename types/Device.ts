@@ -1,13 +1,14 @@
 export enum DeviceType {
   S_BINARY = 'S_BINARY',
-  S_LOCK = 'S_LOCK',
-  S_RGB_LIGHT = 'S_RGB_LIGHT',
-  S_TEMP = 'S_TEMP',
-  S_FAN = 'S_FAN',
-  S_MOTION = 'S_MOTION',
+  S_CUSTOM = 'S_CUSTOM',
   S_DISTANCE = 'S_DISTANCE',
+  S_FAN = 'S_FAN',
   S_HUM = 'S_HUM',
   S_LIGHT_LEVEL = 'S_LIGHT_LEVEL',
+  S_LOCK = 'S_LOCK',
+  S_MOTION = 'S_MOTION',
+  S_RGB_LIGHT = 'S_RGB_LIGHT',
+  S_TEMP = 'S_TEMP',
 }
 
 export type Device<T = any, K = any, L = any> = {
@@ -102,3 +103,15 @@ type ButtonValues = {
 };
 
 export type Button = Device<ButtonValues, DeviceType.S_LOCK>;
+
+type BuzzerValues = {
+  V_STATUS: string;
+};
+
+export type Buzzer = Device<BuzzerValues, DeviceType.S_CUSTOM>;
+
+type LockValues = {
+  V_LOCK_STATUS: string;
+};
+
+export type Lock = Device<LockValues, DeviceType.S_LOCK>;

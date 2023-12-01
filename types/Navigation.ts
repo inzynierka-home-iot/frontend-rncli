@@ -29,8 +29,10 @@ export type RootStackParamList = {
     deviceType: DeviceType;
   };
   Light: DeviceViewRouteParams;
+  Buzzer: DeviceViewRouteParams;
   RgbLight: DeviceViewRouteParams;
   Fan: DeviceViewRouteParams;
+  Lock: DeviceViewRouteParams;
   DistanceDetector: DeviceViewRouteParams;
   HumidityDetector: DeviceViewRouteParams;
   LightDetector: DeviceViewRouteParams;

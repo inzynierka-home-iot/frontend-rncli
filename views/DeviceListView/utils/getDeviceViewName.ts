@@ -2,6 +2,7 @@ import { DeviceType } from '../../../types';
 
 const DEVICE_TO_VIEW: Record<DeviceType, string> = {
   S_BINARY: 'Light',
+  S_CUSTOM: 'Buzzer',
   S_DISTANCE: 'DistanceDetector',
   S_FAN: 'Fan',
   S_HUM: 'HumidityDetector',

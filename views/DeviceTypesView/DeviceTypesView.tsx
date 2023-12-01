@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { DeviceType, RootStackParamList } from '../../types';
 import {
@@ -12,7 +12,7 @@ import {
   selectDeviceTypes,
   selectDevicesLoading,
 } from '../../redux/devicesSlice';
-import { sendAPIRequest } from '../../utils';
+import { getDeviceIcon, sendAPIRequest } from '../../utils';
 import { Button, ListItem, Typography } from '../../.storybook/stories';
 import { LayoutProvider, NavbarWithLogout } from '../../components';
 import { LoadingWrapper } from '../../components/LoadingWrapper';
@@ -37,6 +37,14 @@ export const DeviceTypesView: FC<DeviceTypesViewProps> = ({ route }) => {
   useListenForHomeBotMessages(botId);
   useInitialDevices(botId, botHash);
 
+  const sortedTypes = useMemo(
+    () =>
+      types.sort((a, b) =>
+        getDeviceTypeName(a) < getDeviceTypeName(b) ? -1 : 1,
+      ),
+    [types],
+  );
+
   const reloadDevices = () => {
     dispatch(clearDeviceState());
     sendAPIRequest({
@@ -57,6 +65,7 @@ export const DeviceTypesView: FC<DeviceTypesViewProps> = ({ route }) => {
       <ListItem
         key={deviceViewName}
         text={deviceViewName}
+        icon={getDeviceIcon(deviceType)}
         onPress={() => {
           navigation.navigate('DeviceList', {
             botHash,
@@ -79,7 +88,7 @@ export const DeviceTypesView: FC<DeviceTypesViewProps> = ({ route }) => {
           </View>
         ) : (
           <View style={styles.typesList}>
-            {types.map(deviceType => createTypeElement(deviceType))}
+            {sortedTypes.map(deviceType => createTypeElement(deviceType))}
           </View>
         )}
       </LoadingWrapper>

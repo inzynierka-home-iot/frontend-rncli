@@ -26,6 +26,8 @@ import { useTelegramConnection } from './hooks';
 import { RootStackParamList } from './types';
 import { LoadingWrapper } from './components/LoadingWrapper';
 import { Alerts } from './components/Alerts';
+import { BuzzerView } from './views/BuzzerView';
+import { LockView } from './views/LockView';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -49,23 +51,25 @@ export default function App() {
             <Stack.Screen name="Admin" component={AdminView} />
             <Stack.Screen name="DeviceTypes" component={DeviceTypesView} />
             <Stack.Screen name="DeviceList" component={DeviceListView} />
-            <Stack.Screen name="Light" component={LightView} />
-            <Stack.Screen name="RgbLight" component={RgbLightView} />
-            <Stack.Screen name="TempSensor" component={TempSensorView} />
-            <Stack.Screen name="Fan" component={FanView} />
+            <Stack.Screen name="Buzzer" component={BuzzerView} />
             <Stack.Screen
               name="DistanceDetector"
               component={DistanceDetectorView}
             />
+            <Stack.Screen name="Fan" component={FanView} />
             <Stack.Screen
               name="HumidityDetector"
               component={HumidityDetectorView}
             />
+            <Stack.Screen name="Light" component={LightView} />
             <Stack.Screen name="LightDetector" component={LightDetectorView} />
+            <Stack.Screen name="Lock" component={LockView} />
             <Stack.Screen
               name="MotionDetector"
               component={MotionDetectorView}
             />
+            <Stack.Screen name="RgbLight" component={RgbLightView} />
+            <Stack.Screen name="TempSensor" component={TempSensorView} />
             <Stack.Screen name="Telegram" component={TelegramForm} />
           </Stack.Navigator>
           <Alerts />

@@ -1,7 +1,14 @@
-import { FC } from 'react';
-import { Button } from '../../../../.storybook/stories';
+import { FC, useMemo } from 'react';
+import {
+  Button,
+  Select,
+  Typography,
+  useSelectValue,
+} from '../../../../.storybook/stories';
 import { useSendAPIRequest } from '../../../../hooks';
 import { AdditionalControlsProps } from '../AdditionalControls';
+import { useAppSelector } from '../../../../redux/hooks';
+import { selectNodesWithType } from '../../../../redux/devicesSlice';
 
 export const LightControls: FC<AdditionalControlsProps> = ({
   deviceType,
@@ -10,8 +17,22 @@ export const LightControls: FC<AdditionalControlsProps> = ({
 }) => {
   const sendIoTAPIRequest = useSendAPIRequest();
 
+  const [selectedValue, onSelect] = useSelectValue();
+
+  const nodes = useAppSelector(state => selectNodesWithType(state, deviceType));
+
+  const nodesSelectData = useMemo(
+    () =>
+      nodes.map(node => ({
+        display: node,
+        value: node,
+      })),
+    [nodes],
+  );
+
   const lightActionBaseParams = {
-    location: '*',
+    // TODO - set proper location EVERYWHERE
+    location: 'home-1',
     nodeId: '*',
     deviceId: '*',
     action: 'set',
@@ -31,6 +52,21 @@ export const LightControls: FC<AdditionalControlsProps> = ({
       ...lightActionBaseParams,
       additionalParams: { V_STATUS: 0 },
     });
+
+  const handleNodeLightsOn = () =>
+    sendIoTAPIRequest({
+      ...lightActionBaseParams,
+      nodeId: nodesSelectData[selectedValue].value,
+      additionalParams: { V_STATUS: 1 },
+    });
+
+  const handleNodeLightsOff = () =>
+    sendIoTAPIRequest({
+      ...lightActionBaseParams,
+      nodeId: nodesSelectData[selectedValue].value,
+      additionalParams: { V_STATUS: 0 },
+    });
+
   return (
     <>
       <Button
@@ -45,7 +81,27 @@ export const LightControls: FC<AdditionalControlsProps> = ({
         hasFullWidth
         onPress={handleAllLightsOff}
       />
-      {/* TODO add node selection and turn on/off for selected node */}
+      <Typography
+        variant="body-medium"
+        text="Wybierz node, którym chcesz zarządzać"
+      />
+      <Select
+        selectData={nodesSelectData}
+        index={selectedValue}
+        onSelect={onSelect}
+      />
+      <Button
+        text="Włącz w danym nodzie"
+        variant="success"
+        hasFullWidth
+        onPress={handleNodeLightsOn}
+      />
+      <Button
+        text="Wyłącz w danym nodzie"
+        variant="error"
+        hasFullWidth
+        onPress={handleNodeLightsOff}
+      />
     </>
   );
 };
