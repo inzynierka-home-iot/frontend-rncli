@@ -1,44 +1,45 @@
 import React, { FC } from 'react';
-import CheckBox from 'react-native-check-box';
 import { theme } from '../../theme';
 import { StyleSheet, View } from 'react-native';
 import { Typography } from '../Typography';
+import { Checkbox } from 'react-native-paper';
 
-export type CheckboxProps = {
+export type CheckBoxProps = {
   variant?: 'default' | 'success' | 'error';
   checked: boolean;
   onPress: () => void;
   label?: string;
 };
 
-export const Checkbox: FC<CheckboxProps> = ({
+export const CheckBox: FC<CheckBoxProps> = ({
   variant = 'default',
   checked,
   onPress,
   label,
 }) => {
+  const color = useCheckBoxColor(variant);
+
   return (
     <View style={styles.container}>
-      <CheckBox
-        isChecked={checked}
-        onClick={onPress}
-        checkBoxColor={useCheckboxColor(variant)}
+      <Checkbox
+        status={checked ? 'checked' : 'unchecked'}
+        onPress={onPress}
+        color={color}
+        uncheckedColor={color}
       />
-      {label && (
-        <Typography text={label} variant='body-medium' />
-      )}
+      {label && <Typography text={label} variant="body-medium" />}
     </View>
   );
 };
 
-const useCheckboxColor = (variant: CheckboxProps['variant']) => {
-  const checkboxColor =
+const useCheckBoxColor = (variant: CheckBoxProps['variant']) => {
+  const checkBoxColor =
     variant == 'default'
       ? 'text-informative'
       : variant == 'success'
-        ? 'text-success'
-        : 'text-error';
-  return theme.colors[checkboxColor];
+      ? 'text-success'
+      : 'text-error';
+  return theme.colors[checkBoxColor];
 };
 
 const styles = StyleSheet.create({

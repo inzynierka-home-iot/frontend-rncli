@@ -2,9 +2,9 @@ import { FC, useMemo, useState } from 'react';
 import React from 'react-native';
 import {
   Button,
-  Checkbox,
+  CheckBox,
   ScheduleDatePicker,
-  useCheckboxValue,
+  useCheckBoxValue,
 } from '../../../../.storybook/stories';
 import { useSendAPIRequest } from '../../../../hooks';
 import { DeviceViewRouteParams, TempSensorSchedule } from '../../../../types';
@@ -29,7 +29,7 @@ export const TempRepeatScheduler: FC<TempRepeatSchedulerProps> = ({
     [tempSensorSchedule],
   );
 
-  const [isScheduleRepeat, onToggleScheduleRepeat] = useCheckboxValue(
+  const [isScheduleRepeat, onToggleScheduleRepeat] = useCheckBoxValue(
     Object.keys(tempSensorSchedule || []).length !== 0,
   );
   const [schedule, setSchedule] = useState(initialSchedule);
@@ -62,7 +62,7 @@ export const TempRepeatScheduler: FC<TempRepeatSchedulerProps> = ({
 
   return (
     <>
-      <Checkbox
+      <CheckBox
         checked={isScheduleRepeat}
         onPress={onCheckboxPress}
         label="Pobieraj temperaturę o określonej godzinie"

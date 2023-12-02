@@ -1,11 +1,11 @@
 import React, { FC, useMemo } from 'react';
 import {
   Button,
-  Checkbox,
+  CheckBox,
   Input,
   Select,
   Typography,
-  useCheckboxValue,
+  useCheckBoxValue,
   useInputValue,
   useSelectValue,
 } from '../../../../.storybook/stories';
@@ -23,7 +23,7 @@ export const TurnOnFanSelect: FC<TurnOnFanSelectProps> = ({
   fanBaseParams,
   fanSchedule,
 }) => {
-  const [isFanTurnOnAutomatically, onToggle] = useCheckboxValue(
+  const [isFanTurnOnAutomatically, onToggle] = useCheckBoxValue(
     Object.keys(fanSchedule || []).length !== 0,
   );
   const [tempValue, onChangeTempValue] = useInputValue(fanSchedule?.V_TEMP);
@@ -73,7 +73,7 @@ export const TurnOnFanSelect: FC<TurnOnFanSelectProps> = ({
 
   return (
     <>
-      <Checkbox
+      <CheckBox
         checked={isFanTurnOnAutomatically}
         onPress={onCheckboxPress}
         label="Włączaj automatycznie wentylator, jezeli temperatura na określonym czujniku będzie miała wybraną wartość"
