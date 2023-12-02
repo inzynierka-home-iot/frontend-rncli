@@ -33,9 +33,6 @@ export const LightControls: FC<AdditionalControlsProps> = ({
   const lightActionBaseParams = {
     // TODO - set proper location EVERYWHERE
     location: 'home-1',
-    nodeId: '*',
-    deviceId: '*',
-    action: 'set',
     deviceType,
     botHash,
     botId,
@@ -44,12 +41,18 @@ export const LightControls: FC<AdditionalControlsProps> = ({
   const handleAllLightsOn = () =>
     sendIoTAPIRequest({
       ...lightActionBaseParams,
+      nodeId: '*',
+      deviceId: '*',
+      action: 'set',
       additionalParams: { V_STATUS: 1 },
     });
 
   const handleAllLightsOff = () =>
     sendIoTAPIRequest({
       ...lightActionBaseParams,
+      nodeId: '*',
+      deviceId: '*',
+      action: 'set',
       additionalParams: { V_STATUS: 0 },
     });
 
@@ -57,6 +60,8 @@ export const LightControls: FC<AdditionalControlsProps> = ({
     sendIoTAPIRequest({
       ...lightActionBaseParams,
       nodeId: nodesSelectData[selectedValue].value,
+      deviceId: '*',
+      action: 'set',
       additionalParams: { V_STATUS: 1 },
     });
 
@@ -64,6 +69,8 @@ export const LightControls: FC<AdditionalControlsProps> = ({
     sendIoTAPIRequest({
       ...lightActionBaseParams,
       nodeId: nodesSelectData[selectedValue].value,
+      deviceId: '*',
+      action: 'set',
       additionalParams: { V_STATUS: 0 },
     });
 

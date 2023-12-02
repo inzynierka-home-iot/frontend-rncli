@@ -29,28 +29,26 @@ export const DeviceListView: FC<DeviceListViewProps> = ({ route }) => {
     selectDevicesWithType(state, deviceType),
   );
 
-  const createDeviceElement = (device: Device) => (
-    <ListItem
-      key={createDeviceKey(device)}
-      text={device.name}
-      icon={getDeviceIcon(device.type)}
-      onPress={() => {
-        navigation.navigate(getDeviceViewName(device.type), {
-          location: device.location,
-          nodeId: device.nodeId,
-          deviceId: device.id,
-          botHash,
-          botId,
-        });
-      }}
-    />
-  );
-
   return (
     <LayoutProvider
       navbar={<NavbarWithLogout text="Lista urządzeń" backButton />}>
       <View style={styles.deviceList}>
-        {devices.map(device => createDeviceElement(device))}
+        {devices.map(device => (
+          <ListItem
+            key={createDeviceKey(device)}
+            text={device.name}
+            icon={getDeviceIcon(device.type)}
+            onPress={() => {
+              navigation.navigate(getDeviceViewName(device.type), {
+                location: device.location,
+                nodeId: device.nodeId,
+                deviceId: device.id,
+                botHash,
+                botId,
+              });
+            }}
+          />
+        ))}
       </View>
       <AdditionalControls
         deviceType={deviceType}

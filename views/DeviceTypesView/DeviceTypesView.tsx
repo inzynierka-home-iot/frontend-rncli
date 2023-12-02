@@ -40,7 +40,7 @@ export const DeviceTypesView: FC<DeviceTypesViewProps> = ({ route }) => {
   const sortedTypes = useMemo(
     () =>
       types.sort((a, b) =>
-        getDeviceTypeName(a) < getDeviceTypeName(b) ? -1 : 1,
+        getDeviceTypeName(a).localeCompare(getDeviceTypeName(b)),
       ),
     [types],
   );

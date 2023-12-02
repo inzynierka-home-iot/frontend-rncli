@@ -10,7 +10,7 @@ const TYPE_TO_CATEGORY: Record<DeviceType, string> = {
   S_LOCK: 'Zamki',
   S_MOTION: 'Czujniki ruchu',
   S_RGB_LIGHT: 'Światełka RGB',
-  S_TEMP: 'Czujniki Temperatury',
+  S_TEMP: 'Czujniki temperatury',
 };
 
 export const getDeviceTypeName = (type: DeviceType) => TYPE_TO_CATEGORY[type];
