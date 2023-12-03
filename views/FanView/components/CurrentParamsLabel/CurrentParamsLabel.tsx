@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useMemo } from 'react';
+import React, { FC, useCallback } from 'react';
 import { View } from 'react-native';
 import {
   Button,
@@ -66,12 +66,6 @@ export const CurrentParamsLabel: FC<CurrentParamsLabelProps> = ({
       action: 'status',
     });
   }, [fanBaseParams, sendIoTAPIRequest]);
-
-  useEffect(() => {
-    onTempChange(fanValues.V_TEMP);
-    onPercentageChange(fanValues.V_PERCENTAGE);
-    onDirectionChange(fanValues.V_DIRECTION);
-  }, [fanValues, onDirectionChange, onPercentageChange, onTempChange]);
 
   return (
     <>
