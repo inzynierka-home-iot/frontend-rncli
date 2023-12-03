@@ -53,6 +53,7 @@ export type TempSensor = Device<
 >;
 
 export type FanValues = {
+  V_STATUS: string;
   V_TEMP: string;
   V_PERCENTAGE: string;
   V_DIRECTION: string;
