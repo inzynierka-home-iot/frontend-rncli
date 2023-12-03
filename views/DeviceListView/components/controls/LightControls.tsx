@@ -3,7 +3,7 @@ import {
   Button,
   Select,
   Typography,
-  useSelectValue,
+  useSelectIndex,
 } from '../../../../.storybook/stories';
 import { useSendAPIRequest } from '../../../../hooks';
 import { AdditionalControlsProps } from '../AdditionalControls';
@@ -17,7 +17,7 @@ export const LightControls: FC<AdditionalControlsProps> = ({
 }) => {
   const sendIoTAPIRequest = useSendAPIRequest();
 
-  const [selectedValue, onSelect] = useSelectValue();
+  const [selectedIndex, onSelect] = useSelectIndex();
 
   const nodes = useAppSelector(state => selectNodesWithType(state, deviceType));
 
@@ -61,7 +61,7 @@ export const LightControls: FC<AdditionalControlsProps> = ({
   const handleNodeLightsOn = () => {
     sendIoTAPIRequest({
       ...lightActionBaseParams,
-      nodeId: nodesSelectData[selectedValue].value,
+      nodeId: nodesSelectData[selectedIndex].value,
       deviceId: '*',
       action: 'set',
       additionalParams: { V_STATUS: 1 },
@@ -71,7 +71,7 @@ export const LightControls: FC<AdditionalControlsProps> = ({
   const handleNodeLightsOff = () =>
     sendIoTAPIRequest({
       ...lightActionBaseParams,
-      nodeId: nodesSelectData[selectedValue].value,
+      nodeId: nodesSelectData[selectedIndex].value,
       deviceId: '*',
       action: 'set',
       additionalParams: { V_STATUS: 0 },
@@ -97,7 +97,7 @@ export const LightControls: FC<AdditionalControlsProps> = ({
       />
       <Select
         selectData={nodesSelectData}
-        index={selectedValue}
+        index={selectedIndex}
         onSelect={onSelect}
       />
       <Button
