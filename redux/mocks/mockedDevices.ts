@@ -70,6 +70,7 @@ export const mockedData = {
       type: DeviceType.S_FAN,
       name: 'Fan',
       values: {
+        V_STATUS: '1',
         V_TEMP: '24.5',
         V_PERCENTAGE: '34',
         V_DIRECTION: '128',
@@ -89,6 +90,7 @@ export const mockedData = {
       type: DeviceType.S_FAN,
       name: 'Fan',
       values: {
+        V_STATUS: '0',
         V_TEMP: '24.5',
         V_PERCENTAGE: '34',
         V_DIRECTION: '128',

@@ -32,31 +32,17 @@ export const CurrentParamsLabel: FC<CurrentParamsLabelProps> = ({
   );
   const [direction, onDirectionChange] = useInputValue(fanValues.V_DIRECTION);
 
-  const fanTurnedOff = useMemo(
-    () =>
-      fanValues.V_TEMP === '0' &&
-      fanValues.V_PERCENTAGE === '0' &&
-      fanValues.V_DIRECTION === '0',
-    [fanValues.V_TEMP, fanValues.V_PERCENTAGE, fanValues.V_DIRECTION],
-  );
+  const fanTurnedOn = fanValues.V_STATUS === '1';
 
   const onFanStateToggle = useCallback(() => {
-    const tempValue = fanTurnedOff ? FanRangeValues.DEFAULT_TEMP : 0;
-    const percentageValue = fanTurnedOff
-      ? FanRangeValues.DEFAULT_PERCENTAGE
-      : 0;
-    const directionValue = fanTurnedOff ? FanRangeValues.DEFAULT_DIRECTION : 0;
-
     sendIoTAPIRequest({
       ...fanBaseParams,
       action: 'set',
       additionalParams: {
-        V_TEMP: tempValue,
-        V_PERCENTAGE: percentageValue,
-        V_DIRECTION: directionValue,
+        V_STATUS: fanTurnedOn ? '0' : '1',
       },
     });
-  }, [fanTurnedOff, fanBaseParams, sendIoTAPIRequest]);
+  }, [fanBaseParams, fanTurnedOn, sendIoTAPIRequest]);
 
   const onChangeFanParams = useCallback(() => {
     const finalTempValue = getNumericValue(parseFloat, temp);
@@ -89,9 +75,14 @@ export const CurrentParamsLabel: FC<CurrentParamsLabelProps> = ({
 
   return (
     <>
+      <Typography
+        variant="body-medium"
+        text={`Aktualna status wentylatora: ${fanTurnedOn ? 'Wyłączony' : 'Włączony'
+          }`}
+      />
       <Button
-        text={fanTurnedOff ? 'Włącz wentylator' : 'Wyłącz wentylator'}
-        variant={fanTurnedOff ? 'success' : 'error'}
+        text={fanTurnedOn ? 'Wyłącz wentylator' : 'Włącz wentylator'}
+        variant={fanTurnedOn ? 'error' : 'success'}
         onPress={onFanStateToggle}
       />
       <View style={styles.section}>

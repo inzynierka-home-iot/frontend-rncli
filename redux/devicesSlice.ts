@@ -11,7 +11,7 @@ interface DeviceState {
 const initialState: DeviceState = {
   // devicesList: mockedData.devices,
   devicesList: [],
-  isLoading: false,
+  isLoading: true,
 };
 
 export const devicesSlice = createSlice({
@@ -56,9 +56,6 @@ export const devicesSlice = createSlice({
           device.nodeId !== nodeId ||
           device.id !== id,
       );
-    },
-    startLoadingDevices: state => {
-      state.isLoading = true;
     },
     clearDeviceState: state => {
       state.devicesList = [];
