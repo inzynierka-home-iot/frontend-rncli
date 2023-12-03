@@ -4,7 +4,6 @@ import { hasErrorMessage } from './hasErrorMessage';
 import { raiseTelegramError } from './raiseTelegramError';
 import { AppDispatch } from '../redux/store';
 import { RootNavigationProps } from '../types';
-
 export const logoutFromTelegram = async (
   navigation: RootNavigationProps,
   dispatch: AppDispatch,
@@ -12,6 +11,7 @@ export const logoutFromTelegram = async (
   try {
     const res = await mtproto.call('auth.logOut');
     if (res._ === 'auth.loggedOut') {
+      dispatch({ type: 'logout' });
       await RemoveStoredValue('SignedIn');
       navigation.replace('Login');
     }
