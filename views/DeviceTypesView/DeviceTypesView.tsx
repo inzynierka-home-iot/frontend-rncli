@@ -1,6 +1,6 @@
 import React, { FC, useMemo } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { DeviceType, RootStackParamList } from '../../types';
+import { RootStackParamList } from '../../types';
 import {
   useAppNavigation,
   useInitialDevices,
@@ -58,25 +58,6 @@ export const DeviceTypesView: FC<DeviceTypesViewProps> = ({ route }) => {
     });
   };
 
-  const createTypeElement = (deviceType: DeviceType) => {
-    const deviceViewName = getDeviceTypeName(deviceType);
-
-    return (
-      <ListItem
-        key={deviceViewName}
-        text={deviceViewName}
-        icon={getDeviceIcon(deviceType)}
-        onPress={() => {
-          navigation.navigate('DeviceList', {
-            botHash,
-            botId,
-            deviceType,
-          });
-        }}
-      />
-    );
-  };
-
   return (
     <LayoutProvider
       navbar={<NavbarWithLogout text="Typy urządzeń" backButton />}>
@@ -88,7 +69,20 @@ export const DeviceTypesView: FC<DeviceTypesViewProps> = ({ route }) => {
           </View>
         ) : (
           <View style={styles.typesList}>
-            {sortedTypes.map(deviceType => createTypeElement(deviceType))}
+            {sortedTypes.map(deviceType => (
+              <ListItem
+                key={deviceType}
+                text={getDeviceTypeName(deviceType)}
+                icon={getDeviceIcon(deviceType)}
+                onPress={() => {
+                  navigation.navigate('DeviceList', {
+                    botHash,
+                    botId,
+                    deviceType,
+                  });
+                }}
+              />
+            ))}
           </View>
         )}
       </LoadingWrapper>

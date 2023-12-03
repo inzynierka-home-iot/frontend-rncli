@@ -1,7 +1,7 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Device, DeviceType } from '../types';
 import { RootState } from './store';
-import { mockedData } from './mocks/mockedDevices';
+// import { mockedData } from './mocks/mockedDevices';
 
 interface DeviceState {
   devicesList: Device[];
@@ -11,7 +11,7 @@ interface DeviceState {
 const initialState: DeviceState = {
   // devicesList: mockedData.devices,
   devicesList: [],
-  isLoading: true,
+  isLoading: false,
 };
 
 export const devicesSlice = createSlice({
@@ -57,6 +57,9 @@ export const devicesSlice = createSlice({
           device.id !== id,
       );
     },
+    startLoadingDevices: state => {
+      state.isLoading = true;
+    },
     clearDeviceState: state => {
       state.devicesList = [];
       state.isLoading = true;
@@ -79,17 +82,17 @@ export const selectDevicesLoading = (state: RootState) =>
 
 export const selectDeviceTypes = createSelector(
   [selectDevices],
-  (devices): DeviceType[] => {
-    return [...new Set(devices.map(device => device.type))];
-  },
+  (devices): DeviceType[] => [...new Set(devices.map(device => device.type))],
+);
+
+export const selectDevicesWithType = createSelector(
+  [selectDevices, (_, type: DeviceType) => type],
+  (devices, type) => devices.filter(device => device.type === type),
 );
 
 export const selectNodesWithType = createSelector(
-  [selectDevices, (_, type: DeviceType) => type],
-  (devices, type) => {
-    const filteredDevices = devices.filter(device => device.type === type);
-    return [...new Set(filteredDevices.map(device => device.nodeId))];
-  },
+  [selectDevicesWithType],
+  devices => [...new Set(devices.map(({ nodeId }) => nodeId))],
 );
 
 export const selectDeviceWithId = createSelector(
@@ -106,11 +109,6 @@ export const selectDeviceWithId = createSelector(
         device.nodeId === nodeId &&
         device.id === id,
     ),
-);
-
-export const selectDevicesWithType = createSelector(
-  [selectDevices, (_, type: DeviceType) => type],
-  (devices, type) => devices.filter(device => device.type === type),
 );
 
 export default devicesSlice.reducer;

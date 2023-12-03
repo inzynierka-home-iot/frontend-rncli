@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react';
+import React, { FC, useMemo } from 'react';
 import {
   Button,
   Select,
@@ -38,7 +38,7 @@ export const LightControls: FC<AdditionalControlsProps> = ({
     botId,
   };
 
-  const handleAllLightsOn = () =>
+  const handleAllLightsOn = () => {
     sendIoTAPIRequest({
       ...lightActionBaseParams,
       nodeId: '*',
@@ -46,8 +46,9 @@ export const LightControls: FC<AdditionalControlsProps> = ({
       action: 'set',
       additionalParams: { V_STATUS: 1 },
     });
+  };
 
-  const handleAllLightsOff = () =>
+  const handleAllLightsOff = () => {
     sendIoTAPIRequest({
       ...lightActionBaseParams,
       nodeId: '*',
@@ -55,8 +56,9 @@ export const LightControls: FC<AdditionalControlsProps> = ({
       action: 'set',
       additionalParams: { V_STATUS: 0 },
     });
+  };
 
-  const handleNodeLightsOn = () =>
+  const handleNodeLightsOn = () => {
     sendIoTAPIRequest({
       ...lightActionBaseParams,
       nodeId: nodesSelectData[selectedValue].value,
@@ -64,6 +66,7 @@ export const LightControls: FC<AdditionalControlsProps> = ({
       action: 'set',
       additionalParams: { V_STATUS: 1 },
     });
+  };
 
   const handleNodeLightsOff = () =>
     sendIoTAPIRequest({
