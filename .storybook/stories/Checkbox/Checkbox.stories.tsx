@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View } from 'react-native';
-import { Checkbox } from './Checkbox';
+import { CheckBox } from './CheckBox';
+import { useCheckBoxValue } from './useCheckBoxValue';
 
-const MyCheckboxMeta = {
-  title: 'Checkbox',
-  component: Checkbox,
+const MyCheckBoxMeta = {
+  title: 'CheckBox',
+  component: CheckBox,
   decorators: [
     (Story: any) => (
       <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
@@ -14,25 +15,22 @@ const MyCheckboxMeta = {
   ],
 };
 
-export default MyCheckboxMeta;
+export default MyCheckBoxMeta;
 
 export const Basic = () => {
-  const [checked, setChecked] = useState(true);
-  const onPress = () => setChecked(!checked);
+  const [checked, onPress] = useCheckBoxValue(true);
 
-  return <Checkbox checked={checked} onPress={onPress} />;
+  return <CheckBox checked={checked} onPress={onPress} />;
 };
 
 export const Success = () => {
-  const [checked, setChecked] = useState(true);
-  const onPress = () => setChecked(!checked);
+  const [checked, onPress] = useCheckBoxValue(true);
 
-  return <Checkbox variant="success" checked={checked} onPress={onPress} />;
+  return <CheckBox variant="success" checked={checked} onPress={onPress} />;
 };
 
 export const Error = () => {
-  const [checked, setChecked] = useState(true);
-  const onPress = () => setChecked(!checked);
+  const [checked, onPress] = useCheckBoxValue(true);
 
-  return <Checkbox variant="error" checked={checked} onPress={onPress} />;
+  return <CheckBox variant="error" checked={checked} onPress={onPress} />;
 };

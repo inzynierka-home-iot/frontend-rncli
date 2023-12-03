@@ -135,9 +135,9 @@ const mockedData = {
 };
 
 const initialState: DeviceState = {
-  // devicesList: mockedData.devices,
-  devicesList: [],
-  isLoading: true,
+  devicesList: mockedData.devices,
+  // devicesList: [],
+  isLoading: false,
 };
 
 export const devicesSlice = createSlice({
@@ -145,8 +145,8 @@ export const devicesSlice = createSlice({
   initialState,
   reducers: {
     setInitialDevice: (state, action: PayloadAction<Device[]>) => {
-      state.devicesList = action.payload;
-      state.isLoading = false;
+      // state.devicesList = action.payload;
+      // state.isLoading = false;
     },
     setDevicesValues: (
       state,
@@ -184,11 +184,11 @@ export const devicesSlice = createSlice({
       );
     },
     startLoadingDevices: state => {
-      state.isLoading = true;
+      // state.isLoading = true;
     },
     clearDeviceState: state => {
-      state.devicesList = [];
-      state.isLoading = true;
+      // state.devicesList = [];
+      // state.isLoading = true;
     },
   },
 });

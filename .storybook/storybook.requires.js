@@ -43,13 +43,13 @@ if (parameters) {
 
 try {
   argsEnhancers.forEach(enhancer => addArgsEnhancer(enhancer));
-} catch { }
+} catch {}
 
 const getStories = () => {
   return {
     './.storybook/stories/AlertBanner/AlertBanner.stories.tsx': require('./stories/AlertBanner/AlertBanner.stories'),
     './.storybook/stories/Button/Button.stories.tsx': require('./stories/Button/Button.stories.tsx'),
-    './.storybook/stories/Checkbox/Checkbox.stories.tsx': require('./stories/Checkbox/Checkbox.stories.tsx'),
+    './.storybook/stories/CheckBox/CheckBox.stories.tsx': require('./stories/CheckBox/CheckBox.stories.tsx'),
     './.storybook/stories/DataChart/DataChart.stories.tsx': require('./stories/DataChart/DataChart.stories'),
     './.storybook/stories/DatePicker/ScheduleDatePicker.stories.tsx': require('./stories/DatePicker/ScheduleDatePicker.stories'),
     './.storybook/stories/IconButton/IconButton.stories.tsx': require('./stories/IconButton/IconButton.stories.tsx'),

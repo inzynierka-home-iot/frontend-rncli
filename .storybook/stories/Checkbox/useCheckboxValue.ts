@@ -1,9 +1,11 @@
-import { useState } from "react"
+import { useState } from 'react';
 
-export const useCheckboxValue = (defaultValue = false): [boolean, () => void] => {
+export const useCheckBoxValue = (
+  defaultValue = false,
+): [boolean, () => void] => {
   const [value, setValue] = useState(defaultValue);
 
   const onToggle = () => setValue(oldValue => !oldValue);
 
-  return [value, onToggle]
-}
+  return [value, onToggle];
+};
