@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import React, { StyleSheet, View } from 'react-native';
+import React, { View } from 'react-native';
 import { Button, DataChart, Typography } from '../../../../.storybook/stories';
-import { theme } from '../../../../.storybook/theme';
 import { useSendAPIRequest } from '../../../../hooks';
 import { useTempHistory } from '../../../../hooks/useTempHistory';
 import { DeviceViewRouteParams } from '../../../../types';
+import { styles } from './TempHistoryChart.styles';
 
 type TempHistoryChartProps = {
   tempSensorParams: DeviceViewRouteParams;
@@ -45,9 +45,3 @@ export const TempHistoryChart: FC<TempHistoryChartProps> = ({
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  tempChart: {
-    gap: theme.spacing(2),
-  },
-});

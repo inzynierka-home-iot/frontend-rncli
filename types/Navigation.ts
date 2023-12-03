@@ -1,4 +1,5 @@
 import { StackNavigationProp } from '@react-navigation/stack';
+import { DeviceType } from '.';
 
 export type DeviceViewRouteParams = {
   location: string;
@@ -18,13 +19,20 @@ export type RootStackParamList = {
   Telegram: undefined;
   LocationList: undefined;
   Admin: undefined;
-  DeviceList: {
+  DeviceTypes: {
     botHash: string;
     botId: string;
   };
+  DeviceList: {
+    botHash: string;
+    botId: string;
+    deviceType: DeviceType;
+  };
   Light: DeviceViewRouteParams;
+  Buzzer: DeviceViewRouteParams;
   RgbLight: DeviceViewRouteParams;
   Fan: DeviceViewRouteParams;
+  Lock: DeviceViewRouteParams;
   DistanceDetector: DeviceViewRouteParams;
   HumidityDetector: DeviceViewRouteParams;
   LightDetector: DeviceViewRouteParams;

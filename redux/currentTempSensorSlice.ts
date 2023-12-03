@@ -4,7 +4,6 @@ import { ChartData } from '../types';
 
 interface TempSensorState {
   currentTempSensorHistory: ChartData[];
-  subscription: boolean;
 }
 
 const mockedData = {
@@ -17,12 +16,10 @@ const mockedData = {
     { index: '6', value: 24.825 },
     { index: '7', value: 21.367 },
   ] as ChartData[],
-  subscription: false,
 };
 
 const initialState: TempSensorState = {
   currentTempSensorHistory: mockedData.currentTempSensorHistory,
-  subscription: mockedData.subscription,
 };
 
 export const currentTempSensorSlice = createSlice({
@@ -35,19 +32,12 @@ export const currentTempSensorSlice = createSlice({
         value: number,
       }));
     },
-    setTempSubscription: (state, action: PayloadAction<boolean>) => {
-      state.subscription = action.payload;
-    },
   },
 });
 
-export const { setTempHistory, setTempSubscription } =
-  currentTempSensorSlice.actions;
+export const { setTempHistory } = currentTempSensorSlice.actions;
 
 export const selectTempSensorHistory = (state: RootState) =>
   state.tempSensor.currentTempSensorHistory;
-
-export const selectTempSensorSubscription = (state: RootState) =>
-  state.tempSensor.subscription;
 
 export default currentTempSensorSlice.reducer;

@@ -14,7 +14,7 @@ type LightDetectorViewProps = NativeStackScreenProps<
 >;
 
 export const LightDetectorView: FC<LightDetectorViewProps> = ({ route }) => {
-  const { deviceId, nodeId, location } = route.params;
+  const { location, nodeId, deviceId } = route.params;
 
   const sendIoTAPIRequest = useSendAPIRequest();
 
@@ -43,7 +43,7 @@ export const LightDetectorView: FC<LightDetectorViewProps> = ({ route }) => {
       }>
       <Typography
         variant="body-medium"
-        text={`Aktualny stan natęzenia światła: ${lightDetector.values.V_LIGHT_LEVEL}`}
+        text={`Aktualny stan natężenia światła: ${lightDetector.values.V_LIGHT_LEVEL}`}
       />
       <Button text="Pobierz aktualny stan" onPress={handleGetLightLevel} />
     </LayoutProvider>

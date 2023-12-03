@@ -16,7 +16,7 @@ type HumidityDetectorViewProps = NativeStackScreenProps<
 export const HumidityDetectorView: FC<HumidityDetectorViewProps> = ({
   route,
 }) => {
-  const { deviceId, nodeId, location } = route.params;
+  const { location, nodeId, deviceId } = route.params;
 
   const sendIoTAPIRequest = useSendAPIRequest();
 

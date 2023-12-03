@@ -37,14 +37,13 @@ const useCheckBoxColor = (variant: CheckBoxProps['variant']) => {
     variant == 'default'
       ? 'text-informative'
       : variant == 'success'
-      ? 'text-success'
-      : 'text-error';
+        ? 'text-success'
+        : 'text-error';
   return theme.colors[checkBoxColor];
 };
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
     flexDirection: 'row',
     gap: theme.spacing(2),
   },
