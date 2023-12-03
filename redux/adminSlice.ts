@@ -40,7 +40,6 @@ export const adminSlice = createSlice({
     setBotsNames: (state, action: PayloadAction<string[]>) => {
       state.botsNames = action.payload;
     },
-    resetAdmin: () => initialState,
   },
 });
 
@@ -51,7 +50,6 @@ export const {
   setIsUsernameInvalidError,
   setNewBotToken,
   setBotsNames,
-  resetAdmin,
 } = adminSlice.actions;
 
 export default adminSlice.reducer;

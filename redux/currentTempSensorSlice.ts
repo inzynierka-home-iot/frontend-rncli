@@ -38,11 +38,10 @@ export const currentTempSensorSlice = createSlice({
     setTempSubscription: (state, action: PayloadAction<boolean>) => {
       state.subscription = action.payload;
     },
-    resetTempSensor: () => initialState,
   },
 });
 
-export const { setTempHistory, setTempSubscription, resetTempSensor } =
+export const { setTempHistory, setTempSubscription } =
   currentTempSensorSlice.actions;
 
 export const selectTempSensorHistory = (state: RootState) =>

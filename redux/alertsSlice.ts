@@ -51,11 +51,10 @@ export const alertsSlice = createSlice({
       const { id } = action.payload;
       state.alertsList = state.alertsList.filter(alert => alert.id !== id);
     },
-    resetAlerts: () => initialState,
   },
 });
 
-export const { addAlert, removeAlert, resetAlerts } = alertsSlice.actions;
+export const { addAlert, removeAlert } = alertsSlice.actions;
 
 export const selectAlerts = (state: RootState) => state.alerts.alertsList;
 
