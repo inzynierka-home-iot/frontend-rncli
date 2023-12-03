@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import React, { FC } from 'react';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { theme } from '../../theme';
 import { Typography } from '../Typography';
 
@@ -8,29 +8,35 @@ type DayButtonProps = {
   label: string;
   isSelected: boolean;
   onDayChange: (value: number) => void;
-}
+};
 
 export const DayButton: FC<DayButtonProps> = ({
   value,
   label,
   isSelected,
-  onDayChange
+  onDayChange,
 }) => {
   const styles = useStyles(isSelected);
 
   const onPress = () => onDayChange(value);
 
   return (
-    <TouchableOpacity style={styles.dayButton} onPress={onPress} activeOpacity={0.6}>
-      <Typography text={label} variant='body-small' color='text-invertedPrimary' />
+    <TouchableOpacity
+      style={styles.dayButton}
+      onPress={onPress}
+      activeOpacity={0.6}>
+      <Typography
+        text={label}
+        variant="body-small"
+        color="text-invertedPrimary"
+      />
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 const useStyles = (isSelected: boolean) => {
   return StyleSheet.create({
     dayButton: {
-      display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
       width: theme.spacing(11),
@@ -41,5 +47,5 @@ const useStyles = (isSelected: boolean) => {
         ? theme.colors['text-success']
         : theme.colors['action-primary'],
     },
-  })
-}
+  });
+};

@@ -16,7 +16,7 @@ import { RgbLight, RootStackParamList } from '../../types';
 type RgbLightViewProps = NativeStackScreenProps<RootStackParamList, 'RgbLight'>;
 
 export const RgbLightView: FC<RgbLightViewProps> = ({ route }) => {
-  const { deviceId, nodeId, location } = route.params;
+  const { location, nodeId, deviceId } = route.params;
 
   const sendIoTAPIRequest = useSendAPIRequest();
 

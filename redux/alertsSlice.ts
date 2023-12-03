@@ -10,28 +10,7 @@ interface MessagesState {
   alertsList: AlertMessage[];
 }
 
-const mockedData = {
-  alerts: [
-    {
-      id: nanoid(),
-      variant: 'informative',
-      text: 'Dzień dobry',
-    },
-    {
-      id: nanoid(),
-      variant: 'error',
-      text: 'Lamp broke',
-    },
-    {
-      id: nanoid(),
-      variant: 'success',
-      text: 'Lamp turned on',
-    },
-  ] as AlertMessage[],
-};
-
 const initialState: MessagesState = {
-  // alertsList: mockedData.alerts,
   alertsList: [],
 };
 

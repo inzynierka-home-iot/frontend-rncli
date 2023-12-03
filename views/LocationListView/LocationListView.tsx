@@ -21,7 +21,7 @@ export const LocationListView = () => {
   };
 
   const onNavigateToDeviceList = (botHash: string, botId: string) => {
-    navigation.navigate('DeviceList', {
+    navigation.navigate('DeviceTypes', {
       botHash,
       botId,
     });

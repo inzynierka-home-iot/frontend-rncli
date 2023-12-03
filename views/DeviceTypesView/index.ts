@@ -1,0 +1,1 @@
+export { DeviceTypesView } from './DeviceTypesView';

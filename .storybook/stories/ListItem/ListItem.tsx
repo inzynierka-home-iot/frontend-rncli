@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   leftPanel: {
-    display: 'flex',
     flex: 1,
     flexWrap: 'wrap',
     flexDirection: 'row',

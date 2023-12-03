@@ -16,7 +16,7 @@ type DistanceDetectorViewProps = NativeStackScreenProps<
 export const DistanceDetectorView: FC<DistanceDetectorViewProps> = ({
   route,
 }) => {
-  const { deviceId, nodeId, location } = route.params;
+  const { location, nodeId, deviceId } = route.params;
 
   const sendIoTAPIRequest = useSendAPIRequest();
 
