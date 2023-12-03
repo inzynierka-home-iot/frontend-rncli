@@ -13,4 +13,5 @@ const TYPE_TO_CATEGORY: Record<DeviceType, string> = {
   S_TEMP: 'Czujniki temperatury',
 };
 
-export const getDeviceTypeName = (type: DeviceType) => TYPE_TO_CATEGORY[type];
+export const getDeviceTypeName = (type: DeviceType) =>
+  TYPE_TO_CATEGORY[type] || '';

@@ -71,7 +71,7 @@ export const CurrentParamsLabel: FC<CurrentParamsLabelProps> = ({
     <>
       <Typography
         variant="body-medium"
-        text={`Aktualna status wentylatora: ${fanTurnedOn ? 'Wyłączony' : 'Włączony'
+        text={`Aktualna status wentylatora: ${fanTurnedOn ? 'Włączony' : 'Wyłączony'
           }`}
       />
       <Button
