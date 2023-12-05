@@ -4,6 +4,7 @@ import {
   addDevice,
   removeDevice,
   setDevicesValues,
+  setDeviceSchedule,
 } from '../redux/devicesSlice';
 import { addAlert } from '../redux/alertsSlice';
 import { AppDispatch } from '../redux/store';
@@ -56,8 +57,23 @@ export const listenForMessages = (user_id: string, dispatch: AppDispatch) => {
           text: `Zaaktualizowane parametry: ${changedParams.join(', ')}`,
         };
         dispatch(addAlert(alertMessage));
+      } else if (command === 'setSchedule') {
+        const schedule = paramsToObject(message.req.split('?')[1]);
+        dispatch(
+          setDeviceSchedule({
+            location,
+            nodeId,
+            deviceId,
+            schedule,
+          }),
+        );
+        const alertMessage: Alert = {
+          variant: 'success',
+          text: 'Zaaktualizowano schedule!',
+        };
+        dispatch(addAlert(alertMessage));
       } else if (command === 'status') {
-        const values = message.res;
+        const { res: values } = message;
         dispatch(
           setDevicesValues({
             location,

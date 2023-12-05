@@ -45,6 +45,26 @@ export const devicesSlice = createSlice({
         };
       }
     },
+    setDeviceSchedule: (
+      state,
+      action: PayloadAction<{
+        location: string;
+        nodeId: string;
+        deviceId: string;
+        schedule: any;
+      }>,
+    ) => {
+      const { location, nodeId, deviceId, schedule } = action.payload;
+      const searchedDevice = state.devicesList.find(
+        device =>
+          device.location === location &&
+          device.nodeId === nodeId &&
+          device.id === deviceId,
+      );
+      if (searchedDevice) {
+        searchedDevice.schedule = schedule;
+      }
+    },
     addDevice: (state, action: PayloadAction<Device>) => {
       state.devicesList.push(action.payload);
     },
@@ -67,12 +87,17 @@ export const devicesSlice = createSlice({
 export const {
   setInitialDevice,
   setDevicesValues,
+  setDeviceSchedule,
   addDevice,
   removeDevice,
   clearDeviceState,
 } = devicesSlice.actions;
 
-export const selectDevices = (state: RootState) => state.devices.devicesList;
+export const selectDevices = (state: RootState) =>
+  state.devices.devicesList.filter(
+    ({ type }) =>
+      type !== 'S_ARDUINO_REPEATER_NODE' && type !== 'S_ARDUINO_NODE',
+  );
 
 export const selectDevicesLoading = (state: RootState) =>
   state.devices.isLoading;
