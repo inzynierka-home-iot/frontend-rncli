@@ -33,7 +33,10 @@ export const TempSensorView = ({ route }: TempSensorViewProps) => {
   return (
     <LayoutProvider
       navbar={
-        <Navbar text={`${location} - ${nodeId} - ${tempSensor?.name}`} />
+        <Navbar
+          text={`${location} - ${nodeId} - ${tempSensor?.name}`}
+          variant="header-small"
+        />
       }>
       <CurrentTempLabel
         tempValueRaw={tempSensor.values.V_TEMP}

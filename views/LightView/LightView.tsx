@@ -53,7 +53,12 @@ export const LightView = ({ route }: LightViewProps) => {
 
   return (
     <LayoutProvider
-      navbar={<Navbar text={`${location} - ${nodeId} - ${light?.name}`} />}>
+      navbar={
+        <Navbar
+          text={`${location} - ${nodeId} - ${light?.name}`}
+          variant="header-small"
+        />
+      }>
       <Typography
         variant="body-medium"
         text={`Aktualny status lampy to: ${status ? 'Włączona' : 'Wyłączona'}`}

@@ -9,6 +9,8 @@ import { useSendAPIRequest } from '../../../../hooks';
 import { AdditionalControlsProps } from '../AdditionalControls';
 import { useAppSelector } from '../../../../redux/hooks';
 import { selectNodesWithType } from '../../../../redux/devicesSlice';
+import { View } from 'react-native';
+import { styles } from './styles/Controls.styles';
 
 export const LightControls: FC<AdditionalControlsProps> = ({
   deviceType,
@@ -78,40 +80,44 @@ export const LightControls: FC<AdditionalControlsProps> = ({
     });
 
   return (
-    <>
-      <Button
-        text="Włącz wszystkie w całym domu"
-        variant="success"
-        hasFullWidth
-        onPress={handleAllLightsOn}
-      />
-      <Button
-        text="Wyłącz wszystkie w całym domu"
-        variant="error"
-        hasFullWidth
-        onPress={handleAllLightsOff}
-      />
-      <Typography
-        variant="body-medium"
-        text="Wybierz node, którym chcesz zarządzać"
-      />
-      <Select
-        selectData={nodesSelectData}
-        index={selectedIndex}
-        onSelect={onSelect}
-      />
-      <Button
-        text="Włącz w danym nodzie"
-        variant="success"
-        hasFullWidth
-        onPress={handleNodeLightsOn}
-      />
-      <Button
-        text="Wyłącz w danym nodzie"
-        variant="error"
-        hasFullWidth
-        onPress={handleNodeLightsOff}
-      />
-    </>
+    <View style={styles.container}>
+      <View style={styles.content}>
+        <Button
+          text="Włącz wszystkie w całym domu"
+          variant="success"
+          hasFullWidth
+          onPress={handleAllLightsOn}
+        />
+        <Button
+          text="Wyłącz wszystkie w całym domu"
+          variant="error"
+          hasFullWidth
+          onPress={handleAllLightsOff}
+        />
+      </View>
+      <View style={styles.content}>
+        <Typography
+          variant="body-medium"
+          text="Wybierz node, którym chcesz zarządzać"
+        />
+        <Select
+          selectData={nodesSelectData}
+          index={selectedIndex}
+          onSelect={onSelect}
+        />
+        <Button
+          text="Włącz w danym nodzie"
+          variant="success"
+          hasFullWidth
+          onPress={handleNodeLightsOn}
+        />
+        <Button
+          text="Wyłącz w danym nodzie"
+          variant="error"
+          hasFullWidth
+          onPress={handleNodeLightsOff}
+        />
+      </View>
+    </View>
   );
 };

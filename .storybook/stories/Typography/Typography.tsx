@@ -8,6 +8,7 @@ export type TypographyProps = {
   color?: ColorKeys;
   selectable?: boolean;
   center?: boolean;
+  numberOfLines?: number;
 };
 
 export const Typography: FC<TypographyProps> = ({
@@ -16,9 +17,11 @@ export const Typography: FC<TypographyProps> = ({
   color = 'text-primary',
   selectable = false,
   center = false,
+  numberOfLines = undefined,
 }) => {
   return (
     <Text
+      numberOfLines={numberOfLines}
       style={[
         center && { textAlign: 'center' },
         { color: theme.colors[color] },

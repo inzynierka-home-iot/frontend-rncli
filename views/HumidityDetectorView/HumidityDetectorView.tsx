@@ -41,7 +41,10 @@ export const HumidityDetectorView: FC<HumidityDetectorViewProps> = ({
   return (
     <LayoutProvider
       navbar={
-        <Navbar text={`${location} - ${nodeId} - ${humidityDetector?.name}`} />
+        <Navbar
+          text={`${location} - ${nodeId} - ${humidityDetector?.name}`}
+          variant="header-small"
+        />
       }>
       <Typography
         variant="body-medium"

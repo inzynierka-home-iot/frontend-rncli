@@ -41,7 +41,10 @@ export const DistanceDetectorView: FC<DistanceDetectorViewProps> = ({
   return (
     <LayoutProvider
       navbar={
-        <Navbar text={`${location} - ${nodeId} - ${distanceDetector?.name}`} />
+        <Navbar
+          text={`${location} - ${nodeId} - ${distanceDetector?.name}`}
+          variant="header-small"
+        />
       }>
       <Typography
         variant="body-medium"

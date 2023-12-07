@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Typography } from '../Typography/Typography';
-import { theme } from '../../theme';
+import { TypographyKeys, theme } from '../../theme';
 import { Button, ButtonProps } from '../Button/Button';
 import { IconButton } from '../IconButton/IconButton';
 import { useAppNavigation } from '../../../hooks';
@@ -11,12 +11,14 @@ export type NavbarProps = {
   text: string;
   button?: ButtonProps;
   backButton?: boolean;
+  variant?: TypographyKeys;
 };
 
 export const Navbar: FC<NavbarProps> = ({
   text,
   button = null,
   backButton = true,
+  variant = 'header-medium',
 }) => {
   const navigation = useAppNavigation();
 
@@ -25,7 +27,7 @@ export const Navbar: FC<NavbarProps> = ({
       {backButton && (
         <IconButton icon={faChevronLeft} onPress={navigation.goBack} />
       )}
-      <Typography variant="header-small" text={text} />
+      <Typography variant={variant} text={text} numberOfLines={1} />
       {button && <Button {...button} />}
     </View>
   );
