@@ -1,6 +1,16 @@
-import { DeviceType } from '../../../types';
+import {
+  DeviceType,
+  DeviceViewRouteParams,
+  RootStackParamList,
+} from '../../../types';
 
-const DEVICE_TO_VIEW: Record<DeviceType, string> = {
+type KeysWithDeviceViewRouteParams<T> = {
+  [K in keyof T]: T[K] extends DeviceViewRouteParams ? K : never;
+}[keyof T];
+
+type DeviceViewKeys = KeysWithDeviceViewRouteParams<RootStackParamList>;
+
+const DEVICE_TO_VIEW: Record<DeviceType, DeviceViewKeys> = {
   S_BINARY: 'Light',
   S_CUSTOM: 'Buzzer',
   S_DISTANCE: 'DistanceDetector',
@@ -13,4 +23,6 @@ const DEVICE_TO_VIEW: Record<DeviceType, string> = {
   S_TEMP: 'TempSensor',
 };
 
-export const getDeviceViewName = (type: DeviceType) => DEVICE_TO_VIEW[type];
+export const getDeviceViewName = (type: DeviceType) => {
+  return DEVICE_TO_VIEW[type];
+};

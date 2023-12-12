@@ -38,15 +38,15 @@ export const DeviceListView: FC<DeviceListViewProps> = ({ route }) => {
             key={createDeviceKey(device)}
             text={device.name}
             icon={getDeviceIcon(device.type)}
-            onPress={() => {
+            onPress={() =>
               navigation.navigate(getDeviceViewName(device.type), {
                 location: device.location,
                 nodeId: device.nodeId,
                 deviceId: device.id,
                 botHash,
                 botId,
-              });
-            }}
+              })
+            }
           />
         ))}
       </View>
