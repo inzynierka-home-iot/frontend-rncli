@@ -23,7 +23,7 @@ export const BotTokenLabel = () => {
       />
       <Typography
         variant="body-medium"
-        text="Przekaż ten token do parametru '*' w skrypcie uruchamianym na Twoim brokerze, aby używac aplikacji :)"
+        text="Przekaż ten token do parametru 'telegram_bot_token' w skrypcie uruchamianym na Twoim brokerze, aby używac aplikacji :)"
       />
     </>
   );

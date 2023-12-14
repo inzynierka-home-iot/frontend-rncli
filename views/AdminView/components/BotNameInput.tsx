@@ -2,8 +2,10 @@ import { FC, useCallback, useEffect, useState } from 'react';
 import React from 'react-native';
 import {
   Button,
+  CheckBox,
   Input,
   Typography,
+  useCheckBoxValue,
   useInputValue,
 } from '../../../.storybook/stories';
 import { useAppSelector } from '../../../redux/hooks';
@@ -22,15 +24,18 @@ export const BotNameInput: FC<BotNameInputProps> = ({
   const sendTelegramMessage = useSendTelegramMessage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [botUsername, onBotUsernameChange] = useInputValue();
+  const [generateName, onToggleGenerateName] = useCheckBoxValue(true);
 
   const { isWaitingForUsername, isUsernameInvalidError, isUsernameTakenError } =
     useAppSelector(state => state.admin);
 
   useEffect(() => {
-    if (isWaitingForUsername) {
+    if (generateName && isWaitingForUsername) {
       onBotUsernameChange(generateBotName(locationName));
+    } else {
+      onBotUsernameChange('');
     }
-  }, [isWaitingForUsername]);
+  }, [generateName, isWaitingForUsername]);
 
   const onConfirmBotUsername = useCallback(async () => {
     setIsSubmitting(true);
@@ -45,6 +50,12 @@ export const BotNameInput: FC<BotNameInputProps> = ({
         variant="body-small"
         text={`Podaj username dla bota, którego będziesz używał na Raspberry PI. Na końcu wpisanej nazwy zostanie dodana końcówka '${BOT_SUFFIX}'.`}
         color="text-secondary"
+      />
+      <CheckBox
+        checked={generateName}
+        onPress={onToggleGenerateName}
+        label="Użyj wygenerowanej nazwy"
+        disabled={!isWaitingForUsername || isSubmitting}
       />
       <Input
         text={botUsername}
