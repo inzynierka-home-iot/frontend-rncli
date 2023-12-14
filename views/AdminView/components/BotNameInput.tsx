@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import React from 'react-native';
 import {
   Button,
@@ -8,10 +8,14 @@ import {
 } from '../../../.storybook/stories';
 import { useAppSelector } from '../../../redux/hooks';
 import { BOT_NAME_LENGTH, BOT_SUFFIX } from '../../../utils/env';
-import { BotFather as BotNameInputProps } from '../../../types';
+import { BotFather } from '../../../types';
 import { useSendTelegramMessage } from '../../../hooks';
+import { generateBotName } from '../utils';
+
+type BotNameInputProps = BotFather & { locationName: string };
 
 export const BotNameInput: FC<BotNameInputProps> = ({
+  locationName,
   botFatherAccessHash,
   botFatherId,
 }) => {
@@ -21,6 +25,12 @@ export const BotNameInput: FC<BotNameInputProps> = ({
 
   const { isWaitingForUsername, isUsernameInvalidError, isUsernameTakenError } =
     useAppSelector(state => state.admin);
+
+  useEffect(() => {
+    if (isWaitingForUsername) {
+      onBotUsernameChange(generateBotName(locationName));
+    }
+  }, [isWaitingForUsername]);
 
   const onConfirmBotUsername = useCallback(async () => {
     setIsSubmitting(true);
@@ -49,7 +59,7 @@ export const BotNameInput: FC<BotNameInputProps> = ({
       {isUsernameTakenError && (
         <Typography
           variant="body-medium"
-          text="Nazwa jest juz zajęta. Spróbuj ponownie."
+          text="Nazwa jest już zajęta. Spróbuj ponownie."
           color="text-error"
         />
       )}

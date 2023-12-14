@@ -23,7 +23,7 @@ export const BotTokenLabel = () => {
       />
       <Typography
         variant="body-medium"
-        text="Uzyj tego tokenu w pliku .env na Twoim brokerze oraz uruchom serwer, aby uzywac aplikacji :)"
+        text="Przekaż ten token do parametru '*' w skrypcie uruchamianym na Twoim brokerze, aby używac aplikacji :)"
       />
     </>
   );

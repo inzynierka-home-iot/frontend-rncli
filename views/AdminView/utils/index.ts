@@ -1,0 +1,1 @@
+export { generateBotName } from './generateBotName';

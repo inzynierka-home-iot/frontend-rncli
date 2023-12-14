@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Navbar } from '../../.storybook/stories';
+import { Navbar, useInputValue } from '../../.storybook/stories';
 import { LayoutProvider } from '../../components';
 import { LoadingWrapper } from '../../components/LoadingWrapper';
 import { LocationInput } from './components';
@@ -9,6 +9,7 @@ import { useBotFatherId, useListenForBotFather } from './hooks';
 import { useSendTelegramMessage } from '../../hooks';
 
 export const AdminView = () => {
+  const [locationName, onLocationNameChange] = useInputValue();
   const sendTelegramMessage = useSendTelegramMessage();
   const [botFatherAccessHash, botFatherId] = useBotFatherId();
   useListenForBotFather(botFatherId);
@@ -23,10 +24,13 @@ export const AdminView = () => {
     <LayoutProvider navbar={<Navbar text="Dodaj nową lokalizację" />}>
       <LoadingWrapper isLoading={!botFatherAccessHash || !botFatherId}>
         <LocationInput
+          locationName={locationName}
+          onLocationNameChange={onLocationNameChange}
           botFatherAccessHash={botFatherAccessHash!}
           botFatherId={botFatherId!}
         />
         <BotNameInput
+          locationName={locationName}
           botFatherAccessHash={botFatherAccessHash!}
           botFatherId={botFatherId!}
         />
