@@ -9,6 +9,7 @@ export enum DeviceType {
   S_MOTION = 'S_MOTION',
   S_RGB_LIGHT = 'S_RGB_LIGHT',
   S_TEMP = 'S_TEMP',
+  S_SPRINKLER = 'S_SPRINKLER',
 }
 
 export type Device<T = any, K = any, L = any> = {
@@ -109,10 +110,40 @@ type BuzzerValues = {
   V_STATUS: string;
 };
 
-export type Buzzer = Device<BuzzerValues, DeviceType.S_CUSTOM>;
+export type BuzzerSchedule = {
+  action: string;
+  location: string;
+  nodeId: string;
+  id: string;
+  V_STATUS: string;
+};
+
+export type Buzzer = Device<BuzzerValues, DeviceType.S_CUSTOM, BuzzerSchedule>;
 
 type LockValues = {
   V_LOCK_STATUS: string;
 };
 
 export type Lock = Device<LockValues, DeviceType.S_LOCK>;
+
+type SprinklerValues = {
+  V_STATUS: string;
+};
+
+export type SprinklerSchedule = {
+  action: string;
+  humLocation: string;
+  humNodeId: string;
+  humId: string;
+  V_HUM: string;
+  lightLocation: string;
+  lightNodeId: string;
+  lightId: string;
+  V_LIGHT_LEVEL: string;
+};
+
+export type Sprinkler = Device<
+  SprinklerValues,
+  DeviceType.S_SPRINKLER,
+  SprinklerSchedule
+>;

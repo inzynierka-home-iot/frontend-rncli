@@ -1,0 +1,1 @@
+export { TurnOnFanSelect } from './TurnOnBuzzerSelect';

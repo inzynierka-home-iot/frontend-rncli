@@ -1,6 +1,6 @@
 export * from './AlertBanner';
 export * from './Button';
-export * from './CheckBox';
+export * from './Checkbox';
 export * from './DataChart';
 export * from './DatePicker';
 export * from './IconButton';

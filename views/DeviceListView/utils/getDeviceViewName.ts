@@ -11,6 +11,7 @@ const DEVICE_TO_VIEW: Record<DeviceType, string> = {
   S_MOTION: 'MotionDetector',
   S_RGB_LIGHT: 'RgbLight',
   S_TEMP: 'TempSensor',
+  S_SPRINKLER: 'Sprinkler',
 };
 
 export const getDeviceViewName = (type: DeviceType) => DEVICE_TO_VIEW[type];
