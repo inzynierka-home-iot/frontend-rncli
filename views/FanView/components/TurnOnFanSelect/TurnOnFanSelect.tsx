@@ -90,7 +90,7 @@ export const TurnOnFanSelect: FC<TurnOnFanSelectProps> = ({
             onSelect={onSelect}
           />
           <Typography
-            text="Włącz jezeli temperatura wzrośnie do:"
+            text="Włącz jeżeli temperatura wzrośnie do:"
             variant="body-medium"
           />
           <Input
