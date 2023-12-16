@@ -7,7 +7,7 @@ import {
   Typography,
   useCheckBoxValue,
   useInputValue,
-  useSelectValue,
+  useSelectIndex,
 } from '../../../../.storybook/stories';
 import { selectDevicesWithType } from '../../../../redux/devicesSlice';
 import { useAppSelector } from '../../../../redux/hooks';
@@ -27,7 +27,7 @@ export const TurnOnFanSelect: FC<TurnOnFanSelectProps> = ({
     Object.keys(fanSchedule || []).length !== 0,
   );
   const [tempValue, onChangeTempValue] = useInputValue(fanSchedule?.V_TEMP);
-  const [selectedValue, onSelect] = useSelectValue();
+  const [selectedIndex, onSelect] = useSelectIndex();
 
   const tempSensors = useAppSelector(state =>
     selectDevicesWithType(state, DeviceType.S_TEMP),
@@ -52,7 +52,7 @@ export const TurnOnFanSelect: FC<TurnOnFanSelectProps> = ({
       action: 'setSchedule',
       additionalParams: {
         action: 'maintain',
-        ...tempSensorsIds[selectedValue].value,
+        ...tempSensorsIds[selectedIndex].value,
         V_TEMP: tempValue,
       },
     });
@@ -86,7 +86,7 @@ export const TurnOnFanSelect: FC<TurnOnFanSelectProps> = ({
           />
           <Select
             selectData={tempSensorsIds}
-            index={selectedValue}
+            index={selectedIndex}
             onSelect={onSelect}
           />
           <Typography
