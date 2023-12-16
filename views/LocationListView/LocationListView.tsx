@@ -26,6 +26,7 @@ export const LocationListView = () => {
       botId,
     });
   };
+
   const retrieveAvailableLocations = useCallback(() => {
     if (botFatherAccessHash && botFatherId) {
       startRetrieving();
