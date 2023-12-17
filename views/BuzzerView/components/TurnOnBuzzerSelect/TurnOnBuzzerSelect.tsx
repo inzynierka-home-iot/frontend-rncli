@@ -74,7 +74,7 @@ export const TurnOnBuzzerSelect: FC<TurnOnBuzzerSelectProps> = ({
       <CheckBox
         checked={isBuzzerTurnOnAutomatically}
         onPress={onCheckboxPress}
-        label="Włączaj automatycznie brzęczyk, jezeli czujnik wykryje ruch"
+        label="Włączaj automatycznie alarm, jeżeli czujnik wykryje ruch"
       />
       {isBuzzerTurnOnAutomatically && (
         <>
