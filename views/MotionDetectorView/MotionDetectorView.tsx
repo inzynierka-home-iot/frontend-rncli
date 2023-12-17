@@ -39,10 +39,7 @@ export const MotionDetectorView: FC<MotionDetectorViewProps> = ({ route }) => {
   return (
     <LayoutProvider
       navbar={
-        <Navbar
-          text={`${location} - ${nodeId} - ${motionDetector?.name}`}
-          variant="header-small"
-        />
+        <Navbar text={`${location} - ${nodeId} - ${motionDetector?.name}`} />
       }>
       <Typography
         variant="body-medium"

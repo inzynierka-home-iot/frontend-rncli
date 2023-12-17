@@ -23,14 +23,13 @@ const MyAlertBanner = {
 export default MyAlertBanner;
 
 export const Informative = () => {
-  return <AlertBanner text={'Changes saved'} 
-  onClose={() => {}}/>;
+  return <AlertBanner text="Changes saved" onClose={() => {}} />;
 };
 
 export const Success = () => {
   return (
     <AlertBanner
-      text={'Lights turned on! You are enlighted now!'}
+      text="Lights turned on! You are enlighted now!"
       variant="success"
       onClose={() => {}}
     />
@@ -40,7 +39,7 @@ export const Success = () => {
 export const Error = () => {
   return (
     <AlertBanner
-      text={'Error! Cannot update settings'}
+      text="Error! Cannot update settings"
       variant="error"
       onClose={() => {}}
     />

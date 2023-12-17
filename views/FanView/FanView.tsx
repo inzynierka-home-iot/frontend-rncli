@@ -24,12 +24,7 @@ export const FanView: FC<FanViewProps> = ({ route }) => {
 
   return (
     <LayoutProvider
-      navbar={
-        <Navbar
-          text={`${location} - ${nodeId} - ${fan?.name}`}
-          variant="header-small"
-        />
-      }>
+      navbar={<Navbar text={`${location} - ${nodeId} - ${fan?.name}`} />}>
       <CurrentParamsLabel fanBaseParams={route.params} fanValues={fan.values} />
       <TurnOnFanSelect
         fanBaseParams={route.params}

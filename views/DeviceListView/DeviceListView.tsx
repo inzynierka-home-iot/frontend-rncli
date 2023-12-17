@@ -7,7 +7,11 @@ import { selectDevicesWithType } from '../../redux/devicesSlice';
 import { useAppNavigation } from '../../hooks';
 import { ListItem } from '../../.storybook/stories';
 import { getDeviceViewName } from './utils';
-import { LayoutProvider, NavbarWithLogout } from '../../components';
+import {
+  ControlsLayout,
+  LayoutProvider,
+  NavbarWithLogout,
+} from '../../components';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AdditionalControls } from './components';
 import { styles } from './DeviceListView.styles';
@@ -50,11 +54,13 @@ export const DeviceListView: FC<DeviceListViewProps> = ({ route }) => {
           />
         ))}
       </View>
-      <AdditionalControls
-        deviceType={deviceType}
-        botHash={botHash}
-        botId={botId}
-      />
+      <ControlsLayout>
+        <AdditionalControls
+          deviceType={deviceType}
+          botHash={botHash}
+          botId={botId}
+        />
+      </ControlsLayout>
     </LayoutProvider>
   );
 };

@@ -24,12 +24,7 @@ export const LockView: FC<LockViewProps> = ({ route }) => {
 
   return (
     <LayoutProvider
-      navbar={
-        <Navbar
-          text={`${location} - ${nodeId} - ${lock?.name}`}
-          variant="header-small"
-        />
-      }>
+      navbar={<Navbar text={`${location} - ${nodeId} - ${lock?.name}`} />}>
       <Typography
         variant="body-medium"
         text={`Aktualny stan zamka: ${

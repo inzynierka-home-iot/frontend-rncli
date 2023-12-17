@@ -42,12 +42,7 @@ export const RgbLightView: FC<RgbLightViewProps> = ({ route }) => {
 
   return (
     <LayoutProvider
-      navbar={
-        <Navbar
-          text={`${location} - ${nodeId} - ${rgbLight?.name}`}
-          variant="header-small"
-        />
-      }>
+      navbar={<Navbar text={`${location} - ${nodeId} - ${rgbLight?.name}`} />}>
       <Typography
         variant="body-medium"
         text={`Aktualny kolor lampy to: ${rgbLight.values.V_RGB}`}

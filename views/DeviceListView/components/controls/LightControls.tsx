@@ -9,8 +9,7 @@ import { useSendAPIRequest } from '../../../../hooks';
 import { AdditionalControlsProps } from '../AdditionalControls';
 import { useAppSelector } from '../../../../redux/hooks';
 import { selectNodesWithType } from '../../../../redux/devicesSlice';
-import { View } from 'react-native';
-import { styles } from './styles/Controls.styles';
+import { ControlsSectionLayout } from '../../../../components';
 
 export const LightControls: FC<AdditionalControlsProps> = ({
   deviceType,
@@ -80,8 +79,8 @@ export const LightControls: FC<AdditionalControlsProps> = ({
     });
 
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
+    <>
+      <ControlsSectionLayout>
         <Button
           text="Włącz wszystkie w całym domu"
           variant="success"
@@ -94,8 +93,8 @@ export const LightControls: FC<AdditionalControlsProps> = ({
           hasFullWidth
           onPress={handleAllLightsOff}
         />
-      </View>
-      <View style={styles.content}>
+      </ControlsSectionLayout>
+      <ControlsSectionLayout>
         <Typography
           variant="body-medium"
           text="Wybierz node, którym chcesz zarządzać"
@@ -117,7 +116,7 @@ export const LightControls: FC<AdditionalControlsProps> = ({
           hasFullWidth
           onPress={handleNodeLightsOff}
         />
-      </View>
-    </View>
+      </ControlsSectionLayout>
+    </>
   );
 };

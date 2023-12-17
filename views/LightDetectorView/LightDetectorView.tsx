@@ -39,10 +39,7 @@ export const LightDetectorView: FC<LightDetectorViewProps> = ({ route }) => {
   return (
     <LayoutProvider
       navbar={
-        <Navbar
-          text={`${location} - ${nodeId} - ${lightDetector?.name}`}
-          variant="header-small"
-        />
+        <Navbar text={`${location} - ${nodeId} - ${lightDetector?.name}`} />
       }>
       <Typography
         variant="body-medium"

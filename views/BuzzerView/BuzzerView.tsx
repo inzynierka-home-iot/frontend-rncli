@@ -24,12 +24,7 @@ export const BuzzerView: FC<BuzzerViewProps> = ({ route }) => {
 
   return (
     <LayoutProvider
-      navbar={
-        <Navbar
-          text={`${location} - ${nodeId} - ${buzzer?.name}`}
-          variant="header-small"
-        />
-      }>
+      navbar={<Navbar text={`${location} - ${nodeId} - ${buzzer?.name}`} />}>
       <Typography
         variant="body-medium"
         text={`Aktualny stan alarmu: ${

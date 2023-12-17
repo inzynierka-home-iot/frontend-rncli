@@ -24,10 +24,12 @@ export const Navbar: FC<NavbarProps> = ({
 
   return (
     <View style={styles.container}>
-      {backButton && (
-        <IconButton icon={faChevronLeft} onPress={navigation.goBack} />
-      )}
-      <Typography variant={variant} text={text} numberOfLines={1} />
+      <View style={styles.leftSide}>
+        {backButton && (
+          <IconButton icon={faChevronLeft} onPress={navigation.goBack} />
+        )}
+        <Typography variant={variant} text={text} numberOfLines={1} />
+      </View>
       {button && <Button {...button} />}
     </View>
   );
@@ -45,5 +47,9 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors['text-invertedPrimary'],
     elevation: 2,
     zIndex: 1,
+  },
+  leftSide: {
+    flexDirection: 'row',
+    gap: theme.spacing(4),
   },
 });
