@@ -24,36 +24,36 @@ export const BotNameInput: FC<BotNameInputProps> = ({
   const sendTelegramMessage = useSendTelegramMessage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [botUsername, onBotUsernameChange] = useInputValue();
-  const [generateName, onToggleGenerateName] = useCheckBoxValue(true);
+  const [isNameGenerated, onIsNameGenerated] = useCheckBoxValue(true);
 
   const { isWaitingForUsername, isUsernameInvalidError, isUsernameTakenError } =
     useAppSelector(state => state.admin);
 
   useEffect(() => {
-    if (generateName && isWaitingForUsername) {
+    if (isNameGenerated && isWaitingForUsername) {
       onBotUsernameChange(generateBotName(locationName));
     } else {
       onBotUsernameChange('');
     }
-  }, [generateName, isWaitingForUsername]);
+  }, [isNameGenerated, isWaitingForUsername]);
 
   const onConfirmBotUsername = useCallback(async () => {
     setIsSubmitting(true);
     const botFullName = botUsername + BOT_SUFFIX;
     await sendTelegramMessage(botFullName, botFatherAccessHash, botFatherId);
     setIsSubmitting(false);
-  }, [botUsername, botFatherAccessHash, botFatherId]);
+  }, [botUsername, botFatherAccessHash, botFatherId, sendTelegramMessage]);
 
   return (
     <>
       <Typography
         variant="body-small"
         text={`Podaj username dla bota, którego będziesz używał na Raspberry PI. Na końcu wpisanej nazwy zostanie dodana końcówka '${BOT_SUFFIX}'.`}
-        color="text-secondary"
+        color={isWaitingForUsername ? 'text-primary' : 'text-secondary'}
       />
       <CheckBox
-        checked={generateName}
-        onPress={onToggleGenerateName}
+        checked={isNameGenerated}
+        onPress={onIsNameGenerated}
         label="Użyj wygenerowanej nazwy"
         disabled={!isWaitingForUsername || isSubmitting}
       />
@@ -64,7 +64,7 @@ export const BotNameInput: FC<BotNameInputProps> = ({
         variant={
           isUsernameInvalidError || isUsernameTakenError ? 'error' : 'default'
         }
-        disabled={!isWaitingForUsername || isSubmitting}
+        disabled={!isWaitingForUsername || isSubmitting || isNameGenerated}
         max={BOT_NAME_LENGTH - BOT_SUFFIX.length}
       />
       {isUsernameTakenError && (

@@ -30,14 +30,14 @@ export const LocationInput: FC<LocationInputProps> = ({
     setIsSubmitting(true);
     await sendTelegramMessage(locationName, botFatherAccessHash, botFatherId);
     setIsSubmitting(false);
-  }, [botFatherAccessHash, botFatherId, locationName]);
+  }, [botFatherAccessHash, botFatherId, locationName, sendTelegramMessage]);
 
   return (
     <>
       <Typography
         variant="body-small"
         text="Jak będzie nazywała się Twoja lokalizacja"
-        color="text-secondary"
+        color={isWaitingForName ? 'text-primary' : 'text-secondary'}
       />
       <Input
         text={locationName}

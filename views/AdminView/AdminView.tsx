@@ -7,8 +7,11 @@ import { BotNameInput } from './components/BotNameInput';
 import { BotTokenLabel } from './components/BotTokenLabel';
 import { useBotFatherId, useListenForBotFather } from './hooks';
 import { useSendTelegramMessage } from '../../hooks';
+import { useAppDispatch } from '../../redux/hooks';
+import { resetAdmin } from '../../redux/adminSlice';
 
 export const AdminView = () => {
+  const dispatch = useAppDispatch();
   const [locationName, onLocationNameChange] = useInputValue();
   const sendTelegramMessage = useSendTelegramMessage();
   const [botFatherAccessHash, botFatherId] = useBotFatherId();
@@ -16,6 +19,7 @@ export const AdminView = () => {
 
   useEffect(() => {
     if (botFatherAccessHash && botFatherId) {
+      dispatch(resetAdmin());
       sendTelegramMessage('/newbot', botFatherAccessHash, botFatherId);
     }
   }, [botFatherAccessHash, botFatherId, sendTelegramMessage]);

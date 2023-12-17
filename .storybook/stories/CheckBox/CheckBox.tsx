@@ -31,7 +31,11 @@ export const CheckBox: FC<CheckBoxProps> = ({
         disabled={disabled}
       />
       {label && (
-        <Typography text={label} variant="body-medium" color="text-secondary" />
+        <Typography
+          text={label}
+          variant="body-medium"
+          color={disabled ? 'text-secondary' : 'text-primary'}
+        />
       )}
     </View>
   );
