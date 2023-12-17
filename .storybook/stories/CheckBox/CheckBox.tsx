@@ -57,4 +57,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: theme.spacing(2),
   },
+  label: {
+    flex: 1,
+  },
 });

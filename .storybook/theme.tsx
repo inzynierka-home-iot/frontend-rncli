@@ -23,19 +23,19 @@ export const theme: Theme = {
   typography: {
     'header-large': {
       fontFamily: 'Inter',
-      fontSize: 40,
+      fontSize: 24,
       fontStyle: 'normal',
       fontWeight: '700',
     },
     'header-medium': {
       fontFamily: 'Inter',
-      fontSize: 32,
+      fontSize: 22,
       fontStyle: 'normal',
       fontWeight: '700',
     },
     'header-small': {
       fontFamily: 'Inter',
-      fontSize: 24,
+      fontSize: 20,
       fontStyle: 'normal',
       fontWeight: '700',
     },
