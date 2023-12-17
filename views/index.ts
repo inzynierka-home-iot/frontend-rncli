@@ -12,3 +12,4 @@ export * from './MotionDetectorView';
 export * from './RgbLightView';
 export * from './TempSensorView';
 export * from './LocationListView';
+export * from './SprinklerView';

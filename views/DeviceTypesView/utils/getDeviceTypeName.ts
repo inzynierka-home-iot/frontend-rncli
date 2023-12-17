@@ -11,6 +11,7 @@ const TYPE_TO_CATEGORY: Record<DeviceType, string> = {
   S_MOTION: 'Czujniki ruchu',
   S_RGB_LIGHT: 'Światełka RGB',
   S_TEMP: 'Czujniki temperatury',
+  S_SPRINKLER: 'Zraszacze',
 };
 
 export const getDeviceTypeName = (type: DeviceType) =>

@@ -17,6 +17,7 @@ import {
   MotionDetectorView,
   RgbLightView,
   TempSensorView,
+  SprinklerView,
 } from './views';
 import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
@@ -61,6 +62,7 @@ export default function App() {
               component={HumidityDetectorView}
             />
             <Stack.Screen name="Light" component={LightView} />
+            <Stack.Screen name="Sprinkler" component={SprinklerView} />
             <Stack.Screen name="LightDetector" component={LightDetectorView} />
             <Stack.Screen name="Lock" component={LockView} />
             <Stack.Screen
