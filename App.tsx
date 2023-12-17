@@ -2,7 +2,6 @@ import 'stream-browserify';
 import 'react-native-quick-crypto';
 import React, { Text } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { TelegramForm } from './components';
 import {
   ConfirmAuthView,
   AdminView,
@@ -70,7 +69,6 @@ export default function App() {
             />
             <Stack.Screen name="RgbLight" component={RgbLightView} />
             <Stack.Screen name="TempSensor" component={TempSensorView} />
-            <Stack.Screen name="Telegram" component={TelegramForm} />
           </Stack.Navigator>
           <Alerts />
         </LoadingWrapper>

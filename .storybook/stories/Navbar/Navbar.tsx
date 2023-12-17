@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Typography } from '../Typography/Typography';
-import { theme } from '../../theme';
+import { TypographyKeys, theme } from '../../theme';
 import { Button, ButtonProps } from '../Button/Button';
 import { IconButton } from '../IconButton/IconButton';
 import { useAppNavigation } from '../../../hooks';
@@ -11,21 +11,25 @@ export type NavbarProps = {
   text: string;
   button?: ButtonProps;
   backButton?: boolean;
+  variant?: TypographyKeys;
 };
 
 export const Navbar: FC<NavbarProps> = ({
   text,
   button = null,
   backButton = true,
+  variant = 'header-medium',
 }) => {
   const navigation = useAppNavigation();
 
   return (
     <View style={styles.container}>
-      {backButton && (
-        <IconButton icon={faChevronLeft} onPress={navigation.goBack} />
-      )}
-      <Typography variant="header-small" text={text} />
+      <View style={styles.leftSide}>
+        {backButton && (
+          <IconButton icon={faChevronLeft} onPress={navigation.goBack} />
+        )}
+        <Typography variant={variant} text={text} numberOfLines={1} />
+      </View>
       {button && <Button {...button} />}
     </View>
   );
@@ -43,5 +47,9 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors['text-invertedPrimary'],
     elevation: 2,
     zIndex: 1,
+  },
+  leftSide: {
+    flexDirection: 'row',
+    gap: theme.spacing(4),
   },
 });

@@ -76,7 +76,7 @@ export const TurnOnFanSelect: FC<TurnOnFanSelectProps> = ({
       <CheckBox
         checked={isFanTurnOnAutomatically}
         onPress={onCheckboxPress}
-        label="Włączaj automatycznie wentylator, jezeli temperatura na określonym czujniku będzie miała wybraną wartość"
+        label="Włączaj automatycznie wentylator, jeżeli temperatura na określonym czujniku będzie miała wybraną wartość"
       />
       {isFanTurnOnAutomatically && (
         <>
@@ -90,7 +90,7 @@ export const TurnOnFanSelect: FC<TurnOnFanSelectProps> = ({
             onSelect={onSelect}
           />
           <Typography
-            text="Włącz jezeli temperatura wzrośnie do:"
+            text="Włącz jeżeli temperatura wzrośnie do:"
             variant="body-medium"
           />
           <Input

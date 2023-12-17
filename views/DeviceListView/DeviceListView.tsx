@@ -7,7 +7,11 @@ import { selectDevicesWithType } from '../../redux/devicesSlice';
 import { useAppNavigation } from '../../hooks';
 import { ListItem } from '../../.storybook/stories';
 import { getDeviceViewName } from './utils';
-import { LayoutProvider, NavbarWithLogout } from '../../components';
+import {
+  ControlsLayout,
+  LayoutProvider,
+  NavbarWithLogout,
+} from '../../components';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AdditionalControls } from './components';
 import { styles } from './DeviceListView.styles';
@@ -38,23 +42,25 @@ export const DeviceListView: FC<DeviceListViewProps> = ({ route }) => {
             key={createDeviceKey(device)}
             text={device.name}
             icon={getDeviceIcon(device.type)}
-            onPress={() => {
+            onPress={() =>
               navigation.navigate(getDeviceViewName(device.type), {
                 location: device.location,
                 nodeId: device.nodeId,
                 deviceId: device.id,
                 botHash,
                 botId,
-              });
-            }}
+              })
+            }
           />
         ))}
       </View>
-      <AdditionalControls
-        deviceType={deviceType}
-        botHash={botHash}
-        botId={botId}
-      />
+      <ControlsLayout>
+        <AdditionalControls
+          deviceType={deviceType}
+          botHash={botHash}
+          botId={botId}
+        />
+      </ControlsLayout>
     </LayoutProvider>
   );
 };

@@ -74,13 +74,13 @@ export const DeviceTypesView: FC<DeviceTypesViewProps> = ({ route }) => {
                 key={deviceType}
                 text={getDeviceTypeName(deviceType)}
                 icon={getDeviceIcon(deviceType)}
-                onPress={() => {
+                onPress={() =>
                   navigation.navigate('DeviceList', {
                     botHash,
                     botId,
                     deviceType,
-                  });
-                }}
+                  })
+                }
               />
             ))}
           </View>

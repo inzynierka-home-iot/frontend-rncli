@@ -10,6 +10,7 @@ interface DeviceState {
 
 const initialState: DeviceState = {
   // devicesList: mockedData.devices,
+  // isLoading: false,
   devicesList: [],
   isLoading: true,
 };

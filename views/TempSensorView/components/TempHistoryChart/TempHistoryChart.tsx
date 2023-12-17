@@ -1,8 +1,7 @@
 import { FC } from 'react';
 import React, { View } from 'react-native';
 import { Button, DataChart, Typography } from '../../../../.storybook/stories';
-import { useSendAPIRequest } from '../../../../hooks';
-import { useTempHistory } from '../../../../hooks/useTempHistory';
+import { useSendAPIRequest, useTempHistory } from '../../../../hooks';
 import { DeviceViewRouteParams } from '../../../../types';
 import { styles } from './TempHistoryChart.styles';
 

@@ -27,7 +27,11 @@ export const CheckBox: FC<CheckBoxProps> = ({
         color={color}
         uncheckedColor={color}
       />
-      {label && <Typography text={label} variant="body-medium" />}
+      {label && (
+        <View style={styles.label}>
+          <Typography text={label} variant="body-medium" />
+        </View>
+      )}
     </View>
   );
 };
@@ -37,8 +41,8 @@ const useCheckBoxColor = (variant: CheckBoxProps['variant']) => {
     variant == 'default'
       ? 'text-informative'
       : variant == 'success'
-        ? 'text-success'
-        : 'text-error';
+      ? 'text-success'
+      : 'text-error';
   return theme.colors[checkBoxColor];
 };
 
@@ -46,5 +50,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     gap: theme.spacing(2),
+  },
+  label: {
+    flex: 1,
   },
 });

@@ -3,6 +3,7 @@ import { LayoutChangeEvent, StyleSheet, View } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { ChartData } from '../../../types';
 import { theme } from '../../theme';
+import { DataChartConsts } from './DataChartConsts';
 
 export type DataChartProps = {
   chartData: ChartData[];
@@ -10,15 +11,13 @@ export type DataChartProps = {
   suffix?: string;
 };
 
-const HEIGHT_CALC_FACTOR = 1.5;
-
 export const DataChart: FC<DataChartProps> = ({
   chartData,
   prefix = '',
   suffix = '',
 }) => {
   const [chartWidth, setChartWidth] = useState(0);
-  const chartHeight = chartWidth / HEIGHT_CALC_FACTOR;
+  const chartHeight = chartWidth / DataChartConsts.HEIGHT_CALC_FACTOR;
 
   const onLayout = (event: LayoutChangeEvent) => {
     const width = event.nativeEvent.layout.width;

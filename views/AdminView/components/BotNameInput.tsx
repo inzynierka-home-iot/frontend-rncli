@@ -49,7 +49,7 @@ export const BotNameInput: FC<BotNameInputProps> = ({
       {isUsernameTakenError && (
         <Typography
           variant="body-medium"
-          text="Nazwa jest juz zajęta. Spróbuj ponownie."
+          text="Nazwa jest już zajęta. Spróbuj ponownie."
           color="text-error"
         />
       )}

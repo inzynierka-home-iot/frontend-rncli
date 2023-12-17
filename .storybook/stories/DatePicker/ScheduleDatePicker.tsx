@@ -17,7 +17,7 @@ export type ScheduleDatePickerProps = {
   mode?: 'interval' | 'repeat';
 };
 
-const AVAILABLE_DAYS = ['mon', 'tue', 'wed', 'thu', 'fr', 'sat', 'sun'];
+const AVAILABLE_DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 export const ScheduleDatePicker: FC<ScheduleDatePickerProps> = ({
   schedule: { hours, minutes, days },

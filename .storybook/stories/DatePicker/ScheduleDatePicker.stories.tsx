@@ -21,7 +21,6 @@ const MyScheduleDatePickerMeta = {
 
 export default MyScheduleDatePickerMeta;
 
-
 export const Interval = () => {
   const initialSchedule = {
     hours: 12,

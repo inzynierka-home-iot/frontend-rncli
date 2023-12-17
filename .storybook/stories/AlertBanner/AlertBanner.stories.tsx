@@ -23,39 +23,25 @@ const MyAlertBanner = {
 export default MyAlertBanner;
 
 export const Informative = () => {
-  const [open, setOpen] = useState(true);
-
-  return (
-    <AlertBanner
-      text={'Changes saved'}
-      isOpen={open}
-      onClose={() => setOpen(false)}
-    />
-  );
+  return <AlertBanner text="Changes saved" onClose={() => {}} />;
 };
 
 export const Success = () => {
-  const [open, setOpen] = useState(true);
-
   return (
     <AlertBanner
-      text={'Lights turned on! You are enlighted now!'}
-      isOpen={open}
+      text="Lights turned on! You are enlighted now!"
       variant="success"
-      onClose={() => setOpen(false)}
+      onClose={() => {}}
     />
   );
 };
 
 export const Error = () => {
-  const [open, setOpen] = useState(true);
-
   return (
     <AlertBanner
-      text={'Error! Cannot update settings'}
-      isOpen={open}
+      text="Error! Cannot update settings"
       variant="error"
-      onClose={() => setOpen(false)}
+      onClose={() => {}}
     />
   );
 };
