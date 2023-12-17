@@ -9,6 +9,7 @@ export type CheckBoxProps = {
   checked: boolean;
   onPress: () => void;
   label?: string;
+  disabled?: boolean;
 };
 
 export const CheckBox: FC<CheckBoxProps> = ({
@@ -16,6 +17,7 @@ export const CheckBox: FC<CheckBoxProps> = ({
   checked,
   onPress,
   label,
+  disabled = false,
 }) => {
   const color = useCheckBoxColor(variant);
 
@@ -26,11 +28,14 @@ export const CheckBox: FC<CheckBoxProps> = ({
         onPress={onPress}
         color={color}
         uncheckedColor={color}
+        disabled={disabled}
       />
       {label && (
-        <View style={styles.label}>
-          <Typography text={label} variant="body-medium" />
-        </View>
+        <Typography
+          text={label}
+          variant="body-medium"
+          color={disabled ? 'text-secondary' : 'text-primary'}
+        />
       )}
     </View>
   );
@@ -49,6 +54,7 @@ const useCheckBoxColor = (variant: CheckBoxProps['variant']) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    alignItems: 'center',
     gap: theme.spacing(2),
   },
   label: {

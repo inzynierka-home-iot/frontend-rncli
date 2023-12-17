@@ -6,7 +6,9 @@ import {
   setIsUsernameInvalidError,
   setBotsNames,
 } from '../../redux/adminSlice';
+import { addAlert } from '../../redux/alertsSlice';
 import { AppDispatch } from '../../redux/store';
+import { Alert } from '../../types';
 import { BOT_SUFFIX } from '../env';
 import { mtproto } from '../mtprotoClient';
 
@@ -24,6 +26,9 @@ const createBotNameTakenError =
   'Sorry, this username is already taken. Please try something different.';
 
 const createBotNameInvalidError = 'Sorry, this username is invalid.';
+
+const toManyAttemps =
+  /^Sorry, too many attempts\. Please try again in \d+ seconds\.$/;
 
 const createBotSuccess = 'Done! Congratulations on your new bot.';
 
@@ -75,6 +80,18 @@ export const listenForBotFatherMessages = (
       if (messages.includes(createBotNameInvalidError)) {
         dispatch(setIsUsernameInvalidError(true));
         dispatch(setIsUsernameTakenError(false));
+      }
+      const toManyAttempsMessage = messages.find(message =>
+        toManyAttemps.test(message),
+      );
+      if (toManyAttempsMessage) {
+        const words = toManyAttempsMessage.split(' ');
+        const seconds = words[words.length - 2];
+        const alert: Alert = {
+          variant: 'error',
+          text: `Za dużo prób tworzenia nowego bota. Spróbuj ponownie za ${seconds} sekund`,
+        };
+        dispatch(addAlert(alert));
       }
       const successMessage = messages.find(message =>
         message.includes(createBotSuccess),
