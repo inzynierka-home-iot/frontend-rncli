@@ -103,7 +103,7 @@ export const TurnOnSprinklerSelect: FC<TurnOnSprinklerSelectProps> = ({
       <CheckBox
         checked={isSprinklerTurnOnAutomatically}
         onPress={onCheckboxPress}
-        label="Włączaj automatycznie zraszacz, jezeli czujniki światła i wilgotności uzyskają ustawione wartości."
+        label="Włączaj automatycznie zraszacz, jeżeli czujniki światła i wilgotności uzyskają ustawione wartości."
       />
       {isSprinklerTurnOnAutomatically && (
         <>
