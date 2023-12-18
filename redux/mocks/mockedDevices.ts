@@ -157,5 +157,16 @@ export const mockedData = {
         V_LOCK_STATUS: '0',
       },
     },
+    {
+      location: 'home-1',
+      nodeId: '1',
+      id: '5',
+      type: DeviceType.S_SPRINKLER,
+      name: 'Sprinkler',
+      values: {
+        V_STATUS: '0',
+      },
+      schedule: {},
+    },
   ] as Device[],
 };

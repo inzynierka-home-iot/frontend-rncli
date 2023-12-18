@@ -11,11 +11,7 @@ import {
 } from '../../../.storybook/stories';
 import { selectDevicesWithType } from '../../../redux/devicesSlice';
 import { useAppSelector } from '../../../redux/hooks';
-import {
-  DeviceType,
-  DeviceViewRouteParams,
-  SprinklerSchedule,
-} from '../../../types';
+import { DeviceType, SprinklerSchedule } from '../../../types';
 import { sendAPIRequest } from '../../../utils';
 
 type TurnOnSprinklerSelectProps = {
