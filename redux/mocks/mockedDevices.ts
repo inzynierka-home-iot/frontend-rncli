@@ -146,6 +146,7 @@ export const mockedData = {
       values: {
         V_STATUS: '0',
       },
+      schedule: {},
     },
     {
       location: 'home-1',
