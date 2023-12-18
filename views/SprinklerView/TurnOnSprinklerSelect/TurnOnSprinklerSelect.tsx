@@ -11,11 +11,15 @@ import {
 } from '../../../.storybook/stories';
 import { selectDevicesWithType } from '../../../redux/devicesSlice';
 import { useAppSelector } from '../../../redux/hooks';
-import { DeviceType, SprinklerSchedule } from '../../../types';
-import { sendAPIRequest } from '../../../utils';
+import {
+  DeviceType,
+  DeviceViewRouteParams,
+  SprinklerSchedule,
+} from '../../../types';
+import { useSendAPIRequest } from '../../../hooks';
 
 type TurnOnSprinklerSelectProps = {
-  sprinklerBaseParams: any;
+  sprinklerBaseParams: DeviceViewRouteParams;
   sprinklerSchedule?: SprinklerSchedule;
 };
 
@@ -31,6 +35,8 @@ export const TurnOnSprinklerSelect: FC<TurnOnSprinklerSelectProps> = ({
     sprinklerSchedule?.V_LIGHT_LEVEL,
   );
   const [humSelectedValue, onHumSelect] = useSelectIndex();
+
+  const sendAPIRequest = useSendAPIRequest();
 
   const humSensors = useAppSelector(state =>
     selectDevicesWithType(state, DeviceType.S_HUM),
@@ -117,7 +123,7 @@ export const TurnOnSprinklerSelect: FC<TurnOnSprinklerSelectProps> = ({
             onSelect={onHumSelect}
           />
           <Typography
-            text="Włącz jezeli wilgotność spadnie do:"
+            text="Włącz jeżeli wilgotność spadnie do:"
             variant="body-medium"
           />
           <Input

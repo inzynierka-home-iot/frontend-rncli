@@ -161,7 +161,7 @@ export const mockedData = {
     {
       location: 'home-1',
       nodeId: '1',
-      id: '5',
+      id: '10',
       type: DeviceType.S_SPRINKLER,
       name: 'Sprinkler',
       values: {

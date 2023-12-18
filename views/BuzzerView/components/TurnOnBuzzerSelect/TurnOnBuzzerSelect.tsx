@@ -9,11 +9,15 @@ import {
 } from '../../../../.storybook/stories';
 import { selectDevicesWithType } from '../../../../redux/devicesSlice';
 import { useAppSelector } from '../../../../redux/hooks';
-import { DeviceType, BuzzerSchedule } from '../../../../types';
-import { sendAPIRequest } from '../../../../utils';
+import {
+  DeviceType,
+  BuzzerSchedule,
+  DeviceViewRouteParams,
+} from '../../../../types';
+import { useSendAPIRequest } from '../../../../hooks';
 
 type TurnOnBuzzerSelectProps = {
-  buzzerBaseParams: any;
+  buzzerBaseParams: DeviceViewRouteParams;
   buzzerSchedule?: BuzzerSchedule;
 };
 
@@ -25,6 +29,8 @@ export const TurnOnBuzzerSelect: FC<TurnOnBuzzerSelectProps> = ({
     Object.keys(buzzerSchedule || []).length !== 0,
   );
   const [selectedIndex, onSelect] = useSelectIndex();
+
+  const sendAPIRequest = useSendAPIRequest();
 
   const motionSensors = useAppSelector(state =>
     selectDevicesWithType(state, DeviceType.S_MOTION),
@@ -77,7 +83,7 @@ export const TurnOnBuzzerSelect: FC<TurnOnBuzzerSelectProps> = ({
       {isBuzzerTurnOnAutomatically && (
         <>
           <Typography
-            text="Wybierz czujnik ruchu, który aktywuje brzęczyk:"
+            text="Wybierz czujnik ruchu, który aktywuje alarm:"
             variant="body-medium"
           />
           <Select

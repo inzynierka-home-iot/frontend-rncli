@@ -15,21 +15,13 @@ type SprinklerViewProps = NativeStackScreenProps<
 >;
 
 export const SprinklerView = ({ route }: SprinklerViewProps) => {
-  const { location, nodeId, deviceId, botHash, botId } = route.params;
+  const { location, nodeId, deviceId } = route.params;
 
   const sendIoTAPIRequest = useSendAPIRequest();
 
   const sprinkler = useAppSelector(state =>
     selectDeviceWithId(state, location, nodeId, deviceId),
   ) as Sprinkler;
-
-  // const sprinklerActionBaseParams = {
-  //   location,
-  //   nodeId,
-  //   deviceId,
-  //   botHash,
-  //   botId,
-  // };
 
   const status = useMemo(
     () => sprinkler.values.V_STATUS === '1',
@@ -61,8 +53,9 @@ export const SprinklerView = ({ route }: SprinklerViewProps) => {
       navbar={<Navbar text={`${location} - ${nodeId} - ${sprinkler?.name}`} />}>
       <Typography
         variant="body-medium"
-        text={`Aktualny status zraszacza to: ${status ? 'Włączony' : 'Wyłączony'
-          }`}
+        text={`Aktualny status zraszacza to: ${
+          status ? 'Włączony' : 'Wyłączony'
+        }`}
       />
       {status ? (
         <Button text="Wyłącz" hasFullWidth onPress={handleSprinklerOff} />
