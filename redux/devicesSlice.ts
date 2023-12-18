@@ -1,7 +1,7 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Device, DeviceType } from '../types';
 import { RootState } from './store';
-import { mockedData } from './mocks/mockedDevices';
+// import { mockedData } from './mocks/mockedDevices';
 
 interface DeviceState {
   devicesList: Device[];
@@ -9,10 +9,10 @@ interface DeviceState {
 }
 
 const initialState: DeviceState = {
-  devicesList: mockedData.devices,
-  isLoading: false,
-  // devicesList: [],
-  // isLoading: true,
+  // devicesList: mockedData.devices,
+  // isLoading: false,
+  devicesList: [],
+  isLoading: true,
 };
 
 export const devicesSlice = createSlice({
@@ -20,12 +20,12 @@ export const devicesSlice = createSlice({
   initialState,
   reducers: {
     setInitialDevice: (state, action: PayloadAction<Device[]>) => {
-      // state.devicesList = action.payload;
-      // state.isLoading = false;
+      state.devicesList = action.payload;
+      state.isLoading = false;
     },
     clearDeviceState: state => {
-      // state.devicesList = [];
-      // state.isLoading = true;
+      state.devicesList = [];
+      state.isLoading = true;
     },
     setDevicesValues: (
       state,
