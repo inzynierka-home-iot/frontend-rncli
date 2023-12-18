@@ -7,11 +7,15 @@ import {
   Typography,
   useCheckBoxValue,
   useInputValue,
-  useSelectValue,
+  useSelectIndex,
 } from '../../../.storybook/stories';
 import { selectDevicesWithType } from '../../../redux/devicesSlice';
 import { useAppSelector } from '../../../redux/hooks';
-import { DeviceType, SprinklerSchedule } from '../../../types';
+import {
+  DeviceType,
+  DeviceViewRouteParams,
+  SprinklerSchedule,
+} from '../../../types';
 import { sendAPIRequest } from '../../../utils';
 
 type TurnOnSprinklerSelectProps = {
@@ -30,7 +34,7 @@ export const TurnOnSprinklerSelect: FC<TurnOnSprinklerSelectProps> = ({
   const [lightValue, onChangeLightValue] = useInputValue(
     sprinklerSchedule?.V_LIGHT_LEVEL,
   );
-  const [humSelectedValue, onHumSelect] = useSelectValue();
+  const [humSelectedValue, onHumSelect] = useSelectIndex();
 
   const humSensors = useAppSelector(state =>
     selectDevicesWithType(state, DeviceType.S_HUM),
@@ -49,7 +53,7 @@ export const TurnOnSprinklerSelect: FC<TurnOnSprinklerSelectProps> = ({
     [humSensors],
   );
 
-  const [lightSelectedValue, onLightSelect] = useSelectValue();
+  const [lightSelectedValue, onLightSelect] = useSelectIndex();
 
   const lightSensors = useAppSelector(state =>
     selectDevicesWithType(state, DeviceType.S_LIGHT_LEVEL),
