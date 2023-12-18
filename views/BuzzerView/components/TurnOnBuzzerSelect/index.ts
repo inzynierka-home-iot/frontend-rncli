@@ -1,1 +1,1 @@
-export { TurnOnFanSelect } from './TurnOnBuzzerSelect';
+export { TurnOnBuzzerSelect } from './TurnOnBuzzerSelect';

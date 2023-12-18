@@ -2,12 +2,10 @@ import React, { FC, useMemo } from 'react';
 import {
   Button,
   CheckBox,
-  Input,
   Select,
   Typography,
   useCheckBoxValue,
-  useInputValue,
-  useSelectValue,
+  useSelectIndex,
 } from '../../../../.storybook/stories';
 import { selectDevicesWithType } from '../../../../redux/devicesSlice';
 import { useAppSelector } from '../../../../redux/hooks';
@@ -26,7 +24,7 @@ export const TurnOnBuzzerSelect: FC<TurnOnBuzzerSelectProps> = ({
   const [isBuzzerTurnOnAutomatically, onToggle] = useCheckBoxValue(
     Object.keys(buzzerSchedule || []).length !== 0,
   );
-  const [selectedValue, onSelect] = useSelectValue();
+  const [selectedIndex, onSelect] = useSelectIndex();
 
   const motionSensors = useAppSelector(state =>
     selectDevicesWithType(state, DeviceType.S_MOTION),
@@ -51,7 +49,7 @@ export const TurnOnBuzzerSelect: FC<TurnOnBuzzerSelectProps> = ({
       action: 'setSchedule',
       additionalParams: {
         action: 'motionAlarm',
-        ...motionSensorsIds[selectedValue].value,
+        ...motionSensorsIds[selectedIndex].value,
       },
     });
   };
@@ -84,7 +82,7 @@ export const TurnOnBuzzerSelect: FC<TurnOnBuzzerSelectProps> = ({
           />
           <Select
             selectData={motionSensorsIds}
-            index={selectedValue}
+            index={selectedIndex}
             onSelect={onSelect}
           />
           <Button text="Włącz" onPress={onTurnOnBuzzerAutomatically} />

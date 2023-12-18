@@ -7,7 +7,7 @@ import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
 import { RootStackParamList, Sprinkler } from '../../types';
 import { useSendAPIRequest } from '../../hooks';
-import { TurnOnSprinklerSelect } from './TurnOnFanSelect';
+import { TurnOnSprinklerSelect } from './TurnOnSprinklerSelect';
 
 type SprinklerViewProps = NativeStackScreenProps<
   RootStackParamList,
@@ -23,14 +23,13 @@ export const SprinklerView = ({ route }: SprinklerViewProps) => {
     selectDeviceWithId(state, location, nodeId, deviceId),
   ) as Sprinkler;
 
-  const sprinklerActionBaseParams = {
-    location,
-    nodeId,
-    deviceId,
-    action: 'set',
-    botHash,
-    botId,
-  };
+  // const sprinklerActionBaseParams = {
+  //   location,
+  //   nodeId,
+  //   deviceId,
+  //   botHash,
+  //   botId,
+  // };
 
   const status = useMemo(
     () => sprinkler.values.V_STATUS === '1',
@@ -39,13 +38,15 @@ export const SprinklerView = ({ route }: SprinklerViewProps) => {
 
   const handleSprinklerOn = () =>
     sendIoTAPIRequest({
-      ...sprinklerActionBaseParams,
+      ...route.params,
+      action: 'set',
       additionalParams: { V_STATUS: 1 },
     });
 
   const handleSprinklerOff = () =>
     sendIoTAPIRequest({
-      ...sprinklerActionBaseParams,
+      ...route.params,
+      action: 'set',
       additionalParams: { V_STATUS: 0 },
     });
 

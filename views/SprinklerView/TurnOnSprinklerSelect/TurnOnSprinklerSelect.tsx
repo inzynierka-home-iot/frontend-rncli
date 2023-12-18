@@ -7,7 +7,7 @@ import {
   Typography,
   useCheckBoxValue,
   useInputValue,
-  useSelectValue,
+  useSelectIndex,
 } from '../../../.storybook/stories';
 import { selectDevicesWithType } from '../../../redux/devicesSlice';
 import { useAppSelector } from '../../../redux/hooks';
@@ -30,7 +30,7 @@ export const TurnOnSprinklerSelect: FC<TurnOnSprinklerSelectProps> = ({
   const [lightValue, onChangeLightValue] = useInputValue(
     sprinklerSchedule?.V_LIGHT_LEVEL,
   );
-  const [humSelectedValue, onHumSelect] = useSelectValue();
+  const [humSelectedValue, onHumSelect] = useSelectIndex();
 
   const humSensors = useAppSelector(state =>
     selectDevicesWithType(state, DeviceType.S_HUM),
@@ -49,7 +49,7 @@ export const TurnOnSprinklerSelect: FC<TurnOnSprinklerSelectProps> = ({
     [humSensors],
   );
 
-  const [lightSelectedValue, onLightSelect] = useSelectValue();
+  const [lightSelectedValue, onLightSelect] = useSelectIndex();
 
   const lightSensors = useAppSelector(state =>
     selectDevicesWithType(state, DeviceType.S_LIGHT_LEVEL),
@@ -103,7 +103,7 @@ export const TurnOnSprinklerSelect: FC<TurnOnSprinklerSelectProps> = ({
       <CheckBox
         checked={isSprinklerTurnOnAutomatically}
         onPress={onCheckboxPress}
-        label="Włączaj automatycznie zraszacz, jezeli czujniki światła i wilgotności uzyskają ustawione wartości."
+        label="Włączaj automatycznie zraszacz, jeżeli czujniki światła i wilgotności uzyskają ustawione wartości."
       />
       {isSprinklerTurnOnAutomatically && (
         <>
