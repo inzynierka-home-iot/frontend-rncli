@@ -6,6 +6,7 @@ import { LayoutProvider } from '../../components';
 import { selectDeviceWithId } from '../../redux/devicesSlice';
 import { useAppSelector } from '../../redux/hooks';
 import { Buzzer, RootStackParamList } from '../../types';
+import { TurnOnBuzzerSelect } from './components/TurnOnBuzzerSelect';
 
 type BuzzerViewProps = NativeStackScreenProps<RootStackParamList, 'Buzzer'>;
 
@@ -27,9 +28,12 @@ export const BuzzerView: FC<BuzzerViewProps> = ({ route }) => {
       navbar={<Navbar text={`${location} - ${nodeId} - ${buzzer?.name}`} />}>
       <Typography
         variant="body-medium"
-        text={`Aktualny stan alarmu: ${
-          buzzer.values.V_STATUS === '0' ? 'Wyłączony' : 'Włączony'
-        }`}
+        text={`Aktualny stan alarmu: ${buzzer.values.V_STATUS === '0' ? 'Wyłączony' : 'Włączony'
+          }`}
+      />
+      <TurnOnBuzzerSelect
+        buzzerBaseParams={route.params}
+        buzzerSchedule={buzzer.schedule}
       />
     </LayoutProvider>
   );

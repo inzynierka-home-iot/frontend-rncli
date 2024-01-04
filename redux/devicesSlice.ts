@@ -23,6 +23,10 @@ export const devicesSlice = createSlice({
       state.devicesList = action.payload;
       state.isLoading = false;
     },
+    clearDeviceState: state => {
+      state.devicesList = [];
+      state.isLoading = true;
+    },
     setDevicesValues: (
       state,
       action: PayloadAction<{
@@ -78,20 +82,16 @@ export const devicesSlice = createSlice({
           device.id !== id,
       );
     },
-    clearDeviceState: state => {
-      state.devicesList = [];
-      state.isLoading = true;
-    },
   },
 });
 
 export const {
   setInitialDevice,
+  clearDeviceState,
   setDevicesValues,
   setDeviceSchedule,
   addDevice,
   removeDevice,
-  clearDeviceState,
 } = devicesSlice.actions;
 
 export const selectDevices = (state: RootState) =>

@@ -11,11 +11,15 @@ import {
 } from '../../../../.storybook/stories';
 import { selectDevicesWithType } from '../../../../redux/devicesSlice';
 import { useAppSelector } from '../../../../redux/hooks';
-import { DeviceType, FanSchedule } from '../../../../types';
-import { sendAPIRequest } from '../../../../utils';
+import {
+  DeviceType,
+  DeviceViewRouteParams,
+  FanSchedule,
+} from '../../../../types';
+import { useSendAPIRequest } from '../../../../hooks';
 
 type TurnOnFanSelectProps = {
-  fanBaseParams: any;
+  fanBaseParams: DeviceViewRouteParams;
   fanSchedule?: FanSchedule;
 };
 
@@ -28,6 +32,8 @@ export const TurnOnFanSelect: FC<TurnOnFanSelectProps> = ({
   );
   const [tempValue, onChangeTempValue] = useInputValue(fanSchedule?.V_TEMP);
   const [selectedIndex, onSelect] = useSelectIndex();
+
+  const sendAPIRequest = useSendAPIRequest();
 
   const tempSensors = useAppSelector(state =>
     selectDevicesWithType(state, DeviceType.S_TEMP),

@@ -38,6 +38,7 @@ export type RootStackParamList = {
   LightDetector: DeviceViewRouteParams;
   MotionDetector: DeviceViewRouteParams;
   TempSensor: DeviceViewRouteParams;
+  Sprinkler: DeviceViewRouteParams;
 };
 
 export type RootNavigationProps = StackNavigationProp<RootStackParamList>;
